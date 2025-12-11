@@ -126,8 +126,8 @@ async def test_relevance_evaluator_chinese():
 
 
 @pytest.mark.asyncio
-async def test_relevance_evaluator_with_ground_truth():
-    """Test RelevanceGrader with ground truth for comparison"""
+async def test_relevance_evaluator_with_reference_response():
+    """Test RelevanceGrader with reference response for comparison"""
     # Initialize evaluator
     model = OpenAIChatModel(
         model="qwen-max",
@@ -149,11 +149,11 @@ async def test_relevance_evaluator_with_ground_truth():
         language=LanguageEnum.EN,
     )
 
-    # Test evaluation with ground truth
+    # Test evaluation with reference response
     result = await evaluator.aevaluate(
         query="What services does the premium membership include?",
         response="The premium membership includes priority customer support, exclusive content access, and early product releases.",
-        ground_truth="Premium membership: priority support, exclusive content, early releases, and monthly webinars.",
+        reference_response="Premium membership: priority support, exclusive content, early releases, and monthly webinars.",
     )
 
     # Verify result structure

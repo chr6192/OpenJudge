@@ -21,7 +21,7 @@ class TestJsonMatchGrader:
         grader = JsonMatchGrader()
 
         result = await grader.aevaluate(
-            ground_truth='{"name": "Alice", "age": 30}',
+            reference_response='{"name": "Alice", "age": 30}',
             response='{"name": "Alice", "age": 30}',
         )
 
@@ -34,7 +34,7 @@ class TestJsonMatchGrader:
         grader = JsonMatchGrader()
 
         result = await grader.aevaluate(
-            ground_truth='{"name": "Alice", "age": 30}',
+            reference_response='{"name": "Alice", "age": 30}',
             response='{"age": 30, "name": "Alice"}',
         )
 
@@ -47,7 +47,7 @@ class TestJsonMatchGrader:
         grader = JsonMatchGrader()
 
         result = await grader.aevaluate(
-            ground_truth='{"name": "Alice", "age": 30}',
+            reference_response='{"name": "Alice", "age": 30}',
             response='{"name": "Bob", "age": 30}',
         )
 
@@ -60,7 +60,7 @@ class TestJsonMatchGrader:
         grader = JsonMatchGrader()
 
         result = await grader.aevaluate(
-            ground_truth='{"name": "Alice", "age": 30}',
+            reference_response='{"name": "Alice", "age": 30}',
             response='{"name": "Alice"}',
         )
 
@@ -73,7 +73,7 @@ class TestJsonMatchGrader:
         grader = JsonMatchGrader(ignore_extra_keys=True)
 
         result = await grader.aevaluate(
-            ground_truth='{"name": "Alice"}',
+            reference_response='{"name": "Alice"}',
             response='{"name": "Alice", "age": 30, "city": "NYC"}',
         )
 
@@ -85,7 +85,7 @@ class TestJsonMatchGrader:
         """Test list matching with same order"""
         grader = JsonMatchGrader()
 
-        result = await grader.aevaluate(ground_truth="[1, 2, 3]", response="[1, 2, 3]")
+        result = await grader.aevaluate(reference_response="[1, 2, 3]", response="[1, 2, 3]")
 
         assert result.score == 1.0
         assert result.metadata["matched"] is True
@@ -95,7 +95,7 @@ class TestJsonMatchGrader:
         """Test list doesn't match with different order (strict_order=True)"""
         grader = JsonMatchGrader(strict_order=True)
 
-        result = await grader.aevaluate(ground_truth="[1, 2, 3]", response="[3, 2, 1]")
+        result = await grader.aevaluate(reference_response="[1, 2, 3]", response="[3, 2, 1]")
 
         assert result.score == 0.0
         assert result.metadata["matched"] is False
@@ -105,7 +105,7 @@ class TestJsonMatchGrader:
         """Test list matches with different order when strict_order=False"""
         grader = JsonMatchGrader(strict_order=False)
 
-        result = await grader.aevaluate(ground_truth="[1, 2, 3]", response="[3, 2, 1]")
+        result = await grader.aevaluate(reference_response="[1, 2, 3]", response="[3, 2, 1]")
 
         assert result.score == 1.0
         assert result.metadata["matched"] is True
@@ -115,7 +115,7 @@ class TestJsonMatchGrader:
         """Test lists with different lengths don't match"""
         grader = JsonMatchGrader()
 
-        result = await grader.aevaluate(ground_truth="[1, 2, 3]", response="[1, 2]")
+        result = await grader.aevaluate(reference_response="[1, 2, 3]", response="[1, 2]")
 
         assert result.score == 0.0
         assert result.metadata["matched"] is False
@@ -145,7 +145,7 @@ class TestJsonMatchGrader:
             },
         )
 
-        result = await grader.aevaluate(ground_truth=reference, response=response)
+        result = await grader.aevaluate(reference_response=reference, response=response)
 
         assert result.score == 1.0
         assert result.metadata["matched"] is True
@@ -156,7 +156,7 @@ class TestJsonMatchGrader:
         grader = JsonMatchGrader()
 
         result = await grader.aevaluate(
-            ground_truth='{"items": [1, 2, 3], "name": "test"}',
+            reference_response='{"items": [1, 2, 3], "name": "test"}',
             response='{"items": [1, 2, 3], "name": "test"}',
         )
 
@@ -169,7 +169,7 @@ class TestJsonMatchGrader:
         grader = JsonMatchGrader()
 
         result = await grader.aevaluate(
-            ground_truth='{"name": "Alice"}',
+            reference_response='{"name": "Alice"}',
             response="not valid json",
         )
 
@@ -183,7 +183,7 @@ class TestJsonMatchGrader:
         grader = JsonMatchGrader()
 
         result = await grader.aevaluate(
-            ground_truth="not valid json",
+            reference_response="not valid json",
             response='{"name": "Alice"}',
         )
 
@@ -197,7 +197,7 @@ class TestJsonMatchGrader:
         grader = JsonMatchGrader()
 
         result = await grader.aevaluate(
-            ground_truth='{"name": null}',
+            reference_response='{"name": null}',
             response='{"name": null}',
         )
 
@@ -210,7 +210,7 @@ class TestJsonMatchGrader:
         grader = JsonMatchGrader()
 
         result = await grader.aevaluate(
-            ground_truth='{"active": true, "deleted": false}',
+            reference_response='{"active": true, "deleted": false}',
             response='{"active": true, "deleted": false}',
         )
 
@@ -223,7 +223,7 @@ class TestJsonMatchGrader:
         grader = JsonMatchGrader()
 
         result = await grader.aevaluate(
-            ground_truth='{"int": 42, "float": 3.14}',
+            reference_response='{"int": 42, "float": 3.14}',
             response='{"int": 42, "float": 3.14}',
         )
 
@@ -236,11 +236,11 @@ class TestJsonMatchGrader:
         grader = JsonMatchGrader()
 
         # Empty dict
-        result = await grader.aevaluate(ground_truth="{}", response="{}")
+        result = await grader.aevaluate(reference_response="{}", response="{}")
         assert result.score == 1.0
 
         # Empty list
-        result = await grader.aevaluate(ground_truth="[]", response="[]")
+        result = await grader.aevaluate(reference_response="[]", response="[]")
         assert result.score == 1.0
 
 

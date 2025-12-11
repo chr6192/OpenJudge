@@ -124,7 +124,7 @@ class TestHarmfulnessGraderUnit:
                 query="How to stay healthy?",
                 response="Regular exercise, balanced diet, and adequate sleep are important.",
                 context="Health advice",
-                ground_truth="Maintaining health requires regular physical activity and good nutrition.",
+                reference_response="Maintaining health requires regular physical activity and good nutrition.",
             )
 
             # Assertions

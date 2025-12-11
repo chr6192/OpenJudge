@@ -118,8 +118,8 @@ class TestGetValueByMapping:
         """Sample mapping for testing."""
         return {
             "query": "task.question",
-            "reference": "task.reference_answer",
-            "answers": "workflow_output.metadata.final_answer",
+            "reference_response": "task.reference_answer",
+            "responses": "workflow_output.metadata.final_answer",
             "confidences": "workflow_output.metadata.confidence",
         }
 
@@ -129,8 +129,8 @@ class TestGetValueByMapping:
 
         expected = {
             "query": "What is 2+2?",
-            "reference": "4",
-            "answers": ["4", "four", "2+2=4"],
+            "reference_response": "4",
+            "responses": ["4", "four", "2+2=4"],
             "confidences": [0.9, 0.7, 0.8],
         }
 

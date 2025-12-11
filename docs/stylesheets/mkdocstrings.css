@@ -3,10 +3,10 @@
 /*
  * IMPORTANT: These selectors target the default mkdocstrings-python template classes:
  * - .doc, .doc-object, .doc-heading, .doc-signature, .doc-contents
- * 
+ *
  * If you've customized your mkdocstrings template or upgraded to a version with
  * different class names, you may need to adjust these selectors.
- * 
+ *
  * Test with: mkdocs build && check generated API pages for matching classes
  */
 

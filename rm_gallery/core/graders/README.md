@@ -256,7 +256,7 @@ Listwise 模式输出示例：
 |--------|------|-------------------|------|
 | `query` | 用户查询 | `user_query`, `input_query`, `question`, `instruction` | 用户的原始问题或指令 |
 | `response` | 模型响应 | `answer`, `generated`, `candidate`, `output`, `generated_text`, `prediction`, `generated_response`, `completion` | 模型生成的回答或输出 |
-| `ground_truth` | 参考答案 | `expected`, `reference` | 标准答案或期望的输出 |
+| `reference_response` | 参考答案 | `expected`, `reference` | 标准答案或期望的输出 |
 | `context` | 上下文信息 | `input`, `input_text`, `text` | 评估所需的额外上下文 |
 
 #### 3.1.2 工具相关参数

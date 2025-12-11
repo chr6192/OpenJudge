@@ -48,7 +48,7 @@ class AccuracyGraderValidator(GraderValidator):
             dataset (List[dict]): List of data samples to evaluate. Each dictionary
                 represents a sample with input parameters and expected outputs.
                 For accuracy validation, each sample should include an "expected" key
-                with the ground truth value.
+                with the reference response value.
             grader (BaseGrader): The grader instance to validate for accuracy.
             mapping (Dict[str, str]): Field mapping dictionary that maps grader
                 input parameter names to corresponding keys in the data samples.

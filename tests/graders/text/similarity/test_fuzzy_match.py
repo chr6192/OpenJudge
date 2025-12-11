@@ -18,7 +18,7 @@ class TestFuzzyMatchBasic:
         """Test exact match returns perfect score"""
         grader = SimilarityGrader(algorithm="fuzzy_match")
         result = await grader.aevaluate(
-            ground_truth="hello world",
+            reference_response="hello world",
             response="hello world",
         )
 
@@ -31,7 +31,7 @@ class TestFuzzyMatchBasic:
         """Test completely different strings return low score"""
         grader = SimilarityGrader(algorithm="fuzzy_match")
         result = await grader.aevaluate(
-            ground_truth="hello world",
+            reference_response="hello world",
             response="goodbye universe",
         )
 
@@ -45,7 +45,7 @@ class TestFuzzyMatchBasic:
             algorithm="fuzzy_match",
         )
         result = await grader.aevaluate(
-            ground_truth="hello world",
+            reference_response="hello world",
             response="hello worl",
         )
 
@@ -58,7 +58,7 @@ class TestFuzzyMatchBasic:
         # Case sensitivity is handled by the fuzzy matching algorithm
         grader = SimilarityGrader(algorithm="fuzzy_match")
         result = await grader.aevaluate(
-            ground_truth="Hello World",
+            reference_response="Hello World",
             response="hello world",
         )
 
@@ -74,7 +74,7 @@ class TestFuzzyMatchMethods:
         """Test standard ratio method"""
         grader = SimilarityGrader(algorithm="fuzzy_match")
         result = await grader.aevaluate(
-            ground_truth="the quick brown fox",
+            reference_response="the quick brown fox",
             response="the quick brown fox",
             method="ratio",
         )
@@ -87,7 +87,7 @@ class TestFuzzyMatchMethods:
         """Test partial ratio for substring matching"""
         grader = SimilarityGrader(algorithm="fuzzy_match")
         result = await grader.aevaluate(
-            ground_truth="the quick brown fox jumps",
+            reference_response="the quick brown fox jumps",
             response="quick brown fox",
             method="partial_ratio",
         )
@@ -100,7 +100,7 @@ class TestFuzzyMatchMethods:
         """Test token sort ratio for order-independent matching"""
         grader = SimilarityGrader(algorithm="fuzzy_match")
         result = await grader.aevaluate(
-            ground_truth="brown quick the fox",
+            reference_response="brown quick the fox",
             response="the quick brown fox",
             method="token_sort_ratio",
         )
@@ -125,7 +125,7 @@ class TestFuzzyMatchMultipleReferences:
         scores = []
         for ref in references:
             result = await grader.aevaluate(
-                ground_truth=ref,
+                reference_response=ref,
                 response=candidate,
             )
             scores.append(result.score)
@@ -144,7 +144,7 @@ class TestFuzzyMatchMultipleReferences:
         scores = []
         for ref in references:
             result = await grader.aevaluate(
-                ground_truth=ref,
+                reference_response=ref,
                 response=candidate,
             )
             scores.append(result.score)
@@ -163,7 +163,7 @@ class TestFuzzyMatchMultipleReferences:
         scores = []
         for ref in references:
             result = await grader.aevaluate(
-                ground_truth=ref,
+                reference_response=ref,
                 response=candidate,
             )
             scores.append(result.score)
@@ -180,7 +180,7 @@ class TestFuzzyMatchEdgeCases:
         """Test handling of empty strings"""
         grader = SimilarityGrader(algorithm="fuzzy_match")
         result = await grader.aevaluate(
-            ground_truth="",
+            reference_response="",
             response="",
         )
 
@@ -192,7 +192,7 @@ class TestFuzzyMatchEdgeCases:
         """Test empty reference with non-empty candidate"""
         grader = SimilarityGrader(algorithm="fuzzy_match")
         result = await grader.aevaluate(
-            ground_truth="",
+            reference_response="",
             response="hello",
         )
 
@@ -204,7 +204,7 @@ class TestFuzzyMatchEdgeCases:
         grader = SimilarityGrader(algorithm="fuzzy_match")
         long_text = "word " * 1000  # 1000 words
         result = await grader.aevaluate(
-            ground_truth=long_text,
+            reference_response=long_text,
             response=long_text,
         )
 
@@ -215,7 +215,7 @@ class TestFuzzyMatchEdgeCases:
         """Test handling of special characters"""
         grader = SimilarityGrader(algorithm="fuzzy_match")
         result = await grader.aevaluate(
-            ground_truth="hello@world#2024!",
+            reference_response="hello@world#2024!",
             response="hello@world#2024!",
         )
 
@@ -226,7 +226,7 @@ class TestFuzzyMatchEdgeCases:
         """Test handling of Unicode characters"""
         grader = SimilarityGrader(algorithm="fuzzy_match")
         result = await grader.aevaluate(
-            ground_truth="你好世界",
+            reference_response="你好世界",
             response="你好世界",
         )
 
@@ -246,7 +246,7 @@ class TestFuzzyMatchThreshold:
 
         # High similarity - should match
         result = await grader.aevaluate(
-            ground_truth="the quick brown fox",
+            reference_response="the quick brown fox",
             response="the quick brown fo",
         )
 
@@ -265,7 +265,7 @@ class TestFuzzyMatchThreshold:
             threshold=0.99,
         )
         result_strict = await grader_strict.aevaluate(
-            ground_truth="hello world",
+            reference_response="hello world",
             response="hello worl",
         )
 
@@ -275,7 +275,7 @@ class TestFuzzyMatchThreshold:
             threshold=0.80,
         )
         result_lenient = await grader_lenient.aevaluate(
-            ground_truth="hello world",
+            reference_response="hello world",
             response="hello worl",
         )
 

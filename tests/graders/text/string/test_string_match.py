@@ -18,7 +18,7 @@ class TestStringMatchGrader:
         """Test exact match with case sensitivity"""
         grader = StringMatchGrader(algorithm="exact_match", case_sensitive=True)
         result = await grader.aevaluate(
-            ground_truth="Hello World",
+            reference_response="Hello World",
             response="Hello World",
         )
         assert result.score == 1.0
@@ -28,7 +28,7 @@ class TestStringMatchGrader:
         """Test exact match without case sensitivity"""
         grader = StringMatchGrader(algorithm="exact_match", case_sensitive=False)
         result = await grader.aevaluate(
-            ground_truth="Hello World",
+            reference_response="Hello World",
             response="hello world",
         )
         assert result.score == 1.0
@@ -38,7 +38,7 @@ class TestStringMatchGrader:
         """Test exact match ignoring whitespace"""
         grader = StringMatchGrader(algorithm="exact_match", ignore_whitespace=True)
         result = await grader.aevaluate(
-            ground_truth="Hello World",
+            reference_response="Hello World",
             response="HelloWorld",
         )
         assert result.score == 1.0
@@ -48,7 +48,7 @@ class TestStringMatchGrader:
         """Test prefix match success"""
         grader = StringMatchGrader(algorithm="prefix_match")
         result = await grader.aevaluate(
-            ground_truth="Hello",
+            reference_response="Hello",
             response="Hello World",
         )
         assert result.score == 1.0
@@ -58,7 +58,7 @@ class TestStringMatchGrader:
         """Test prefix match failure"""
         grader = StringMatchGrader(algorithm="prefix_match")
         result = await grader.aevaluate(
-            ground_truth="World",
+            reference_response="World",
             response="Hello World",
         )
         assert result.score == 0.0
@@ -68,7 +68,7 @@ class TestStringMatchGrader:
         """Test suffix match success"""
         grader = StringMatchGrader(algorithm="suffix_match")
         result = await grader.aevaluate(
-            ground_truth="World",
+            reference_response="World",
             response="Hello World",
         )
         assert result.score == 1.0
@@ -78,7 +78,7 @@ class TestStringMatchGrader:
         """Test suffix match failure"""
         grader = StringMatchGrader(algorithm="suffix_match")
         result = await grader.aevaluate(
-            ground_truth="Hello",
+            reference_response="Hello",
             response="Hello World",
         )
         assert result.score == 0.0
@@ -88,7 +88,7 @@ class TestStringMatchGrader:
         """Test regex match success"""
         grader = StringMatchGrader(algorithm="regex_match")
         result = await grader.aevaluate(
-            ground_truth=r"\d{3}-\d{4}",
+            reference_response=r"\d{3}-\d{4}",
             response="My phone is 123-4567",
         )
         assert result.score == 1.0
@@ -98,7 +98,7 @@ class TestStringMatchGrader:
         """Test regex match with pattern parameter"""
         grader = StringMatchGrader(algorithm="regex_match")
         result = await grader.aevaluate(
-            ground_truth="",
+            reference_response="",
             response="test@example.com",
             pattern=r"[\w.-]+@[\w.-]+\.\w+",
         )
@@ -109,7 +109,7 @@ class TestStringMatchGrader:
         """Test regex match with invalid pattern"""
         grader = StringMatchGrader(algorithm="regex_match")
         result = await grader.aevaluate(
-            ground_truth="[invalid(",
+            reference_response="[invalid(",
             response="test",
         )
         assert result.score == 0.0
@@ -119,7 +119,7 @@ class TestStringMatchGrader:
         """Test substring match success"""
         grader = StringMatchGrader(algorithm="substring_match")
         result = await grader.aevaluate(
-            ground_truth="cat",
+            reference_response="cat",
             response="The cat sat on the mat",
         )
         assert result.score == 1.0
@@ -129,7 +129,7 @@ class TestStringMatchGrader:
         """Test substring match failure"""
         grader = StringMatchGrader(algorithm="substring_match")
         result = await grader.aevaluate(
-            ground_truth="dog",
+            reference_response="dog",
             response="The cat sat on the mat",
         )
         assert result.score == 0.0
@@ -139,7 +139,7 @@ class TestStringMatchGrader:
         """Test substring match bidirectional"""
         grader = StringMatchGrader(algorithm="substring_match")
         result = await grader.aevaluate(
-            ground_truth="The cat sat on the mat",
+            reference_response="The cat sat on the mat",
             response="cat",
             bidirectional=True,
         )
@@ -150,7 +150,7 @@ class TestStringMatchGrader:
         """Test contains all success"""
         grader = StringMatchGrader(algorithm="contains_all")
         result = await grader.aevaluate(
-            ground_truth="",
+            reference_response="",
             response="The cat sat on the mat",
             substrings=["cat", "mat"],
         )
@@ -162,7 +162,7 @@ class TestStringMatchGrader:
         """Test contains all partial match"""
         grader = StringMatchGrader(algorithm="contains_all")
         result = await grader.aevaluate(
-            ground_truth="",
+            reference_response="",
             response="The cat sat on the mat",
             substrings=["cat", "dog", "mat"],
         )
@@ -174,7 +174,7 @@ class TestStringMatchGrader:
         """Test contains any success"""
         grader = StringMatchGrader(algorithm="contains_any")
         result = await grader.aevaluate(
-            ground_truth="",
+            reference_response="",
             response="The cat sat on the mat",
             substrings=["dog", "cat"],
         )
@@ -186,7 +186,7 @@ class TestStringMatchGrader:
         """Test contains any failure"""
         grader = StringMatchGrader(algorithm="contains_any")
         result = await grader.aevaluate(
-            ground_truth="",
+            reference_response="",
             response="The cat sat on the mat",
             substrings=["dog", "bird"],
         )
@@ -197,10 +197,10 @@ class TestStringMatchGrader:
         """Test word overlap"""
         grader = StringMatchGrader(algorithm="word_overlap")
         result = await grader.aevaluate(
-            ground_truth="the cat sat on the mat",
+            reference_response="the cat sat on the mat",
             response="the dog sat on the rug",
         )
-        # Overlapping words: "the", "sat", "on" = 3 out of 5 unique words in ground_truth
+        # Overlapping words: "the", "sat", "on" = 3 out of 5 unique words in reference_response
         # Reference has: {"the", "cat", "sat", "on", "mat"} = 5 unique words
         # Overlap: {"the", "sat", "on"} = 3 words
         assert result.score == pytest.approx(3.0 / 5.0)
@@ -209,7 +209,7 @@ class TestStringMatchGrader:
         """Test character overlap"""
         grader = StringMatchGrader(algorithm="char_overlap")
         result = await grader.aevaluate(
-            ground_truth="hello",
+            reference_response="hello",
             response="helo",
         )
         # All characters in "hello" {h, e, l, o} are in "helo"
@@ -225,7 +225,7 @@ class TestStringMatchGrader:
         """Test that algorithm is included in metadata"""
         grader = StringMatchGrader(algorithm="exact_match")
         result = await grader.aevaluate(
-            ground_truth="test",
+            reference_response="test",
             response="test",
         )
         assert result.metadata["algorithm"] == "exact_match"

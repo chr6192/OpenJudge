@@ -1,7 +1,7 @@
 /*
  * Navigation & Scroll Enhancements for RM-Gallery Documentation
  * Phase 1: 导航滚动修复
- * 
+ *
  * Features:
  * - 侧边栏滚动优化
  * - 当前页面高亮
@@ -415,7 +415,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id],
     border-right: 1px solid var(--border, #e5e7eb);
     padding: 1rem;
   }
-  
+
   /* Open state for drawer navigation */
   nav.sidebar.mobile-drawer.open,
   .md-sidebar.mobile-drawer.open,
@@ -423,14 +423,14 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id],
   aside.sidebar.mobile-drawer.open {
     transform: translateX(0);
   }
-  
+
   /* Mobile TOC - hidden by default */
   .toc,
   .md-sidebar--secondary,
   .table-of-contents {
     display: none;
   }
-  
+
   /* Scroll to top - smaller on mobile */
   .scroll-to-top {
     bottom: 1rem;
@@ -438,7 +438,7 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id],
     width: 2.25rem;
     height: 2.25rem;
   }
-  
+
   /* Reduce scroll margin for smaller header */
   h1[id], h2[id], h3[id], h4[id], h5[id], h6[id],
   [id]:target {

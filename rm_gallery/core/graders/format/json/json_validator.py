@@ -82,7 +82,7 @@ class JsonValidatorGrader(BaseGrader):
 
         Attempts to parse the response string as JSON and returns a score indicating
         whether the parsing was successful. This grader does not compare against
-        ground truth since it only validates the format.
+        reference response since it only validates the format.
 
         Args:
             response (str, optional): The JSON string to validate. Defaults to empty string.

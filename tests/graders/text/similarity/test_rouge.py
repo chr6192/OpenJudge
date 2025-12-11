@@ -20,7 +20,7 @@ class TestROUGEBasic:
             algorithm="rouge",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat is on the mat",
+            reference_response="the cat is on the mat",
             response="the cat is on the mat",
         )
 
@@ -33,7 +33,7 @@ class TestROUGEBasic:
             algorithm="rouge",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat is on the mat",
+            reference_response="the cat is on the mat",
             response="hello world foo bar",
         )
 
@@ -46,7 +46,7 @@ class TestROUGEBasic:
             algorithm="rouge",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat is on the mat",
+            reference_response="the cat is on the mat",
             response="the dog is on the rug",
         )
 
@@ -64,7 +64,7 @@ class TestROUGE1:
             algorithm="rouge",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat sat",
+            reference_response="the cat sat",
             response="the cat sat",
         )
 
@@ -77,7 +77,7 @@ class TestROUGE1:
             algorithm="rouge1",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat sat",
+            reference_response="the cat sat",
             response="sat cat the",
         )
 
@@ -91,7 +91,7 @@ class TestROUGE1:
             algorithm="rouge",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat sat",
+            reference_response="the cat sat",
             response="the big cat sat down",
         )
 
@@ -109,7 +109,7 @@ class TestROUGE2:
             algorithm="rouge",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat is on the mat",
+            reference_response="the cat is on the mat",
             response="the cat is on the mat",
         )
 
@@ -122,7 +122,7 @@ class TestROUGE2:
             algorithm="rouge",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat is on the mat",
+            reference_response="the cat is on the mat",
             response="the mat is on the cat",
         )
 
@@ -136,7 +136,7 @@ class TestROUGE2:
             algorithm="rouge2",
         )
         result = await grader.aevaluate(
-            ground_truth="a b c d",
+            reference_response="a b c d",
             response="b a d c",
         )
 
@@ -154,7 +154,7 @@ class TestROUGEL:
             algorithm="rouge",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat is on the mat",
+            reference_response="the cat is on the mat",
             response="the cat is on the mat",
         )
 
@@ -167,7 +167,7 @@ class TestROUGEL:
             algorithm="rougeL",
         )
         result = await grader.aevaluate(
-            ground_truth="a b c d e f",
+            reference_response="a b c d e f",
             response="a x b x c x d x e x f",
         )
 
@@ -185,11 +185,11 @@ class TestROUGEL:
         )
 
         resultL = await rougeL.aevaluate(
-            ground_truth="the cat sat on the mat",
+            reference_response="the cat sat on the mat",
             response="the cat was sitting on the mat",
         )
         result2 = await rouge2.aevaluate(
-            ground_truth="the cat sat on the mat",
+            reference_response="the cat sat on the mat",
             response="the cat was sitting on the mat",
         )
 
@@ -208,7 +208,7 @@ class TestROUGENGram:
             algorithm="rouge",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat sat on the mat",
+            reference_response="the cat sat on the mat",
             response="the cat sat on the mat",
         )
 
@@ -221,7 +221,7 @@ class TestROUGENGram:
             algorithm="rouge",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat sat on the mat",
+            reference_response="the cat sat on the mat",
             response="the cat sat on the mat",
         )
 
@@ -234,7 +234,7 @@ class TestROUGENGram:
             algorithm="rouge",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat sat on the mat",
+            reference_response="the cat sat on the mat",
             response="the cat sat on the mat",
         )
 
@@ -254,15 +254,15 @@ class TestROUGENGram:
         )
 
         result1 = await rouge1.aevaluate(
-            ground_truth="the quick brown fox jumps over",
+            reference_response="the quick brown fox jumps over",
             response="the quick brown fox walks over",
         )
         result2 = await rouge2.aevaluate(
-            ground_truth="the quick brown fox jumps over",
+            reference_response="the quick brown fox jumps over",
             response="the quick brown fox walks over",
         )
         result3 = await rouge3.aevaluate(
-            ground_truth="the quick brown fox jumps over",
+            reference_response="the quick brown fox jumps over",
             response="the quick brown fox walks over",
         )
 
@@ -280,7 +280,7 @@ class TestROUGEEdgeCases:
             algorithm="rouge",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat",
+            reference_response="the cat",
             response="",
         )
 
@@ -293,7 +293,7 @@ class TestROUGEEdgeCases:
             algorithm="rouge",
         )
         result = await grader.aevaluate(
-            ground_truth="",
+            reference_response="",
             response="the cat",
         )
 
@@ -306,7 +306,7 @@ class TestROUGEEdgeCases:
             algorithm="rouge1",
         )
         result = await grader.aevaluate(
-            ground_truth="cat",
+            reference_response="cat",
             response="cat",
         )
 
@@ -319,7 +319,7 @@ class TestROUGEEdgeCases:
             algorithm="rouge1",
         )
         result = await grader.aevaluate(
-            ground_truth="cat cat cat",
+            reference_response="cat cat cat",
             response="cat dog cat",
         )
 
@@ -337,7 +337,7 @@ class TestROUGEWithStemming:
             algorithm="rouge",
         )
         result = await grader.aevaluate(
-            ground_truth="the cats are running",
+            reference_response="the cats are running",
             response="the cat is running",
             use_stemmer=True,
         )
@@ -352,7 +352,7 @@ class TestROUGEWithStemming:
             algorithm="rouge",
         )
         result = await grader.aevaluate(
-            ground_truth="the cats are running",
+            reference_response="the cats are running",
             response="the cat is running",
             use_stemmer=False,
         )

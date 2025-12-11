@@ -42,7 +42,7 @@ async def test_hallucination_grader_execution():
         query=query,
         response=response,
         context=context,
-        ground_truth=reference_response,
+        reference_response=reference_response,
     )
     print(result)
 

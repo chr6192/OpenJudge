@@ -20,7 +20,7 @@ class TestF1ScoreBasic:
             algorithm="f1_score",
         )
         result = await grader.aevaluate(
-            ground_truth="hello world",
+            reference_response="hello world",
             response="hello world",
         )
 
@@ -35,7 +35,7 @@ class TestF1ScoreBasic:
             algorithm="f1_score",
         )
         result = await grader.aevaluate(
-            ground_truth="hello world",
+            reference_response="hello world",
             response="goodbye universe",
         )
 
@@ -50,7 +50,7 @@ class TestF1ScoreBasic:
             algorithm="f1_score",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat is on the mat",
+            reference_response="the cat is on the mat",
             response="cat on mat",
         )
 
@@ -68,11 +68,11 @@ class TestF1ScoreBasic:
         )
 
         result1 = await grader.aevaluate(
-            ground_truth="the quick brown fox",
+            reference_response="the quick brown fox",
             response="fox brown quick the",
         )
         result2 = await grader.aevaluate(
-            ground_truth="the quick brown fox",
+            reference_response="the quick brown fox",
             response="the quick brown fox",
         )
 
@@ -90,7 +90,7 @@ class TestF1ScoreNormalization:
             algorithm="f1_score",
         )
         result = await grader.aevaluate(
-            ground_truth="Hello World",
+            reference_response="Hello World",
             response="hello world",
             normalize=True,
         )
@@ -105,7 +105,7 @@ class TestF1ScoreNormalization:
             algorithm="f1_score",
         )
         result = await grader.aevaluate(
-            ground_truth="Hello World",
+            reference_response="Hello World",
             response="hello world",
             normalize=False,
         )
@@ -124,7 +124,7 @@ class TestF1ScoreEdgeCases:
             algorithm="f1_score",
         )
         result = await grader.aevaluate(
-            ground_truth="",
+            reference_response="",
             response="",
         )
 
@@ -138,7 +138,7 @@ class TestF1ScoreEdgeCases:
             algorithm="f1_score",
         )
         result = await grader.aevaluate(
-            ground_truth="",
+            reference_response="",
             response="hello",
         )
 
@@ -151,7 +151,7 @@ class TestF1ScoreEdgeCases:
             algorithm="f1_score",
         )
         result = await grader.aevaluate(
-            ground_truth="hello",
+            reference_response="hello",
             response="",
         )
 
@@ -164,7 +164,7 @@ class TestF1ScoreEdgeCases:
             algorithm="f1_score",
         )
         result = await grader.aevaluate(
-            ground_truth="hello",
+            reference_response="hello",
             response="hello",
         )
 
@@ -177,7 +177,7 @@ class TestF1ScoreEdgeCases:
             algorithm="f1_score",
         )
         result = await grader.aevaluate(
-            ground_truth="hello hello world",
+            reference_response="hello hello world",
             response="hello world world",
         )
 
@@ -195,7 +195,7 @@ class TestF1ScorePrecisionRecall:
             algorithm="f1_score",
         )
         result = await grader.aevaluate(
-            ground_truth="the quick brown fox jumps over the lazy dog",
+            reference_response="the quick brown fox jumps over the lazy dog",
             response="quick brown fox",
         )
 
@@ -210,7 +210,7 @@ class TestF1ScorePrecisionRecall:
             algorithm="f1_score",
         )
         result = await grader.aevaluate(
-            ground_truth="quick brown fox",
+            reference_response="quick brown fox",
             response="the quick brown fox jumps over the lazy dog",
         )
 
@@ -229,7 +229,7 @@ class TestTokenF1Alias:
             algorithm="token_f1",
         )
         result = await grader.aevaluate(
-            ground_truth="hello world",
+            reference_response="hello world",
             response="hello world",
         )
 

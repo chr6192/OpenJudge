@@ -182,20 +182,20 @@
   --rm-primary: #your-brand-color;
   --rm-primary-light: ...;
   --rm-primary-dark: ...;
-  
+
   /* 语义化颜色 */
   --rm-success: #10b981;
   --rm-warning: #f59e0b;
   --rm-danger: #ef4444;
   --rm-info: #3b82f6;
-  
+
   /* 间距系统 */
   --rm-space-xs: 0.25rem;
   --rm-space-sm: 0.5rem;
   --rm-space-md: 1rem;
   --rm-space-lg: 1.5rem;
   --rm-space-xl: 2rem;
-  
+
   /* 动画时间 */
   --rm-transition-fast: 0.15s;
   --rm-transition-normal: 0.25s;

@@ -79,7 +79,7 @@ print(f"Results: {results}")
     def greet(name: str) -> str:
         """Greet a person by name."""
         return f"Hello, {name}!"
-    
+
     # Usage
     message = greet("RM-Gallery")
     print(message)
@@ -92,7 +92,7 @@ print(f"Results: {results}")
       // Greet a person by name
       return `Hello, ${name}!`;
     }
-    
+
     // Usage
     const message = greet("RM-Gallery");
     console.log(message);
@@ -102,12 +102,12 @@ print(f"Results: {results}")
 
     ```bash
     #!/bin/bash
-    
+
     # Greet a person by name
     greet() {
       echo "Hello, $1!"
     }
-    
+
     # Usage
     greet "RM-Gallery"
     ```
@@ -138,12 +138,12 @@ Click to expand these collapsible sections and watch the smooth animation:
 
 ??? note "Click to expand - Animation Demo"
     The content smoothly slides down when you click the header.
-    
+
     Features:
     - Smooth expand/collapse animation
     - Arrow rotation
     - Background color change on hover
-    
+
     ```python
     # Even code blocks inside collapsibles are animated
     print("Smooth animations!")
@@ -151,7 +151,7 @@ Click to expand these collapsible sections and watch the smooth animation:
 
 ???+ tip "Expanded by Default"
     This section starts expanded, but you can collapse it to see the smooth animation in reverse.
-    
+
     The animation system uses CSS transitions and keyframes for optimal performance.
 
 ---

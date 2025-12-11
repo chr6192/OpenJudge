@@ -20,7 +20,7 @@ class TestBLEUBasic:
             algorithm="bleu",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat is on the mat",
+            reference_response="the cat is on the mat",
             response="the cat is on the mat",
         )
 
@@ -34,7 +34,7 @@ class TestBLEUBasic:
             algorithm="bleu",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat is on the mat",
+            reference_response="the cat is on the mat",
             response="hello world foo bar baz qux",
         )
 
@@ -47,7 +47,7 @@ class TestBLEUBasic:
             algorithm="bleu",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat is on the mat",
+            reference_response="the cat is on the mat",
             response="the dog is on the mat",
         )
 
@@ -61,7 +61,7 @@ class TestBLEUBasic:
             algorithm="bleu",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat is on the mat",
+            reference_response="the cat is on the mat",
             response="the mat on is cat the",
         )
 
@@ -82,7 +82,7 @@ class TestBLEUParameters:
                 max_ngram_order=n,
             )
             result = await grader.aevaluate(
-                ground_truth="the quick brown fox jumps over the lazy dog",
+                reference_response="the quick brown fox jumps over the lazy dog",
                 response="the quick brown fox jumps over the lazy dog",
             )
             assert result.score == 1.0
@@ -98,7 +98,7 @@ class TestBLEUParameters:
                 smooth_method=method,
             )
             result = await grader.aevaluate(
-                ground_truth="the cat sat on the mat",
+                reference_response="the cat sat on the mat",
                 response="the cat",
             )
             assert 0.0 <= result.score <= 1.0
@@ -114,7 +114,7 @@ class TestBLEUEdgeCases:
             algorithm="bleu",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat is on the mat",
+            reference_response="the cat is on the mat",
             response="",
         )
 
@@ -128,7 +128,7 @@ class TestBLEUEdgeCases:
             algorithm="bleu",
         )
         result = await grader.aevaluate(
-            ground_truth="",
+            reference_response="",
             response="the cat",
         )
 
@@ -142,7 +142,7 @@ class TestBLEUEdgeCases:
             algorithm="bleu",
         )
         result = await grader.aevaluate(
-            ground_truth="cat",
+            reference_response="cat",
             response="cat",
         )
 
@@ -156,7 +156,7 @@ class TestBLEUEdgeCases:
         )
         long_sentence = " ".join(["word"] * 500)
         result = await grader.aevaluate(
-            ground_truth=long_sentence,
+            reference_response=long_sentence,
             response=long_sentence,
         )
 
@@ -174,7 +174,7 @@ class TestBLEUDetails:
             max_ngram_order=4,
         )
         result = await grader.aevaluate(
-            ground_truth="the cat is on the mat",
+            reference_response="the cat is on the mat",
             response="the cat is on the mat",
         )
 
@@ -193,7 +193,7 @@ class TestBLEUDetails:
 
         # Short candidate
         result = await grader.aevaluate(
-            ground_truth="the cat is on the mat",
+            reference_response="the cat is on the mat",
             response="the cat",
         )
 
@@ -208,7 +208,7 @@ class TestBLEUDetails:
             algorithm="bleu",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat is on the mat",
+            reference_response="the cat is on the mat",
             response="the dog is on the rug",
         )
 
@@ -227,7 +227,7 @@ class TestSentenceBLEU:
             algorithm="sentence_bleu",
         )
         result = await grader.aevaluate(
-            ground_truth="the cat is on the mat",
+            reference_response="the cat is on the mat",
             response="the cat is on the mat",
         )
 
@@ -240,7 +240,7 @@ class TestSentenceBLEU:
             algorithm="sentence_bleu",
         )
         sentence_result = await grader.aevaluate(
-            ground_truth="the cat is on the mat",
+            reference_response="the cat is on the mat",
             response="the dog is on the mat",
         )
 
@@ -248,7 +248,7 @@ class TestSentenceBLEU:
             algorithm="bleu",
         )
         corpus_result = await grader.aevaluate(
-            ground_truth="the cat is on the mat",
+            reference_response="the cat is on the mat",
             response="the dog is on the mat",
         )
 

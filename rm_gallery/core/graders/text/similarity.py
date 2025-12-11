@@ -105,7 +105,7 @@ class SimilarityGrader(BaseGrader):
         >>>
         >>> # Use BLEU algorithm
         >>> result = await grader.aevaluate(
-        ...     ground_truth="the cat is on the mat",
+        ...     reference_response="the cat is on the mat",
         ...     candidate="the cat is on the mat",
         ...     algorithm="bleu",
         ...     max_ngram_order=4
@@ -113,14 +113,14 @@ class SimilarityGrader(BaseGrader):
         >>>
         >>> # Use ROUGE algorithm
         >>> result = await grader.aevaluate(
-        ...     ground_truth="the cat is on the mat",
+        ...     reference_response="the cat is on the mat",
         ...     candidate="the cat is on the mat",
         ...     algorithm="rouge1"
         ... )
         >>>
         >>> # Use F1 Score algorithm with override
         >>> result = await grader.aevaluate(
-        ...     ground_truth="hello world",
+        ...     reference_response="hello world",
         ...     candidate="hello world",
         ...     algorithm="f1_score",
         ...     normalize=False  # override init setting
@@ -165,7 +165,7 @@ class SimilarityGrader(BaseGrader):
 
     async def aevaluate(
         self,
-        ground_truth: str,
+        reference_response: str,
         response: str,
         **kwargs: Any,
     ) -> GraderScore:
@@ -173,7 +173,7 @@ class SimilarityGrader(BaseGrader):
         Evaluate text similarity using specified algorithm
 
         Args:
-            ground_truth: Reference text
+            reference_response: Reference text
             response: Response text to evaluate
             **kwargs: Algorithm-specific parameters that override init defaults
                      (e.g., normalize, case_sensitive, use_stemmer, max_ngram_order, etc.)
@@ -208,7 +208,7 @@ class SimilarityGrader(BaseGrader):
             self._ensure_nltk_data()
 
         # Call the compute function
-        score, details = compute_fn(ground_truth, response, **params)
+        score, details = compute_fn(reference_response, response, **params)
 
         # Handle errors
         if "error" in details:

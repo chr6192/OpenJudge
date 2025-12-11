@@ -60,10 +60,10 @@ class StringMatchGrader(BaseGrader):
 
     Supported Algorithms:
         - exact_match: Exact string match (with case and whitespace options)
-        - prefix_match: Check if response starts with ground_truth
-        - suffix_match: Check if response ends with ground_truth
+        - prefix_match: Check if response starts with reference_response
+        - suffix_match: Check if response ends with reference_response
         - regex_match: Regular expression pattern matching
-        - substring_match: Check if response contains ground_truth
+        - substring_match: Check if response contains reference_response
         - contains_all: Check if response contains all specified substrings
         - contains_any: Check if response contains any of the specified substrings
         - word_overlap: Calculate word overlap ratio
@@ -74,14 +74,14 @@ class StringMatchGrader(BaseGrader):
         >>>
         >>> # Use exact match algorithm
         >>> result = await grader.aevaluate(
-        ...     ground_truth="Hello World",
+        ...     reference_response="Hello World",
         ...     response="hello world",
         ...     algorithm="exact_match"
         ... )
         >>>
         >>> # Use substring match algorithm with override
         >>> result = await grader.aevaluate(
-        ...     ground_truth="cat",
+        ...     reference_response="cat",
         ...     response="The cat sat on the mat",
         ...     algorithm="substring_match",
         ...     case_sensitive=True  # override init setting
@@ -89,14 +89,14 @@ class StringMatchGrader(BaseGrader):
         >>>
         >>> # Use regex match algorithm
         >>> result = await grader.aevaluate(
-        ...     ground_truth=r"\\d{3}-\\d{4}",
+        ...     reference_response=r"\\d{3}-\\d{4}",
         ...     response="My phone is 123-4567",
         ...     algorithm="regex_match"
         ... )
         >>>
         >>> # Use contains all algorithm
         >>> result = await grader.aevaluate(
-        ...     ground_truth="",
+        ...     reference_response="",
         ...     response="The cat sat on the mat",
         ...     algorithm="contains_all",
         ...     substrings=["cat", "mat"]
@@ -138,7 +138,7 @@ class StringMatchGrader(BaseGrader):
 
     async def aevaluate(
         self,
-        ground_truth: str = "",
+        reference_response: str = "",
         response: str = "",
         **kwargs: Any,
     ) -> GraderScore:
@@ -146,7 +146,7 @@ class StringMatchGrader(BaseGrader):
         Evaluate string matching using specified algorithm
 
         Args:
-            ground_truth: Reference text
+            reference_response: Reference text
             response: Generated text to evaluate
             **kwargs: Algorithm-specific parameters that override init defaults
                      (e.g., case_sensitive, ignore_whitespace, pattern, substrings, etc.)
@@ -173,7 +173,7 @@ class StringMatchGrader(BaseGrader):
         params.update(kwargs)
 
         # Call the compute function
-        score, details = compute_fn(ground_truth, response, **params)
+        score, details = compute_fn(reference_response, response, **params)
 
         # Handle errors
         if "error" in details:

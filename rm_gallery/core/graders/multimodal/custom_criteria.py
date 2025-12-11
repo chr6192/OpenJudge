@@ -116,8 +116,8 @@ class CustomCriteriaGrader(BaseGrader):
         model: BaseChatModel instance or dict config for vision-language model
         evaluation_name: Name for this evaluation (e.g., "Image Caption Quality")
         evaluation_params: List of parameter strings to evaluate, e.g., ["query", "response"]
-                          Valid values: "query", "response", "ground_truth", "context",
-                          "retrieval_context", "tool_calls", "ground_truth_tool_calls"
+                          Valid values: "query", "response", "reference_response", "context",
+                          "retrieval_context", "tool_calls", "reference_response_tool_calls"
         criteria: Evaluation criteria description (required if evaluation_steps not provided)
         evaluation_steps: Explicit evaluation steps (optional, auto-generated if not provided)
         rubric: Optional list of Rubric objects defining score ranges
@@ -497,11 +497,11 @@ JSON:
         *,
         query: Optional[List[Union[str, MLLMImage]]] = None,
         response: Optional[List[Union[str, MLLMImage]]] = None,
-        ground_truth: Optional[List[Union[str, MLLMImage]]] = None,
+        reference_response: Optional[List[Union[str, MLLMImage]]] = None,
         context: Optional[List[Union[str, MLLMImage]]] = None,
         retrieval_context: Optional[List[Union[str, MLLMImage]]] = None,
         tool_calls: Optional[List[Union[str, MLLMImage]]] = None,
-        ground_truth_tool_calls: Optional[List[Union[str, MLLMImage]]] = None,
+        reference_tool_calls: Optional[List[Union[str, MLLMImage]]] = None,
     ) -> GraderScore:
         """
         Evaluate using custom criteria framework
@@ -509,11 +509,11 @@ JSON:
         Args:
             query: Input to the system (prompt, question, images, etc.)
             response: Actual output from the system
-            ground_truth: Expected/reference output
+            reference_response: Expected/reference output
             context: General context information
             retrieval_context: Context retrieved from a knowledge base
             tool_calls: Tools used by the system
-            ground_truth_tool_calls: Expected/reference tool_calls that should be used
+            reference_tool_calls: Expected/reference tool_calls that should be used
 
         Returns:
             GraderScore: Score with normalized evaluation value [0, 1]
@@ -528,11 +528,11 @@ JSON:
         params_dict = {
             "query": query,
             "response": response,
-            "ground_truth": ground_truth,
+            "reference_response": reference_response,
             "context": context,
             "retrieval_context": retrieval_context,
             "tool_calls": tool_calls,
-            "ground_truth_tool_calls": ground_truth_tool_calls,
+            "reference_tool_calls": reference_tool_calls,
         }
 
         # Remove None values

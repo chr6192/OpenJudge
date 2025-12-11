@@ -2,7 +2,7 @@
 """
 Tool Call Sequence Grader
 This module provides graders for evaluating tool call sequences against
-ground truth references, supporting both strict and loose matching modes.
+reference references, supporting both strict and loose matching modes.
 """
 import json
 from collections import Counter
@@ -15,11 +15,11 @@ from rm_gallery.core.graders.base_grader import BaseGrader, GraderMode, GraderSc
 
 class ToolCallSequenceMatchGrader(BaseGrader):
     """
-    Tool call sequence ground truth matching grader.
-    This grader evaluates whether the model's tool call sequence matches the ground truth
+    Tool call sequence reference matching grader.
+    This grader evaluates whether the model's tool call sequence matches the reference
     expected sequence by comparing predicted tool calls against reference tool calls.
     **Strict mode**: Matches both tool name and parameters, using F1 score calculation.
-    **Loose mode**: Only matches tool name, checking whether model tool list is a subset of ground truth.
+    **Loose mode**: Only matches tool name, checking whether model tool list is a subset of reference.
     Attributes:
         strict_mode: If True, matches both tool name and arguments; if False, only matches tool name
         use_jaccard_similarity: If True, use Jaccard similarity for loose mode (ignores step order)
@@ -27,7 +27,7 @@ class ToolCallSequenceMatchGrader(BaseGrader):
         >>> grader = ToolCallSequenceMatchGrader(strict_mode=True)
         >>> result = await grader.aevaluate(
         ...     messages=[...],  # Model's messages with tool calls
-        ...     ground_truth_tool_calls=[...]  # Ground truth reference tool calls
+        ...     reference_tool_calls=[...]  # Ground truth reference tool calls
         ... )
         >>> print(f"Sequence match score: {result.score}")
     """
@@ -41,7 +41,7 @@ class ToolCallSequenceMatchGrader(BaseGrader):
         super().__init__(
             name="tool_call_sequence",
             mode=GraderMode.POINTWISE,
-            description="Evaluate tool call sequence matching against ground truth",
+            description="Evaluate tool call sequence matching against reference",
             **kwargs,
         )
         self.strict_mode = strict_mode
@@ -84,14 +84,14 @@ class ToolCallSequenceMatchGrader(BaseGrader):
                 step_idx += 1
         return step_tools
 
-    def extract_ground_truth_tool_sequence(
+    def extract_reference_tool_sequence(
         self,
-        ground_truth_tool_calls: List[Dict[str, Any]],
+        reference_tool_calls: List[Dict[str, Any]],
     ) -> Dict[int, List[Dict[str, Any]]]:
         """
-        Extract ground truth tool call sequence from reference tool calls, organized by steps.
+        Extract reference tool call sequence from reference tool calls, organized by steps.
         Args:
-            ground_truth_tool_calls: Ground truth tool call list in format:
+            reference_tool_calls: Ground truth tool call list in format:
                 [
                     {
                         "step": 0,
@@ -107,7 +107,7 @@ class ToolCallSequenceMatchGrader(BaseGrader):
             Dictionary mapping step numbers to lists of tool calls within that step
         """
         step_tools = {}
-        for step_info in ground_truth_tool_calls:
+        for step_info in reference_tool_calls:
             step = step_info.get("step", 0)
             tools = step_info.get("tool", [])
             if step not in step_tools:
@@ -173,7 +173,7 @@ class ToolCallSequenceMatchGrader(BaseGrader):
         """
         Check if all elements of list1 are present in list2, regardless of order.
         Args:
-            list1: Target list (ground truth)
+            list1: Target list (reference)
             list2: Source list (model output)
         Returns:
             Tuple of (is_subsequence, missing_elements)
@@ -190,29 +190,29 @@ class ToolCallSequenceMatchGrader(BaseGrader):
     def calculate_step_matching_score(
         self,
         predicted_tool_steps: Dict[int, List[Dict[str, Any]]],
-        ground_truth_tool_steps: Dict[int, List[Dict[str, Any]]],
+        reference_tool_steps: Dict[int, List[Dict[str, Any]]],
     ) -> float:
         """
-        Calculate step matching score by comparing each step between predicted and ground truth tool calls.
+        Calculate step matching score by comparing each step between predicted and reference tool calls.
         Uses F1 score for parameter matching in strict mode and improved scoring based on missing tools.
         Args:
             predicted_tool_steps: Model's predicted tool calls organized by steps
-            ground_truth_tool_steps: Ground truth reference tool calls organized by steps
+            reference_tool_steps: Ground truth reference tool calls organized by steps
         Returns:
             Step matching score (0.0 - 1.0) based on proportion of matched steps
         """
-        if not ground_truth_tool_steps:
+        if not reference_tool_steps:
             return 1.0 if not predicted_tool_steps else 0.0
         total_score = 0.0
-        total_steps = len(ground_truth_tool_steps)
-        # Iterate through each step in ground_truth_tool_steps
-        for step_index, ground_truth_tools in ground_truth_tool_steps.items():
+        total_steps = len(reference_tool_steps)
+        # Iterate through each step in reference_tool_steps
+        for step_index, reference_tools in reference_tool_steps.items():
             step_score = 0.0
             # Check if model has the corresponding step
             if step_index in predicted_tool_steps:
                 predicted_tools = predicted_tool_steps[step_index]
                 # Extract tool names
-                gt_tool_names = [tool.get("name", "") for tool in ground_truth_tools]
+                gt_tool_names = [tool.get("name", "") for tool in reference_tools]
                 pred_tool_names = [tool.get("name", "") for tool in predicted_tools]
                 # Use unordered matching to check tools in this step
                 is_match, missing = self.is_subsequence_unordered(
@@ -225,9 +225,9 @@ class ToolCallSequenceMatchGrader(BaseGrader):
                         step_score = 0.0
                     else:
                         # Tool names match, calculate F1 score for parameters
-                        # For each ground truth tool, find matching predicted tool by name and calculate F1
+                        # For each reference tool, find matching predicted tool by name and calculate F1
                         tool_scores = []
-                        for gt_tool in ground_truth_tools:
+                        for gt_tool in reference_tools:
                             gt_name = gt_tool.get("name", "")
                             # Find matching predicted tool by name
                             matching_pred_tool = None
@@ -247,7 +247,7 @@ class ToolCallSequenceMatchGrader(BaseGrader):
                                 # Ground truth tool not found in predictions, score is 0
                                 tool_scores.append(0.0)
 
-                        # Average F1 score across all ground truth tools in this step
+                        # Average F1 score across all reference tools in this step
                         step_score = sum(tool_scores) / len(tool_scores) if tool_scores else 0.0
                 else:
                     # In loose mode, calculate step score based on the ratio of matched tools
@@ -264,14 +264,14 @@ class ToolCallSequenceMatchGrader(BaseGrader):
     def calculate_jaccard_similarity_score(
         self,
         predicted_tool_steps: Dict[int, List[Dict[str, Any]]],
-        ground_truth_tool_steps: Dict[int, List[Dict[str, Any]]],
+        reference_tool_steps: Dict[int, List[Dict[str, Any]]],
     ) -> Tuple[float, Set[str], Set[str]]:
         """
         Calculate Jaccard similarity score for tool calls, ignoring step order.
         Treats all tool calls as a set and computes intersection over union.
         Args:
             predicted_tool_steps: Model's predicted tool calls organized by steps
-            ground_truth_tool_steps: Ground truth reference tool calls organized by steps
+            reference_tool_steps: Ground truth reference tool calls organized by steps
         Returns:
             Tuple of (jaccard_score, intersection_set, union_set)
         """
@@ -283,10 +283,10 @@ class ToolCallSequenceMatchGrader(BaseGrader):
                     predicted_tool_names.add(
                         f"{tool.get('name', '')}: {tool.get('parameters', {})}",
                     )
-            ground_truth_tool_names = set()
-            for tools in ground_truth_tool_steps.values():
+            reference_tool_names = set()
+            for tools in reference_tool_steps.values():
                 for tool in tools:
-                    ground_truth_tool_names.add(
+                    reference_tool_names.add(
                         f"{tool.get('name', '')}: {tool.get('parameters', {})}",
                     )
         else:
@@ -295,33 +295,33 @@ class ToolCallSequenceMatchGrader(BaseGrader):
             for tools in predicted_tool_steps.values():
                 for tool in tools:
                     predicted_tool_names.add(tool.get("name", ""))
-            # Extract all tool names from ground truth steps
-            ground_truth_tool_names = set()
-            for tools in ground_truth_tool_steps.values():
+            # Extract all tool names from reference steps
+            reference_tool_names = set()
+            for tools in reference_tool_steps.values():
                 for tool in tools:
-                    ground_truth_tool_names.add(tool.get("name", ""))
+                    reference_tool_names.add(tool.get("name", ""))
         # Handle edge cases
-        if not ground_truth_tool_names and not predicted_tool_names:
+        if not reference_tool_names and not predicted_tool_names:
             return 1.0, set(), set()  # Both empty sets
-        if not ground_truth_tool_names or not predicted_tool_names:
+        if not reference_tool_names or not predicted_tool_names:
             return 0.0, set(), set()  # One empty set
         # Calculate Jaccard similarity: |A ∩ B| / |A ∪ B|
-        intersection_set = predicted_tool_names & ground_truth_tool_names
-        union_set = predicted_tool_names | ground_truth_tool_names
+        intersection_set = predicted_tool_names & reference_tool_names
+        union_set = predicted_tool_names | reference_tool_names
         score = len(intersection_set) / len(union_set) if union_set else 0.0
         return score, intersection_set, union_set
 
     async def aevaluate(
         self,
         messages: List[Dict[str, Any]],
-        ground_truth_tool_calls: List[Dict[str, Any]],
+        reference_tool_calls: List[Dict[str, Any]],
         **kwargs: Any,
     ) -> GraderScore:
         """
-        Evaluate tool call sequence matching against ground truth.
+        Evaluate tool call sequence matching against reference.
         Args:
             messages: List of message dicts containing model's predicted tool calls
-            ground_truth_tool_calls: Ground truth reference tool call sequence
+            reference_tool_calls: Ground truth reference tool call sequence
             **kwargs: Additional evaluation parameters
         Returns:
             GraderScore: Tool call sequence matching score and details
@@ -329,7 +329,7 @@ class ToolCallSequenceMatchGrader(BaseGrader):
         # Extract sequences
         try:
             predicted_tool_steps = self.extract_predicted_tool_sequence(messages)
-            ground_truth_tool_steps = self.extract_ground_truth_tool_sequence(ground_truth_tool_calls)
+            reference_tool_steps = self.extract_reference_tool_sequence(reference_tool_calls)
         except Exception as e:
             logger.error(f"Sequence extraction failed: {e}")
             return GraderScore(
@@ -338,14 +338,14 @@ class ToolCallSequenceMatchGrader(BaseGrader):
                 reason=f"Sequence extraction failed: {str(e)}",
                 metadata={"error": str(e)},
             )
-        if not predicted_tool_steps and not ground_truth_tool_steps:
+        if not predicted_tool_steps and not reference_tool_steps:
             return GraderScore(
                 name=self.name,
                 score=1.0,
-                reason="Both predicted and ground truth have no tool calls",
+                reason="Both predicted and reference have no tool calls",
                 metadata={
                     "predicted_tool_count": 0,
-                    "ground_truth_tool_count": 0,
+                    "reference_tool_count": 0,
                 },
             )
         # Calculate scores using the appropriate function
@@ -354,13 +354,13 @@ class ToolCallSequenceMatchGrader(BaseGrader):
                 jaccard_score,
                 intersection_set,
                 union_set,
-            ) = self.calculate_jaccard_similarity_score(predicted_tool_steps, ground_truth_tool_steps)
+            ) = self.calculate_jaccard_similarity_score(predicted_tool_steps, reference_tool_steps)
             final_score = jaccard_score
             score_type = "jaccard_similarity"
         else:
             step_matching_score = self.calculate_step_matching_score(
                 predicted_tool_steps,
-                ground_truth_tool_steps,
+                reference_tool_steps,
             )
             final_score = step_matching_score
             score_type = "step_matching"
@@ -370,15 +370,15 @@ class ToolCallSequenceMatchGrader(BaseGrader):
         reason = f"Tool call sequence evaluation ({mode_str} mode, {method_str}): {score_type}={final_score:.3f}"
         # Count tools for metadata
         predicted_tool_count = sum(len(tools) for tools in predicted_tool_steps.values())
-        ground_truth_tool_count = sum(len(tools) for tools in ground_truth_tool_steps.values())
+        reference_tool_count = sum(len(tools) for tools in reference_tool_steps.values())
         # Prepare metadata
         metadata = {
             "strict_mode": self.strict_mode,
             "use_jaccard_similarity": self.use_jaccard_similarity,
             "predicted_tool_count": predicted_tool_count,
-            "ground_truth_tool_count": ground_truth_tool_count,
+            "reference_tool_count": reference_tool_count,
             "predicted_tool_steps": predicted_tool_steps,
-            "ground_truth_tool_steps": ground_truth_tool_steps,
+            "reference_tool_steps": reference_tool_steps,
         }
         # Add the appropriate score to metadata
         if self.use_jaccard_similarity:

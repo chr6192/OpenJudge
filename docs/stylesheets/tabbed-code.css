@@ -1,4 +1,4 @@
-/* 
+/*
  * Tabbed Code Blocks Styling for pymdownx.tabbed alternate_style with shadcn/ui theme
  * Override base.css styles for alternate_style: true
  */
@@ -360,18 +360,18 @@ article .tabbed-set.tabbed-alternate .copy-button.copied {
   article .tabbed-set.tabbed-alternate > .tabbed-labels {
     padding: 0.375rem 2.75rem 0 0.375rem !important;
   }
-  
+
   article .tabbed-set.tabbed-alternate > .tabbed-labels > label {
     padding: 0.375rem 0.625rem !important;
     font-size: 0.8125rem !important;
     margin: 0 0.125rem !important;
   }
-  
+
   article .tabbed-set.tabbed-alternate .tabbed-block pre code {
     padding: 0.875rem 1rem !important;
     font-size: 0.75rem !important;
   }
-  
+
   article .tabbed-set.tabbed-alternate .tabbed-labels .copy-button {
     opacity: 1 !important;
     min-width: 1.75rem !important;
@@ -380,7 +380,7 @@ article .tabbed-set.tabbed-alternate .copy-button.copied {
     top: 0.5rem !important;
     right: 0.5rem !important;
   }
-  
+
   article .tabbed-set.tabbed-alternate .tabbed-labels .copy-button svg {
     width: 0.875rem !important;
     height: 0.875rem !important;

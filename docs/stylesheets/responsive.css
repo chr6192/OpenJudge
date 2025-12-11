@@ -1,7 +1,7 @@
 /*
  * Responsive Enhancements for RM-Gallery Documentation
  * Phase 5: 响应式完善
- * 
+ *
  * Features:
  * - 统一断点系统
  * - 移动端导航优化
@@ -23,19 +23,19 @@
   /* --breakpoint-lg: 1024px;   Tablet landscape / Small desktop */
   /* --breakpoint-xl: 1280px;   Desktop */
   /* --breakpoint-2xl: 1536px;  Large desktop */
-  
+
   /* Container max-widths */
   --container-sm: 640px;
   --container-md: 768px;
   --container-lg: 1024px;
   --container-xl: 1280px;
   --container-2xl: 1536px;
-  
+
   /* Responsive spacing */
   --spacing-mobile: 1rem;
   --spacing-tablet: 1.5rem;
   --spacing-desktop: 2rem;
-  
+
   /* Touch target minimum size */
   --touch-target-min: 44px;
 }
@@ -107,7 +107,7 @@ html {
   main.md-main {
     padding: 0;
   }
-  
+
   /* Reduce margins on mobile */
   article > *,
   .prose > *,
@@ -115,26 +115,26 @@ html {
     margin-left: 0;
     margin-right: 0;
   }
-  
+
   /* Stack grids on mobile */
   .grid,
   .md-grid {
     display: block;
   }
-  
+
   .grid > *,
   .md-grid > * {
     width: 100%;
     margin-bottom: 1rem;
   }
-  
+
   /* Hide TOC on mobile */
   .md-sidebar--secondary,
   .toc,
   .table-of-contents {
     display: none;
   }
-  
+
   /* Full width code blocks */
   pre,
   .highlight,
@@ -145,12 +145,12 @@ html {
     border-left: none;
     border-right: none;
   }
-  
+
   pre code {
     padding-left: var(--spacing-mobile);
     padding-right: var(--spacing-mobile);
   }
-  
+
   /* Full width tables */
   .table-responsive,
   table {
@@ -158,7 +158,7 @@ html {
     margin-right: calc(-1 * var(--spacing-mobile));
     width: calc(100% + 2 * var(--spacing-mobile));
   }
-  
+
   /* Reduce heading sizes on mobile */
   h1 { font-size: 1.75rem; }
   h2 { font-size: 1.375rem; }
@@ -176,7 +176,7 @@ html {
     display: flex;
     flex-wrap: wrap;
   }
-  
+
   /* Sidebar takes full width on tablet portrait */
   .md-sidebar--primary {
     width: 100%;
@@ -185,24 +185,24 @@ html {
     height: auto;
     max-height: none;
   }
-  
+
   /* Content takes full width */
   .md-content {
     width: 100%;
     max-width: none;
   }
-  
+
   /* Hide secondary sidebar on tablet */
   .md-sidebar--secondary {
     display: none;
   }
-  
+
   /* Grid adjustments */
   .grid-cols-3,
   .md-grid-3 {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .grid-cols-4,
   .md-grid-4 {
     grid-template-columns: repeat(2, 1fr);
@@ -218,19 +218,19 @@ html {
   .md-main__inner {
     display: flex;
   }
-  
+
   /* Primary sidebar */
   .md-sidebar--primary {
     width: 240px;
     flex-shrink: 0;
   }
-  
+
   /* Main content */
   .md-content {
     flex: 1;
     min-width: 0;
   }
-  
+
   /* Secondary sidebar (TOC) */
   .md-sidebar--secondary {
     width: 200px;
@@ -243,7 +243,7 @@ html {
   .md-sidebar--primary {
     width: 280px;
   }
-  
+
   .md-sidebar--secondary {
     width: 240px;
   }
@@ -256,7 +256,7 @@ html {
 /* Ensure minimum touch target size */
 @media (hover: none) and (pointer: coarse) {
   /* Touch devices */
-  
+
   a,
   button,
   .btn,
@@ -270,21 +270,21 @@ html {
     min-width: var(--touch-target-min);
     padding: 0.75rem 1rem;
   }
-  
+
   /* Increase tap targets in navigation */
   .md-nav__link,
   nav.sidebar a,
   .nav-sidebar a {
     padding: 0.875rem 1rem;
   }
-  
+
   /* Larger checkboxes */
   input[type="checkbox"],
   input[type="radio"] {
     width: 1.25rem;
     height: 1.25rem;
   }
-  
+
   /* Remove hover effects on touch - use active instead */
   .highlight:hover,
   .codehilite:hover,
@@ -292,27 +292,27 @@ html {
     transform: none;
     box-shadow: var(--rm-shadow-sm);
   }
-  
+
   .highlight:active,
   .codehilite:active,
   pre:active {
     transform: scale(0.99);
   }
-  
+
   /* Show copy button always on touch devices */
   .copy-button,
   .md-clipboard,
   button[data-clipboard-target] {
     opacity: 1 !important;
   }
-  
+
   /* Disable hover lift effects */
   button:hover,
   .button:hover,
   .btn:hover {
     transform: none;
   }
-  
+
   button:active,
   .button:active,
   .btn:active {
@@ -406,13 +406,13 @@ html {
     padding: 1rem;
     padding-top: 2rem;
   }
-  
+
   .md-sidebar--primary.open,
   nav.sidebar.open,
   .nav-sidebar.open {
     transform: translateX(0);
   }
-  
+
   /* Dark mode mobile sidebar */
   .dark .md-sidebar--primary,
   .dark nav.sidebar,
@@ -443,7 +443,7 @@ html {
     display: block;
     pointer-events: none;
   }
-  
+
   .mobile-nav-overlay.visible {
     opacity: 1;
     pointer-events: auto;
@@ -548,19 +548,19 @@ article img,
   .table-cards table {
     display: block;
   }
-  
+
   table.responsive-cards thead,
   .table-cards thead {
     display: none;
   }
-  
+
   table.responsive-cards tbody,
   table.responsive-cards tr,
   .table-cards tbody,
   .table-cards tr {
     display: block;
   }
-  
+
   table.responsive-cards tr,
   .table-cards tr {
     margin-bottom: 1rem;
@@ -569,7 +569,7 @@ article img,
     border-radius: var(--radius-lg, 0.5rem);
     background: var(--card, #fff);
   }
-  
+
   table.responsive-cards td,
   .table-cards td {
     display: flex;
@@ -578,12 +578,12 @@ article img,
     border: none;
     border-bottom: 1px solid var(--border, #e5e7eb);
   }
-  
+
   table.responsive-cards td:last-child,
   .table-cards td:last-child {
     border-bottom: none;
   }
-  
+
   table.responsive-cards td::before,
   .table-cards td::before {
     content: attr(data-label);
@@ -605,19 +605,19 @@ article img,
     font-size: 0.75rem;
     line-height: 1.6;
   }
-  
+
   /* Reduce padding */
   pre code,
   .highlight pre code {
     padding: 0.75rem 1rem;
   }
-  
+
   /* Hide line numbers on very small screens */
   .highlight .linenos,
   .highlight .linenodiv {
     display: none;
   }
-  
+
   /* Simpler copy button */
   .copy-button,
   .md-clipboard {
@@ -638,33 +638,33 @@ article img,
     font-size: 0.9375rem;
     line-height: 1.65;
   }
-  
+
   article h1,
   .prose h1,
   .md-typeset h1 {
     font-size: 1.625rem;
     line-height: 1.2;
   }
-  
+
   article h2,
   .prose h2,
   .md-typeset h2 {
     font-size: 1.25rem;
     margin-top: 2em;
   }
-  
+
   article h3,
   .prose h3,
   .md-typeset h3 {
     font-size: 1.0625rem;
   }
-  
+
   /* Tighter spacing */
   article p,
   .prose p {
     margin-bottom: 1em;
   }
-  
+
   article ul,
   article ol,
   .prose ul,
@@ -691,7 +691,7 @@ article img,
     border-top: 3px solid;
     padding: 0.875rem 1rem;
   }
-  
+
   article .admonition-title,
   .prose .admonition-title,
   article details summary {
@@ -699,20 +699,20 @@ article img,
     padding: 0.625rem 1rem;
     font-size: 0.875rem;
   }
-  
+
   /* Workflow adjustments */
   .workflow ol > li,
   ol.workflow-steps > li {
     padding-left: 2.5rem;
   }
-  
+
   .workflow ol > li::before,
   ol.workflow-steps > li::before {
     width: 1.5rem;
     height: 1.5rem;
     font-size: 0.75rem;
   }
-  
+
   .workflow ol > li::after,
   ol.workflow-steps > li::after {
     left: calc(0.75rem - 0.5px);
@@ -734,11 +734,11 @@ article img,
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
-  
+
   .tabbed-labels::-webkit-scrollbar {
     display: none;
   }
-  
+
   .tabbed-labels > label,
   .tabbed-set label {
     flex-shrink: 0;
@@ -816,7 +816,7 @@ article img,
   .text-center-mobile {
     text-align: center;
   }
-  
+
   .text-left-mobile {
     text-align: left;
   }
@@ -828,7 +828,7 @@ article img,
   .p-mobile-1 { padding: 0.25rem !important; }
   .p-mobile-2 { padding: 0.5rem !important; }
   .p-mobile-4 { padding: 1rem !important; }
-  
+
   .m-mobile-0 { margin: 0 !important; }
   .m-mobile-auto { margin: auto !important; }
 }
@@ -854,7 +854,7 @@ article img,
   .md-footer {
     display: none !important;
   }
-  
+
   /* Full width content */
   .md-content,
   article,
@@ -865,7 +865,7 @@ article img,
     margin: 0 !important;
     padding: 0 !important;
   }
-  
+
   /* Print-friendly colors */
   body,
   article,
@@ -874,29 +874,29 @@ article img,
     color: #000 !important;
     background: #fff !important;
   }
-  
+
   /* Links show URL */
   a[href]::after {
     content: " (" attr(href) ")";
     font-size: 0.8em;
     color: #666;
   }
-  
+
   /* Don't show URL for internal links */
   a[href^="#"]::after,
   a[href^="/"]::after {
     content: "";
   }
-  
+
   /* Avoid page breaks in bad places */
   h1, h2, h3, h4, h5, h6 {
     page-break-after: avoid;
   }
-  
+
   pre, blockquote, table, figure, .admonition {
     page-break-inside: avoid;
   }
-  
+
   /* Code blocks */
   pre, .highlight {
     border: 1px solid #ccc;
@@ -905,12 +905,12 @@ article img,
     white-space: pre-wrap;
     word-wrap: break-word;
   }
-  
+
   /* Tables */
   table {
     border-collapse: collapse;
   }
-  
+
   th, td {
     border: 1px solid #ccc;
     padding: 0.5rem;
@@ -927,12 +927,12 @@ article img,
   header {
     padding: 0.5rem 1rem;
   }
-  
+
   /* Reduce scroll margin for shorter header */
   h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {
     scroll-margin-top: 50px;
   }
-  
+
   /* Compact navigation */
   .md-nav__link,
   nav a {
@@ -964,13 +964,13 @@ article img,
   [data-theme="dark"] .mobile-nav-overlay {
     background: rgba(0, 0, 0, 0.7);
   }
-  
+
   /* Dark mode scroll shadows */
   .dark .table-responsive::before,
   [data-theme="dark"] .table-responsive::before {
     background: linear-gradient(to right, var(--background, #111827) 0%, transparent 100%);
   }
-  
+
   .dark .table-responsive::after,
   [data-theme="dark"] .table-responsive::after {
     background: linear-gradient(to left, var(--background, #111827) 0%, transparent 100%);
@@ -988,17 +988,17 @@ article img,
     padding-left: max(1rem, env(safe-area-inset-left));
     padding-right: max(1rem, env(safe-area-inset-right));
   }
-  
+
   .md-sidebar--primary,
   nav.sidebar {
     padding-left: max(1rem, env(safe-area-inset-left));
   }
-  
+
   .mobile-menu-toggle {
     bottom: max(1.5rem, calc(env(safe-area-inset-bottom) + 0.5rem));
     left: max(1.5rem, calc(env(safe-area-inset-left) + 0.5rem));
   }
-  
+
   .scroll-to-top {
     bottom: max(2rem, calc(env(safe-area-inset-bottom) + 0.5rem));
     right: max(2rem, calc(env(safe-area-inset-right) + 0.5rem));

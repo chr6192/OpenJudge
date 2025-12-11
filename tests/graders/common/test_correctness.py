@@ -13,8 +13,8 @@ from rm_gallery.core.models.schema.prompt_template import LanguageEnum
 
 
 @pytest.mark.asyncio
-async def test_correctness_grader_with_ground_truth():
-    """Test CorrectnessGrader with ground truth"""
+async def test_correctness_grader_with_reference_response():
+    """Test CorrectnessGrader with reference response"""
     # Initialize grader with mock model
     model = OpenAIChatModel(
         model="qwen-max",
@@ -26,7 +26,7 @@ async def test_correctness_grader_with_ground_truth():
     mock_response = AsyncMock()
     mock_response.metadata = {
         "score": 5.0,
-        "reason": "Correctness score: Response perfectly matches the ground truth",
+        "reason": "Correctness score: Response perfectly matches the reference response",
     }
     model.achat = AsyncMock(return_value=mock_response)
 
@@ -40,7 +40,7 @@ async def test_correctness_grader_with_ground_truth():
     result = await grader.aevaluate(
         query="What is the capital of France?",
         response="Paris is the capital of France.",
-        ground_truth="The capital of France is Paris, with a population of 2.2M.",
+        reference_response="The capital of France is Paris, with a population of 2.2M.",
         context="Geography quiz question",
     )
 
@@ -53,8 +53,8 @@ async def test_correctness_grader_with_ground_truth():
 
 
 @pytest.mark.asyncio
-async def test_correctness_grader_without_ground_truth():
-    """Test CorrectnessGrader without ground truth"""
+async def test_correctness_grader_without_reference_response():
+    """Test CorrectnessGrader without reference response"""
     # Initialize grader with mock model
     model = OpenAIChatModel(
         model="qwen-max",
@@ -76,7 +76,7 @@ async def test_correctness_grader_without_ground_truth():
         language=LanguageEnum.EN,
     )
 
-    # Test evaluation without ground_truth
+    # Test evaluation without reference_response
     result = await grader.aevaluate(
         query="What is the capital of France?",
         response="Paris is the capital of France.",

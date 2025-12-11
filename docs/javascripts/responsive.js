@@ -1,7 +1,7 @@
 /**
  * Responsive Enhancements for RM-Gallery Documentation
  * Phase 5: 响应式完善
- * 
+ *
  * Features:
  * - Mobile menu toggle
  * - Table scroll detection
@@ -15,19 +15,19 @@
   // ========================================
   // Mobile Navigation Toggle
   // ========================================
-  
+
   function initMobileNav() {
     const sidebar = document.querySelector('.md-sidebar--primary, nav.sidebar, .nav-sidebar');
     const menuToggle = document.querySelector('.mobile-menu-toggle');
     let overlay = document.querySelector('.mobile-nav-overlay');
-    
+
     // Create overlay if it doesn't exist
     if (!overlay && sidebar) {
       overlay = document.createElement('div');
       overlay.className = 'mobile-nav-overlay';
       document.body.appendChild(overlay);
     }
-    
+
     // Create menu toggle if it doesn't exist
     if (!menuToggle && sidebar) {
       const toggle = document.createElement('button');
@@ -45,21 +45,21 @@
         </svg>
       `;
       document.body.appendChild(toggle);
-      
+
       toggle.addEventListener('click', toggleMobileNav);
     }
-    
+
     if (overlay) {
       overlay.addEventListener('click', closeMobileNav);
     }
-    
+
     // Close on escape key
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         closeMobileNav();
       }
     });
-    
+
     // Close on resize to desktop
     window.addEventListener('resize', debounce(function() {
       if (window.innerWidth >= 768) {
@@ -67,12 +67,12 @@
       }
     }, 100));
   }
-  
+
   function toggleMobileNav() {
     const sidebar = document.querySelector('.md-sidebar--primary, nav.sidebar, .nav-sidebar');
     const menuToggle = document.querySelector('.mobile-menu-toggle');
     const overlay = document.querySelector('.mobile-nav-overlay');
-    
+
     if (sidebar) {
       sidebar.classList.toggle('open');
     }
@@ -82,16 +82,16 @@
     if (overlay) {
       overlay.classList.toggle('visible');
     }
-    
+
     // Prevent body scroll when menu is open
     document.body.classList.toggle('nav-open');
   }
-  
+
   function closeMobileNav() {
     const sidebar = document.querySelector('.md-sidebar--primary, nav.sidebar, .nav-sidebar');
     const menuToggle = document.querySelector('.mobile-menu-toggle');
     const overlay = document.querySelector('.mobile-nav-overlay');
-    
+
     if (sidebar) {
       sidebar.classList.remove('open');
     }
@@ -107,13 +107,13 @@
   // ========================================
   // Table Scroll Detection
   // ========================================
-  
+
   function initTableScroll() {
     const tables = document.querySelectorAll('.table-responsive, table');
-    
+
     tables.forEach(function(table) {
       let wrapper = table;
-      
+
       // Wrap table if not already in a responsive container
       if (!table.classList.contains('table-responsive') && table.tagName === 'TABLE') {
         wrapper = document.createElement('div');
@@ -121,32 +121,32 @@
         table.parentNode.insertBefore(wrapper, table);
         wrapper.appendChild(table);
       }
-      
+
       // Check scroll state
       updateTableScrollState(wrapper);
-      
+
       // Listen for scroll
       wrapper.addEventListener('scroll', function() {
         updateTableScrollState(wrapper);
       });
     });
-    
+
     // Update on resize
     window.addEventListener('resize', debounce(function() {
       document.querySelectorAll('.table-responsive').forEach(updateTableScrollState);
     }, 100));
   }
-  
+
   function updateTableScrollState(wrapper) {
     if (!wrapper) return;
-    
+
     const scrollLeft = wrapper.scrollLeft;
     const scrollWidth = wrapper.scrollWidth;
     const clientWidth = wrapper.clientWidth;
-    
+
     // Check if table is scrollable
     const canScroll = scrollWidth > clientWidth;
-    
+
     // Update classes
     wrapper.classList.toggle('can-scroll', canScroll);
     wrapper.classList.toggle('can-scroll-left', scrollLeft > 0);
@@ -156,14 +156,14 @@
   // ========================================
   // Touch Event Optimization
   // ========================================
-  
+
   function initTouchOptimization() {
     // Detect touch device
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    
+
     if (isTouchDevice) {
       document.body.classList.add('touch-device');
-      
+
       // Fast tap for navigation links
       const navLinks = document.querySelectorAll('.md-nav__link, nav a');
       navLinks.forEach(function(link) {
@@ -183,16 +183,16 @@
   // ========================================
   // Viewport Height Fix (Mobile Safari)
   // ========================================
-  
+
   function initViewportFix() {
     // Fix for mobile viewport height (100vh issue)
     function setViewportHeight() {
       const vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
     }
-    
+
     setViewportHeight();
-    
+
     window.addEventListener('resize', debounce(setViewportHeight, 100));
     window.addEventListener('orientationchange', function() {
       setTimeout(setViewportHeight, 100);
@@ -202,25 +202,25 @@
   // ========================================
   // Scroll Progress Indicator
   // ========================================
-  
+
   function initScrollProgress() {
     let progressBar = document.querySelector('.scroll-progress');
-    
+
     // Create progress bar if it doesn't exist
     if (!progressBar) {
       progressBar = document.createElement('div');
       progressBar.className = 'scroll-progress';
       document.body.prepend(progressBar);
     }
-    
+
     function updateProgress() {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
-      
+
       progressBar.style.width = `${progress}%`;
     }
-    
+
     window.addEventListener('scroll', throttle(updateProgress, 10));
     updateProgress();
   }
@@ -228,10 +228,10 @@
   // ========================================
   // Scroll to Top Button
   // ========================================
-  
+
   function initScrollToTop() {
     let scrollBtn = document.querySelector('.scroll-to-top');
-    
+
     // Create button if it doesn't exist
     if (!scrollBtn) {
       scrollBtn = document.createElement('button');
@@ -244,19 +244,19 @@
       `;
       document.body.appendChild(scrollBtn);
     }
-    
+
     function toggleButton() {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       scrollBtn.classList.toggle('visible', scrollTop > 300);
     }
-    
+
     scrollBtn.addEventListener('click', function() {
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
       });
     });
-    
+
     window.addEventListener('scroll', throttle(toggleButton, 100));
     toggleButton();
   }
@@ -264,11 +264,11 @@
   // ========================================
   // Responsive Image Loading
   // ========================================
-  
+
   function initResponsiveImages() {
     // Lazy load images
     const images = document.querySelectorAll('img[loading="lazy"]');
-    
+
     if ('IntersectionObserver' in window) {
       const imageObserver = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
@@ -281,7 +281,7 @@
       }, {
         rootMargin: '50px 0px'
       });
-      
+
       images.forEach(function(img) {
         imageObserver.observe(img);
       });
@@ -296,7 +296,7 @@
   // ========================================
   // Utility Functions
   // ========================================
-  
+
   function debounce(func, wait) {
     let timeout;
     return function executedFunction() {
@@ -308,7 +308,7 @@
       }, wait);
     };
   }
-  
+
   function throttle(func, limit) {
     let inThrottle;
     return function() {
@@ -327,7 +327,7 @@
   // ========================================
   // Initialize All
   // ========================================
-  
+
   function init() {
     initMobileNav();
     initTableScroll();
@@ -337,20 +337,20 @@
     initScrollToTop();
     initResponsiveImages();
   }
-  
+
   // Run on DOM ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
   }
-  
+
   // Expose functions for external use
   window.RMGalleryResponsive = {
     toggleMobileNav: toggleMobileNav,
     closeMobileNav: closeMobileNav,
     updateTableScrollState: updateTableScrollState
   };
-  
+
 })();
 

@@ -146,9 +146,9 @@ Use collapsible sections to hide detailed content that not all readers need.
 
 ??? note "Click to expand"
     This content is hidden by default. Click the header to reveal it.
-    
+
     You can include any content here, including code blocks:
-    
+
     ```python
     print("Hidden code!")
     ```
@@ -461,24 +461,24 @@ Admonitions can contain complex nested content:
 
 !!! note "Using Code in Admonitions"
     You can include inline code like `grader.evaluate()` and code blocks:
-    
+
     ```python
     from rm_gallery import LLMGrader
-    
+
     grader = LLMGrader(model="gpt-4")
     result = grader.evaluate(response, reference)
     ```
-    
+
     Links also work: see the [Graders Overview](../graders/overview.md).
 
 !!! tip "Lists in Admonitions"
     Admonitions support all list types:
-    
+
     **Unordered:**
     - First item
     - Second item with `code`
     - Third item with [link](https://example.com)
-    
+
     **Ordered:**
     1. Step one
     2. Step two
@@ -486,7 +486,7 @@ Admonitions can contain complex nested content:
 
 !!! warning "Nested Admonitions"
     You can even nest admonitions for complex scenarios:
-    
+
     !!! danger "Critical Warning"
         This is a nested danger alert inside a warning.
 
@@ -497,17 +497,17 @@ Admonitions can contain complex nested content:
 
 !!! example "Complete Example"
     Here's a full working example:
-    
+
     ```python
     from rm_gallery import TextSimilarityGrader
-    
+
     grader = TextSimilarityGrader(threshold=0.8)
-    
+
     result = grader.evaluate(
         response="The capital of France is Paris.",
         reference="Paris is the capital of France."
     )
-    
+
     print(f"Score: {result.score}")  # Score: 0.95
     print(f"Pass: {result.passed}")  # Pass: True
     ```

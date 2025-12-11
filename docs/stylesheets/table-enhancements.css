@@ -1,7 +1,7 @@
 /*
  * Table Enhancements for RM-Gallery Documentation
  * Phase 1: 表格样式增强
- * 
+ *
  * Features:
  * - 表头样式优化
  * - 单元格垂直居中
@@ -302,7 +302,7 @@ article table.wide,
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-  
+
   article table th,
   article table td,
   .prose table th,
@@ -312,7 +312,7 @@ article table.wide,
     padding: 0.625rem 0.75rem;
     white-space: nowrap;
   }
-  
+
   article table th,
   .prose table th,
   .md-typeset table:not([class]) th {

@@ -1,7 +1,7 @@
 /**
  * Animations & Visual Enhancements JavaScript
  * Phase 3: 视觉增强
- * 
+ *
  * Features:
  * - Scroll-triggered animations
  * - Image lazy loading complete handler
@@ -15,7 +15,7 @@
   // ========================================
   // Configuration
   // ========================================
-  
+
   const config = {
     scrollThreshold: 0.1, // 10% of element visible triggers animation
     observerOptions: {
@@ -41,7 +41,7 @@
 
     // Select elements to animate on scroll
     const animateElements = document.querySelectorAll('.fade-in-on-scroll, .slide-in-left, .slide-in-right');
-    
+
     if (animateElements.length === 0) return;
 
     const observer = new IntersectionObserver((entries) => {
@@ -66,7 +66,7 @@
    */
   function initImageAnimations() {
     const lazyImages = document.querySelectorAll('img[loading="lazy"]');
-    
+
     lazyImages.forEach(img => {
       // If image is already loaded
       if (img.complete) {
@@ -76,7 +76,7 @@
         img.addEventListener('load', function() {
           this.classList.add('loaded');
         });
-        
+
         // Handle load errors
         img.addEventListener('error', function() {
           console.warn('Failed to load image:', this.src);
@@ -95,22 +95,22 @@
    */
   function addCodeLanguageBadges() {
     const codeBlocks = document.querySelectorAll('pre code[class*="language-"]');
-    
+
     codeBlocks.forEach(code => {
       const parentPre = code.closest('pre');
       if (!parentPre || parentPre.querySelector('.language-name')) return;
-      
+
       // Extract language from class
       const languageClass = Array.from(code.classList).find(cls => cls.startsWith('language-'));
       if (!languageClass) return;
-      
+
       const language = languageClass.replace('language-', '');
-      
+
       // Create badge
       const badge = document.createElement('span');
       badge.className = 'language-name';
       badge.textContent = language;
-      
+
       // Add to parent pre
       parentPre.style.position = 'relative';
       parentPre.appendChild(badge);
@@ -125,16 +125,16 @@
     document.addEventListener('click', function(e) {
       const copyButton = e.target.closest('.copy-button, .md-clipboard, [data-clipboard-target]');
       if (!copyButton) return;
-      
+
       // Add copied class for animation
       copyButton.classList.add('copied');
-      
+
       // Optional: Change button text temporarily
       const originalText = copyButton.textContent;
       if (originalText && !copyButton.querySelector('svg')) {
         copyButton.textContent = '✓ Copied!';
       }
-      
+
       // Remove after animation
       setTimeout(() => {
         copyButton.classList.remove('copied');
@@ -156,20 +156,20 @@
     document.addEventListener('click', function(e) {
       const link = e.target.closest('a[href^="#"]');
       if (!link) return;
-      
+
       const targetId = link.getAttribute('href').slice(1);
       if (!targetId) return;
-      
+
       const targetElement = document.getElementById(targetId);
       if (!targetElement) return;
-      
+
       e.preventDefault();
-      
+
       targetElement.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       });
-      
+
       // Update URL without jumping
       if (history.pushState) {
         history.pushState(null, null, `#${targetId}`);
@@ -186,7 +186,7 @@
    */
   function handleReducedMotion() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    
+
     function applyReducedMotion(e) {
       if (e.matches) {
         document.documentElement.style.setProperty('--rm-transition-fast', '0.01ms');
@@ -198,10 +198,10 @@
         document.documentElement.style.setProperty('--rm-transition-slow', '0.4s');
       }
     }
-    
+
     // Initial check
     applyReducedMotion(prefersReducedMotion);
-    
+
     // Listen for changes
     prefersReducedMotion.addEventListener('change', applyReducedMotion);
   }
@@ -215,17 +215,17 @@
    */
   function enhanceTabSwitching() {
     const tabInputs = document.querySelectorAll('.tabbed-set input[type="radio"]');
-    
+
     tabInputs.forEach(input => {
       input.addEventListener('change', function() {
         const tabbedSet = this.closest('.tabbed-set');
         if (!tabbedSet) return;
-        
+
         const activeBlock = tabbedSet.querySelector('.tabbed-block--active');
         if (activeBlock) {
           // Add fade-out animation to old content
           activeBlock.style.animation = 'fadeOut 0.15s ease-out';
-          
+
           setTimeout(() => {
             activeBlock.style.animation = '';
           }, 150);
@@ -243,7 +243,7 @@
    */
   function enhanceDetails() {
     const detailsElements = document.querySelectorAll('details');
-    
+
     detailsElements.forEach(details => {
       details.addEventListener('toggle', function() {
         if (this.open) {
@@ -268,14 +268,14 @@
     // Highlight current page in navigation
     const currentPath = window.location.pathname;
     const navLinks = document.querySelectorAll('.md-nav__link, nav a');
-    
+
     navLinks.forEach(link => {
       const linkPath = new URL(link.href, window.location.origin).pathname;
-      
+
       if (linkPath === currentPath) {
         link.classList.add('active');
         link.setAttribute('aria-current', 'page');
-        
+
         // Ensure parent items are expanded
         let parent = link.closest('.md-nav__item--nested, li.has-children');
         while (parent) {
@@ -315,7 +315,7 @@
   function initScrollProgress() {
     // Check if progress bar element exists
     let progressBar = document.querySelector('.scroll-progress');
-    
+
     if (!progressBar) {
       // Create progress bar
       progressBar = document.createElement('div');
@@ -332,16 +332,16 @@
       `;
       document.body.appendChild(progressBar);
     }
-    
+
     const updateProgress = debounce(() => {
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight - windowHeight;
       const scrolled = window.scrollY;
       const progress = (scrolled / documentHeight) * 100;
-      
+
       progressBar.style.width = `${Math.min(progress, 100)}%`;
     }, 10);
-    
+
     window.addEventListener('scroll', updateProgress);
     updateProgress(); // Initial call
   }
@@ -355,23 +355,23 @@
    */
   function init() {
     console.log('🎨 Initializing RM-Gallery animations...');
-    
+
     // Core animations
     handleReducedMotion();
     initScrollAnimations();
     initImageAnimations();
     initSmoothScroll();
-    
+
     // UI enhancements
     addCodeLanguageBadges();
     initCopyButtonAnimations();
     enhanceTabSwitching();
     enhanceDetails();
     enhanceNavigation();
-    
+
     // Optional: Enable scroll progress
     // initScrollProgress();
-    
+
     console.log('✨ Animations initialized successfully');
   }
 

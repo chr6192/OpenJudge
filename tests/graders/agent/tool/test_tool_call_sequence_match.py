@@ -34,7 +34,7 @@ async def test_tool_call_sequence_match_grader_empty_messages():
     """Test with empty messages"""
     grader = ToolCallSequenceMatchGrader(strict_mode=True)
 
-    result = await grader.aevaluate(messages=[], ground_truth_tool_calls=[])
+    result = await grader.aevaluate(messages=[], reference_tool_calls=[])
 
     assert result is not None
     assert hasattr(result, "score")
@@ -60,13 +60,13 @@ async def test_tool_call_sequence_match_grader_exact_match():
         },
     ]
 
-    ground_truth_tool_calls = [
+    reference_tool_calls = [
         {"step": 0, "tool": [{"name": "search", "parameters": {"query": "test"}}]},
     ]
 
     result = await grader.aevaluate(
         messages=messages,
-        ground_truth_tool_calls=ground_truth_tool_calls,
+        reference_tool_calls=reference_tool_calls,
     )
 
     assert result is not None
@@ -93,13 +93,13 @@ async def test_tool_call_sequence_match_grader_mismatch():
         },
     ]
 
-    ground_truth_tool_calls = [
+    reference_tool_calls = [
         {"step": 0, "tool": [{"name": "calculate", "parameters": {"value": 42}}]},
     ]
 
     result = await grader.aevaluate(
         messages=messages,
-        ground_truth_tool_calls=ground_truth_tool_calls,
+        reference_tool_calls=reference_tool_calls,
     )
 
     assert result is not None
@@ -127,13 +127,13 @@ async def test_tool_call_sequence_match_grader_loose_mode_matching():
         },
     ]
 
-    ground_truth_tool_calls = [
+    reference_tool_calls = [
         {"step": 0, "tool": [{"name": "search", "parameters": {"query": "test"}}]},
     ]
 
     result = await grader.aevaluate(
         messages=messages,
-        ground_truth_tool_calls=ground_truth_tool_calls,
+        reference_tool_calls=reference_tool_calls,
     )
 
     assert result is not None

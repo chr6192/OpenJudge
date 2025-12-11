@@ -375,7 +375,7 @@ sys.setrecursionlimit(6*10**5)
                     200,
                 )
 
-                # ground truth sequences are not tuples
+                # reference sequences are not tuples
                 if isinstance(output, tuple):
                     output = list(output)
 
@@ -383,7 +383,7 @@ sys.setrecursionlimit(6*10**5)
                 if isinstance(in_outs["outputs"][index], list) and in_outs["outputs"][index]:
                     tmp_result = tmp_result or (output == in_outs["outputs"][index][0])
 
-                # ground truth sequences are not tuples
+                # reference sequences are not tuples
                 try:
                     if isinstance(output[0], tuple):
                         tmp_result = tmp_result or ([list(x) for x in output] == in_outs["outputs"][index][0])
@@ -480,7 +480,7 @@ sys.setrecursionlimit(6*10**5)
                 results.append(tmp_result)
                 continue
 
-            # ground truth sequences are expressed as lists not tuples
+            # reference sequences are expressed as lists not tuples
             if isinstance(output, tuple):
                 output = list(output)
 
@@ -683,26 +683,26 @@ sys.setrecursionlimit(6*10**5)
     return results, {}
 
 
-def custom_compare_(output, ground_truth):
+def custom_compare_(response, reference_response):
     """
-    Custom comparison function for checking output against ground truth.
+    Custom comparison function for checking output against reference response.
 
     Args:
-        output: Actual output from the tested code
-        ground_truth: Expected output
+        response: Actual output from the tested code
+        reference_response: Expected output
 
     Returns:
-        bool: True if output matches ground truth, False otherwise
+        bool: True if output matches reference response, False otherwise
     """
-    if isinstance(output, list):
-        output_1 = "\n".join(output)
-        if stripped_string_compare(output_1, ground_truth):
+    if isinstance(response, list):
+        output_1 = "\n".join(response)
+        if stripped_string_compare(output_1, reference_response):
             return True
 
-    if isinstance(output, list):
-        output_2 = [o.lstrip().rstrip() for o in output]
+    if isinstance(response, list):
+        output_2 = [o.lstrip().rstrip() for o in response]
         output_2 = "\n".join(output_2)
-        if stripped_string_compare(output_2, ground_truth):
+        if stripped_string_compare(output_2, reference_response):
             return True
 
     return False

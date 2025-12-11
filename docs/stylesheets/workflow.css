@@ -273,14 +273,14 @@ ol.workflow-steps.compact > li::after {
   ol.workflow-steps > li {
     padding-left: 3rem;
   }
-  
+
   .workflow ol > li::before,
   ol.workflow-steps > li::before {
     width: 1.75rem;
     height: 1.75rem;
     font-size: 0.8125rem;
   }
-  
+
   .workflow ol > li::after,
   ol.workflow-steps > li::after {
     left: calc(0.875rem - 0.5px);

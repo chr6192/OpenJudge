@@ -1,7 +1,7 @@
 /*
  * Code Enhancements for RM-Gallery Documentation
  * Phase 1: 代码块样式增强
- * 
+ *
  * Features:
  * - 行内代码样式优化
  * - 代码块圆角和边框
@@ -422,14 +422,14 @@ article pre code::-webkit-scrollbar-thumb:hover,
     font-size: 0.8125em;
     padding: 0.15em 0.35em;
   }
-  
+
   article pre code,
   .prose pre code,
   .md-typeset pre code {
     padding: 0.875rem 1rem;
     font-size: 0.75rem;
   }
-  
+
   article .highlight .copy-button,
   article pre .copy-button,
   button.copy-code-button,
