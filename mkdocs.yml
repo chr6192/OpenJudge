@@ -98,7 +98,7 @@ markdown_extensions:
   - extra
   - attr_list
   - md_in_html
-  - pymdownx.blocks.details
+  - pymdownx.details
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.progressbar
