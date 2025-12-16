@@ -67,7 +67,7 @@ class TestToolCallSuccessGraderUnit:
         # Setup mock response with the expected metadata structure
         mock_response = AsyncMock()
         mock_response.metadata = {
-            "score": 0.9,  # Will be normalized to 1.0 (> 0.5)
+            "score": 1.0,
             "reason": "Tool calls executed successfully and returned expected results",
         }
 
@@ -100,7 +100,7 @@ class TestToolCallSuccessGraderUnit:
             )
 
             # Assertions
-            assert result.score == 1.0  # Normalized from 0.9
+            assert result.score == 1.0
             assert "success" in result.reason.lower()
 
             # Verify model was called correctly
@@ -112,7 +112,7 @@ class TestToolCallSuccessGraderUnit:
         # Setup mock response with the expected metadata structure
         mock_response = AsyncMock()
         mock_response.metadata = {
-            "score": 0.1,  # Will be normalized to 0.0 (< 0.5)
+            "score": 0.0,
             "reason": "Tool calls failed with error responses",
         }
 
@@ -145,7 +145,7 @@ class TestToolCallSuccessGraderUnit:
             )
 
             # Assertions
-            assert result.score == 0.0  # Normalized from 0.1
+            assert result.score == 0.0
             assert "fail" in result.reason.lower() or "error" in result.reason.lower()
 
             # Verify model was called correctly
