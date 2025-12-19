@@ -48,10 +48,8 @@ nav:
       - Generate Evaluation Reports: running-graders/evaluation-reports.md
 
   - Validating Graders:
-      - Validation Workflow: validating-graders/workflow.md
-      - Run Benchmark Tests: validating-graders/benchmarks.md
-      - Validation Metrics: validating-graders/metrics.md
-      - Generate Validation Reports: validating-graders/validation-reports.md
+      - Overview: validating-graders/overview.md
+      - Validate on RewardBench2: validating-graders/rewardbench2.md
 
   - Applications:
       - Refine Data Quality: applications/data-refinement.md
