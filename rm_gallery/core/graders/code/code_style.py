@@ -167,6 +167,5 @@ class CodeStyleGrader(BaseGrader):
 
     @staticmethod
     def get_metadata() -> Dict[str, Any]:
-        """Return the docstring of the aevaluate method.
-        """
-        return {'aevaluate': CodeStyleGrader.aevaluate.__doc__}
+        """Return the docstring of the aevaluate method."""
+        return {"aevaluate": CodeStyleGrader.aevaluate.__doc__}

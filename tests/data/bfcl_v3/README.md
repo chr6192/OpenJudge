@@ -56,5 +56,5 @@ python process_bfcl_tool_call_data.py --input_path <tool_call_bfcl_v3_multiple.j
 ### 3. `run_grader_eval_bfcl_dataset.py`
 用于评估指定评分器（例如 `ToolCallAccuracyGrader`）在 BFCL 数据集的一组测试用例(`tool_call_bfcl_v3_multiple_eval_data.jsonl`)上的性能。
 ```
-python run_grader_eval_bfcl_dataset.py --grader_name ToolCallAccuracyGrader --sample_size 10 --skip 1 
+python run_grader_eval_bfcl_dataset.py --grader_name ToolCallAccuracyGrader --sample_size 10 --skip 1
 ```

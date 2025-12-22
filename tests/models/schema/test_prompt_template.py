@@ -2,11 +2,8 @@
 """Unit tests for PromptTemplate."""
 import pytest
 
-from rm_gallery.core.models.schema.prompt_template import (
-    LanguageEnum,
-    PromptTemplate,
-)
 from rm_gallery.core.models.schema.oai.message import ChatMessage
+from rm_gallery.core.models.schema.prompt_template import LanguageEnum, PromptTemplate
 
 
 @pytest.mark.unit
@@ -60,26 +57,26 @@ class TestPromptTemplate:
         assert len(pt.messages) == 2
 
         assert len(pt.messages[LanguageEnum.EN.value]) == 2
-        assert pt.messages[LanguageEnum.EN.value][0].role == 'system'
-        assert pt.messages[LanguageEnum.EN.value][0].content == 'system prompt text'
-        assert pt.messages[LanguageEnum.EN.value][1].role == 'user'
-        assert pt.messages[LanguageEnum.EN.value][1].content == 'user prompt text'
+        assert pt.messages[LanguageEnum.EN.value][0].role == "system"
+        assert pt.messages[LanguageEnum.EN.value][0].content == "system prompt text"
+        assert pt.messages[LanguageEnum.EN.value][1].role == "user"
+        assert pt.messages[LanguageEnum.EN.value][1].content == "user prompt text"
 
         assert len(pt.messages[LanguageEnum.ZH.value]) == 2
-        assert pt.messages[LanguageEnum.ZH.value][0].role == 'system'
-        assert pt.messages[LanguageEnum.ZH.value][0].content == '系统提示'
-        assert pt.messages[LanguageEnum.ZH.value][1].role == 'user'
-        assert pt.messages[LanguageEnum.ZH.value][1].content == '用户提示'
+        assert pt.messages[LanguageEnum.ZH.value][0].role == "system"
+        assert pt.messages[LanguageEnum.ZH.value][0].content == "系统提示"
+        assert pt.messages[LanguageEnum.ZH.value][1].role == "user"
+        assert pt.messages[LanguageEnum.ZH.value][1].content == "用户提示"
 
     def test_init_with_single_list_messages(self):
         """Test initialization of PromptTemplate."""
         pt = self._get_single_list_prompt_template()
 
         assert len(pt.messages) == 2
-        assert pt.messages[0].role == 'system'
-        assert pt.messages[0].content == 'system prompt text'
-        assert pt.messages[1].role == 'user'
-        assert pt.messages[1].content == 'user prompt text'
+        assert pt.messages[0].role == "system"
+        assert pt.messages[0].content == "system prompt text"
+        assert pt.messages[1].role == "user"
+        assert pt.messages[1].content == "user prompt text"
 
     def test_get_prompts_of_multi_languages(self):
         """Test initialization of PromptTemplate."""
@@ -91,23 +88,22 @@ class TestPromptTemplate:
         assert len(prompts[LanguageEnum.EN.value]) == 2
 
         d = prompts[LanguageEnum.EN.value][0]
-        assert d['role'] == 'system'
-        assert d['content'] == 'system prompt text'
+        assert d["role"] == "system"
+        assert d["content"] == "system prompt text"
 
         d = prompts[LanguageEnum.EN.value][1]
-        assert d['role'] == 'user'
-        assert d['content'] == 'user prompt text'
-
+        assert d["role"] == "user"
+        assert d["content"] == "user prompt text"
 
         assert len(prompts[LanguageEnum.ZH.value]) == 2
 
         d = prompts[LanguageEnum.ZH.value][0]
-        assert d['role'] == 'system'
-        assert d['content'] == '系统提示'
+        assert d["role"] == "system"
+        assert d["content"] == "系统提示"
 
         d = prompts[LanguageEnum.ZH.value][1]
-        assert d['role'] == 'user'
-        assert d['content'] == '用户提示'
+        assert d["role"] == "user"
+        assert d["content"] == "用户提示"
 
     def test_get_prompts_of_one_of_multi_languages(self):
         """Test initialization of PromptTemplate."""
@@ -119,12 +115,12 @@ class TestPromptTemplate:
         assert len(prompts[LanguageEnum.ZH.value]) == 2
 
         d = prompts[LanguageEnum.ZH.value][0]
-        assert d['role'] == 'system'
-        assert d['content'] == '系统提示'
+        assert d["role"] == "system"
+        assert d["content"] == "系统提示"
 
         d = prompts[LanguageEnum.ZH.value][1]
-        assert d['role'] == 'user'
-        assert d['content'] == '用户提示'
+        assert d["role"] == "user"
+        assert d["content"] == "用户提示"
 
     def test_get_prompts_of_single_list(self):
         """Test initialization of PromptTemplate."""
@@ -136,9 +132,9 @@ class TestPromptTemplate:
         assert len(prompts[LanguageEnum.ANY.value]) == 2
 
         d = prompts[LanguageEnum.ANY.value][0]
-        assert d['role'] == 'system'
-        assert d['content'] == 'system prompt text'
+        assert d["role"] == "system"
+        assert d["content"] == "system prompt text"
 
         d = prompts[LanguageEnum.ANY.value][1]
-        assert d['role'] == 'user'
-        assert d['content'] == 'user prompt text'
+        assert d["role"] == "user"
+        assert d["content"] == "user prompt text"

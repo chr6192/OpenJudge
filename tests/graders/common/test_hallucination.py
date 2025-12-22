@@ -40,8 +40,8 @@ from rm_gallery.core.analyzer.validation import (
 )
 from rm_gallery.core.graders.common.hallucination import HallucinationGrader
 from rm_gallery.core.models.openai_chat_model import OpenAIChatModel
-from rm_gallery.core.runner.grading_runner import GraderConfig, GradingRunner
 from rm_gallery.core.models.schema.prompt_template import LanguageEnum
+from rm_gallery.core.runner.grading_runner import GraderConfig, GradingRunner
 
 # ==================== UNIT TESTS ====================
 # These tests verify the basic functionality of the grader in isolation
@@ -59,24 +59,26 @@ class TestHallucinationGraderUnit:
         assert grader.name == "hallucination"
         assert grader.model == mock_model
 
-
     def test_get_metadata(self):
         """Test get_metadata."""
         meta = HallucinationGrader.get_metadata()
         assert len(meta) == 2
 
-        assert 'aevaluate' in meta
-        assert 'Evaluate hallucination in response' in meta['aevaluate']
+        assert "aevaluate" in meta
+        assert "Evaluate hallucination in response" in meta["aevaluate"]
 
-        assert 'prompt' in meta
-        prompt = meta['prompt']
+        assert "prompt" in meta
+        prompt = meta["prompt"]
         assert len(prompt) == 2
         assert len(prompt[LanguageEnum.EN.value]) == 1
-        assert prompt[LanguageEnum.EN.value][0]['role'] == 'user'
-        assert 'evaluating whether the model response contains hallucinations' in prompt[LanguageEnum.EN.value][0]['content']
+        assert prompt[LanguageEnum.EN.value][0]["role"] == "user"
+        assert (
+            "evaluating whether the model response contains hallucinations"
+            in prompt[LanguageEnum.EN.value][0]["content"]
+        )
         assert len(prompt[LanguageEnum.ZH.value]) == 1
-        assert prompt[LanguageEnum.ZH.value][0]['role'] == 'user'
-        assert '负责评估模型输出是否包含幻觉' in prompt[LanguageEnum.ZH.value][0]['content']
+        assert prompt[LanguageEnum.ZH.value][0]["role"] == "user"
+        assert "负责评估模型输出是否包含幻觉" in prompt[LanguageEnum.ZH.value][0]["content"]
 
     @pytest.mark.asyncio
     async def test_successful_evaluation(self):

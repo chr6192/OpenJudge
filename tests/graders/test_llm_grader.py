@@ -68,7 +68,7 @@ class TestLLMGraderUnit:
                 model=AsyncMock(),
                 name="foo",
             )
-        assert 'Template must be a str, dict or PromptTemplate object' in str(error_obj.value)
+        assert "Template must be a str, dict or PromptTemplate object" in str(error_obj.value)
 
     def test_initialization_with_string_template(self):
         """Test successful initialization with string template"""
@@ -134,11 +134,11 @@ class TestLLMGraderUnit:
     def test_get_metadata(self):
         meta = LLMGrader.get_metadata()
         assert len(meta) == 2
-        assert 'aevaluate' in meta
-        assert 'Evaluate using LLM.' in meta['aevaluate']
-        assert 'Performs evaluation using a large language model' in meta['aevaluate']
-        assert 'prompt' in meta
-        assert not meta['prompt']
+        assert "aevaluate" in meta
+        assert "Evaluate using LLM." in meta["aevaluate"]
+        assert "Performs evaluation using a large language model" in meta["aevaluate"]
+        assert "prompt" in meta
+        assert not meta["prompt"]
 
     def test_initialization_with_model_dict(self):
         """Test initialization with model configuration dict"""

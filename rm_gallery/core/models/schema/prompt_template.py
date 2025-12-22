@@ -6,7 +6,6 @@ in various formats and languages. It supports both monolingual and multilingual
 templates with easy formatting capabilities.
 """
 
-import json
 from enum import Enum
 from typing import Any, Dict, List, TypedDict, Union
 
@@ -289,7 +288,7 @@ class PromptTemplate(BaseModel):
         if isinstance(self.messages, list):
             prompt = []
             for msg in self.messages:
-                part = {'role': msg.role, 'content': msg.content}
+                part = {"role": msg.role, "content": msg.content}
                 prompt.append(part)
             return {LanguageEnum.ANY.value: prompt}
 
@@ -301,7 +300,7 @@ class PromptTemplate(BaseModel):
                     continue
                 prompt = []
                 for msg in msgs:
-                    part = {'role': msg.role, 'content': msg.content}
+                    part = {"role": msg.role, "content": msg.content}
                     prompt.append(part)
                 language_prompts[lang.value] = prompt
             return language_prompts

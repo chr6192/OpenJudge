@@ -16,7 +16,7 @@ Classes:
 
 import os
 import textwrap
-from typing import Any, Callable, Type, Dict
+from typing import Any, Callable, Dict, Type
 
 from pydantic import BaseModel
 
@@ -331,6 +331,5 @@ class LLMGrader(BaseGrader):
 
     @staticmethod
     def get_metadata() -> Dict[str, Any]:
-        """Return the docstring of the aevaluate method to explain how LLMGrader works with LLM.
-        """
-        return {'aevaluate': LLMGrader.aevaluate.__doc__, 'prompt':{}}
+        """Return the docstring of the aevaluate method to explain how LLMGrader works with LLM."""
+        return {"aevaluate": LLMGrader.aevaluate.__doc__, "prompt": {}}

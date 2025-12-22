@@ -158,10 +158,10 @@ class BaseGrader(ABC):
 
         Define this as a static method, because the explanation belongs to the class level, not the instance level.
 
-        Each subclass must implement its own, otherwise calling this method from a subclass returns value from its parent's method.
+        Each subclass must implement its own,
+        otherwise calling this method from a subclass returns value from its parent's method.
         """
-        return {'warning': 'This Grader has not implemented its own get_metadata().'}
-
+        return {"warning": "This Grader has not implemented its own get_metadata()."}
 
     @classmethod
     def from_config(

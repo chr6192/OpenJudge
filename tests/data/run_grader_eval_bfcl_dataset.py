@@ -21,35 +21,40 @@ import argparse
 import asyncio
 import json
 import os
-import nest_asyncio
 import random
 from typing import List
+
+import nest_asyncio
 
 from rm_gallery.core.graders.agent import *
 from rm_gallery.core.graders.common import *
 from rm_gallery.core.models.schema.prompt_template import LanguageEnum
 
-
 nest_asyncio.apply()
 
+
 def read_jsonl(file_path: str) -> List[dict]:
-    with open(file_path, 'r', encoding='utf-8') as f:
+    with open(file_path, "r", encoding="utf-8") as f:
         return [json.loads(line) for line in f if line.strip()]
+
 
 def random_sample_jsonl(data, sample_size, seed=42):
     if not sample_size:
-        print(f'All data will be selected because sample_size is not set')
+        print(f"All data will be selected because sample_size is not set")
         return data
     if sample_size > len(data):
         raise ValueError(f"Random select {sample_size} samples, but only {len(data)} samples exists")
     random.seed(seed)
     sample_data = random.sample(data, sample_size)
     return sample_data
+
+
 def get_required_env(var_name):
     value = os.getenv(var_name)
     if not value:
         raise EnvironmentError(f"Required environment variable '{var_name}' is not set.")
     return value
+
 
 def run_cases(case_file: str, grader_name: str, sample_size: int, skip: int):
     model_config = {
@@ -81,11 +86,15 @@ def run_cases(case_file: str, grader_name: str, sample_size: int, skip: int):
                 continue
 
             if has_min and result.score < data["min_expect_score"]:
-                print(f"\033[91mFAILED \033[0m, index: {index}, result score {result.score} is less than min_expect_score {data['min_expect_score']}, result: {result}")
+                print(
+                    f"\033[91mFAILED \033[0m, index: {index}, result score {result.score} is less than min_expect_score {data['min_expect_score']}, result: {result}"
+                )
                 continue
 
             if has_max and result.score > data["max_expect_score"]:
-                print(f"\033[91mFAILED\033[0m, index: {index}, result score {result.score} is greater than max_expect_score {data['max_expect_score']}, result: {result}")
+                print(
+                    f"\033[91mFAILED\033[0m, index: {index}, result score {result.score} is greater than max_expect_score {data['max_expect_score']}, result: {result}"
+                )
                 continue
             cnt += 1
             print(f"PASSED: index: {index}, score: {result.score}")
@@ -97,12 +106,13 @@ def run_cases(case_file: str, grader_name: str, sample_size: int, skip: int):
     pass_rate = cnt / num_data
     print(f"{grader_name} pass rate: {pass_rate} ({cnt}/{num_data})")
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run grader test cases from BFCL dataset.")
     parser.add_argument(
         "--grader_name",
         type=str,
-        default='ToolCallAccuracyGrader',
+        default="ToolCallAccuracyGrader",
         help="Specify the name of grader to run",
     )
     parser.add_argument(
@@ -119,7 +129,9 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    run_cases(case_file="bfcl_v3/tool_call/tool_call_bfcl_v3_multiple_eval_data.jsonl",
-              grader_name=args.grader_name,
-              sample_size=args.sample_size,
-              skip=args.skip)
+    run_cases(
+        case_file="bfcl_v3/tool_call/tool_call_bfcl_v3_multiple_eval_data.jsonl",
+        grader_name=args.grader_name,
+        sample_size=args.sample_size,
+        skip=args.skip,
+    )
