@@ -1,10 +1,11 @@
 <div align="center">
 
 <p align="center">
-  <img src="./docs/images/logo.png" alt="RM-Gallery Logo" width="500">
+  <img src="./docs/images/logo.png" alt="Open-Judge Logo" width="500">
 </p>
 
-Precision Evaluation, Quality Rewards: Driving Agent Excellence.
+**Holistic Evaluation, Quality Rewards: Driving Application Excellence**
+
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue)](https://pypi.org/project/rm-gallery/)
 [![PyPI](https://img.shields.io/badge/pypi-v0.2.0-blue?logo=pypi)](https://pypi.org/project/rm-gallery/)
@@ -15,14 +16,15 @@ Precision Evaluation, Quality Rewards: Driving Agent Excellence.
 </div>
 
 
-
-Open-Judge unifies reward signals and evaluation metrics into one **Grader** interface—with pre-built graders, flexible customization, and seamless framework integration.
-
 ## News
 
 - **2025-10-20** - [Auto-Rubric: Learning to Extract Generalizable Criteria for Reward Modeling](https://arxiv.org/abs/2510.17314) - We released a new paper on learning generalizable reward criteria for robust modeling.
 - **2025-10-17** - [Taming the Judge: Deconflicting AI Feedback for Stable Reinforcement Learning](https://arxiv.org/abs/2510.15514) - We introduced techniques to align judge feedback and improve RL stability.
 - **2025-07-09** - Released RM-Gallery v0.1.0 on [PyPI](https://pypi.org/project/rm-gallery/)
+
+
+Evaluation and reward signals are the cornerstones of application excellence. **Holistic evaluation** enables the systematic analysis of shortcomings to drive rapid iteration, while **high-quality** rewards provide the essential foundation for advanced optimization and fine-tuning.
+Open-Judge unifies reward signals and evaluation metrics into one **Grader** interface—with pre-built graders, flexible customization, and seamless framework integration.
 
 ## Key Features
 
@@ -82,6 +84,7 @@ Complete Quickstart can be found in [here](https://modelscope.cn/docs/rm-gallery
 |-------------|---------------|
 | LangSmith   | [LangSmith](https://modelscope.cn/docs/rm-gallery/integrations/langsmith) |
 | LangFuse    | [LangFuse](https://modelscope.cn/docs/rm-gallery/integrations/langfuse) |
+| Arize Phoenix| [Arize Phoenix](https://modelscope.cn/docs/rm-gallery/integrations/langfuse) |
 
 ## Contributing
 We welcome contributions from the community! 
