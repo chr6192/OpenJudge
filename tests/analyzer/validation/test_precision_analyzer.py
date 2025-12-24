@@ -3,11 +3,8 @@
 
 import pytest
 
-from rm_gallery.core.analyzer.validation import (
-    PrecisionAnalysisResult,
-    PrecisionAnalyzer,
-)
-from rm_gallery.core.graders.schema import GraderScore
+from open_judge.analyzer.validation import PrecisionAnalysisResult, PrecisionAnalyzer
+from open_judge.graders.schema import GraderScore
 
 
 @pytest.mark.unit

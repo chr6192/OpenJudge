@@ -20,9 +20,9 @@ Validate against public benchmarks with standardized ground truth. This approach
 **Example:**
 
 ```python
-from rm_gallery.core.graders.llm_grader import LLMGrader
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.runner import GradingRunner
+from open_judge.graders.llm_grader import LLMGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.runner import GradingRunner
 
 # Create grader
 model = OpenAIChatModel(model="qwen3-32b")
@@ -33,7 +33,7 @@ runner = GradingRunner(grader_configs={"my_grader": grader})
 results = await runner.arun(rewardbench2_dataset)
 
 # Analyze accuracy
-from rm_gallery.core.analyzer import ValidationAnalyzer
+from open_judge.analyzer import ValidationAnalyzer
 analyzer = ValidationAnalyzer()
 report = analyzer.analyze(dataset=rewardbench2_dataset, grader_results=results["my_grader"])
 

@@ -1,6 +1,6 @@
 import pytest
 
-from rm_gallery.core.graders.format.json.json_validator import JsonValidatorGrader
+from open_judge.graders.format.json.json_validator import JsonValidatorGrader
 
 
 class TestJsonValidatorGrader:

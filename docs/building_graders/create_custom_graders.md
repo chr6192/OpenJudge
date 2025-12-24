@@ -2,7 +2,7 @@
 Custom graders allow you to define precisely how you want to evaluate AI model responses when built-in evaluation tools don't meet your specific needs. This guide helps you build the right grader for your task by following a structured approach to grader design.
 
 !!! tip
-    Before creating custom graders, review the [Core Concepts](../get_started/core_concepts.md) to understand how graders fit into the RM-Gallery ecosystem.
+    Before creating custom graders, review the [Core Concepts](../get_started/core_concepts.md) to understand how graders fit into the OpenJudge ecosystem.
 
 ## Understanding Your Evaluation Needs
 Before diving into implementation, it's essential to clearly define what you want to evaluate and in what scenario. Consider whether you're measuring objective properties like length and keyword presence or subjective qualities such as helpfulness and coherence. Determine if you need absolute scores or relative rankings, and think about what constitutes a "good" response in your particular use case.
@@ -90,8 +90,8 @@ To create effective LLM-Based graders:
     - **Output Format**: Specify the exact JSON structure for responses
 
 ```python
-from rm_gallery.core.graders.llm_grader import LLMGrader
-from rm_gallery.core.models.openai_chat_model import OpenAIChatModel
+from open_judge.graders.llm_grader import LLMGrader
+from open_judge.models.openai_chat_model import OpenAIChatModel
 
 # Define your model
 model = OpenAIChatModel(
@@ -165,7 +165,7 @@ comparison_grader = LLMGrader(
 
 !!! info "Code-Based Grader Best Practices"
     Effective Code-Based graders should have:
-    
+
     - **Transparent Logic**: Clear, understandable evaluation rules
     - **Modular Design**: Separate concerns for maintainability
     - **Edge Case Handling**: Robust error handling
@@ -173,8 +173,8 @@ comparison_grader = LLMGrader(
 
 #### Pointwise Code-Based Example: Content Quality Checker
 ```python
-from rm_gallery.core.graders.function_grader import FunctionGrader
-from rm_gallery.core.graders.schema import GraderScore
+from open_judge.graders.function_grader import FunctionGrader
+from open_judge.graders.schema import GraderScore
 
 async def content_quality_checker(query: str, response: str) -> GraderScore:
     """Check content quality based on multiple criteria."""
@@ -228,7 +228,7 @@ content_quality_grader = FunctionGrader(
 
 !!! tip "Advanced Techniques"
     When developing Code-Based graders, consider:
-    
+
     - **Compiled Regex**: Use for complex pattern matching
     - **Weighted Scoring**: Assign different weights to criteria
     - **Clear Thresholds**: Define explicit pass/fail boundaries
@@ -236,8 +236,8 @@ content_quality_grader = FunctionGrader(
 
 #### Listwise Code-Based Example: Multi-factor Ranker
 ```python
-from rm_gallery.core.graders.function_grader import FunctionGrader
-from rm_gallery.core.graders.schema import GraderRank
+from open_judge.graders.function_grader import FunctionGrader
+from open_judge.graders.schema import GraderRank
 
 async def multi_factor_ranker(query: str, response_1: str, response_2: str) -> GraderRank:
     """Rank responses based on multiple factors."""

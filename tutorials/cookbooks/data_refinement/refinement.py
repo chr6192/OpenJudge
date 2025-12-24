@@ -2,13 +2,13 @@ import asyncio
 from abc import ABC
 from typing import Callable, List
 
-from rm_gallery.core.graders.base_grader import BaseGrader
-from rm_gallery.core.graders.schema import GraderMode, GraderResult
-from rm_gallery.core.models.base_chat_model import BaseChatModel
-from rm_gallery.core.models.schema.oai.message import ChatMessage
-from rm_gallery.core.models.schema.oai.response import ChatResponse
-from rm_gallery.core.models.schema.prompt_template import PromptTemplate
-from rm_gallery.core.utils.mapping import parse_data_with_mapper
+from open_judge.graders.base_grader import BaseGrader
+from open_judge.graders.schema import GraderMode, GraderResult
+from open_judge.models.base_chat_model import BaseChatModel
+from open_judge.models.schema.oai.message import ChatMessage
+from open_judge.models.schema.oai.response import ChatResponse
+from open_judge.models.schema.prompt_template import PromptTemplate
+from open_judge.utils.mapping import parse_data_with_mapper
 
 
 def format_messages(messages: List[ChatMessage]) -> str:
@@ -93,8 +93,8 @@ class LLMRefinement(ABC):
     response generation and subsequent refinements through multiple iterations.
 
     Example:
-        >>> from rm_gallery.core.graders import LLMPairwiseGrader
-        >>> from rm_gallery.core.models import QwenChatModel
+        >>> from open_judge.graders import LLMPairwiseGrader
+        >>> from open_judge.models import QwenChatModel
         >>> from .refinement import LLMRefinement
         >>>
         >>> grader = LLMPairwiseGrader()
@@ -126,8 +126,8 @@ class LLMRefinement(ABC):
             AssertionError: If the provided grader is not a listwise grader (grader.mode != GraderMode.LISTWISE).
 
         Example:
-            >>> from rm_gallery.core.graders import LLMPairwiseGrader
-            >>> from rm_gallery.core.models import QwenChatModel
+            >>> from open_judge.graders import LLMPairwiseGrader
+            >>> from open_judge.models import QwenChatModel
             >>>
             >>> grader = LLMPairwiseGrader()
             >>> model = OpenAIChatModel(model="qwen3-max")
@@ -283,8 +283,8 @@ class LLMRefinement(ABC):
                 The last entry in the responses list contains the final refined response.
 
         Example:
-            >>> from rm_gallery.core.graders import LLMPairwiseGrader
-            >>> from rm_gallery.core.models import QwenChatModel
+            >>> from open_judge.graders import LLMPairwiseGrader
+            >>> from open_judge.models import QwenChatModel
             >>> from .refinement import LLMRefinement
             >>>
             >>> grader = LLMPairwiseGrader()

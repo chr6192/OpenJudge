@@ -12,12 +12,12 @@ from typing import Any, Callable, Dict, List, Optional, Union
 from loguru import logger
 from pydantic import BaseModel, Field
 
-from rm_gallery.core.graders.base_grader import GraderMode, GraderScore
-from rm_gallery.core.graders.llm_grader import LLMGrader
-from rm_gallery.core.graders.schema import GraderError
-from rm_gallery.core.models.base_chat_model import BaseChatModel
-from rm_gallery.core.models.schema.oai.message import ChatMessage
-from rm_gallery.core.models.schema.prompt_template import LanguageEnum, PromptTemplate
+from open_judge.graders.base_grader import GraderMode, GraderScore
+from open_judge.graders.llm_grader import LLMGrader
+from open_judge.graders.schema import GraderError
+from open_judge.models.base_chat_model import BaseChatModel
+from open_judge.models.schema.oai.message import ChatMessage
+from open_judge.models.schema.prompt_template import LanguageEnum, PromptTemplate
 
 # pylint: disable=line-too-long, too-many-lines
 
@@ -1020,7 +1020,7 @@ class FinancialTrajectoryFaithfulGrader(LLMGrader):
         language: Language for evaluation prompts
 
     Example:
-        >>> from rm_gallery.core.models.openai_chat_model import OpenAIChatModel
+        >>> from open_judge.models.openai_chat_model import OpenAIChatModel
         >>> api = OpenAIChatModel(api_key="...", model="gpt-4o")
         >>> grader = FinancialTrajectoryFaithfulGrader(model=api)
         >>> result = await grader.aevaluate(
@@ -1169,7 +1169,7 @@ class FinancialTrajectoryFaithfulGrader(LLMGrader):
                 Defaults to LanguageEnum.ZH (Chinese).
 
         Example:
-            >>> from rm_gallery.core.models.openai_chat_model import OpenAIChatModel
+            >>> from open_judge.models.openai_chat_model import OpenAIChatModel
             >>> model = OpenAIChatModel(api_key="...", model="gpt-4o")
             >>> grader = FinancialTrajectoryFaithfulGrader(model=model)
         """
@@ -1296,10 +1296,7 @@ class FinancialTrajectoryFaithfulGrader(LLMGrader):
 
         if not user_query or not search_result or not ai_answer:
             logger.warning("Empty user query or search result or AI answer, returning error")
-            return GraderError(
-                name=self.name,
-                error="Empty user query or search result or AI answer"
-            )
+            return GraderError(name=self.name, error="Empty user query or search result or AI answer")
 
         try:
             # Call parent evaluation with formatted parameters

@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-# Training examples for RM-Gallery
+# Training examples for OpenJudge

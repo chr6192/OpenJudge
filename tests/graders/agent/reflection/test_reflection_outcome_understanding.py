@@ -31,16 +31,16 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from rm_gallery.core.analyzer.validation import (
+from open_judge.analyzer.statistical import ConsistencyAnalyzer
+from open_judge.analyzer.validation import (
     AccuracyAnalyzer,
-    ConsistencyAnalyzer,
     FalseNegativeAnalyzer,
     FalsePositiveAnalyzer,
 )
-from rm_gallery.core.graders.agent import ReflectionOutcomeUnderstandingGrader
-from rm_gallery.core.models.openai_chat_model import OpenAIChatModel
-from rm_gallery.core.models.schema.prompt_template import LanguageEnum
-from rm_gallery.core.runner.grading_runner import GraderConfig, GradingRunner
+from open_judge.graders.agent import ReflectionOutcomeUnderstandingGrader
+from open_judge.models.openai_chat_model import OpenAIChatModel
+from open_judge.models.schema.prompt_template import LanguageEnum
+from open_judge.runner.grading_runner import GraderConfig, GradingRunner
 
 # ==================== UNIT TESTS ====================
 # These tests verify the basic functionality of the grader in isolation
@@ -73,7 +73,7 @@ class TestReflectionOutcomeUnderstandingGraderUnit:
         }
 
         # Use patch to mock the model's achat method
-        with patch("rm_gallery.core.graders.llm_grader.BaseChatModel.achat", new_callable=AsyncMock) as mock_achat:
+        with patch("open_judge.graders.llm_grader.BaseChatModel.achat", new_callable=AsyncMock) as mock_achat:
             mock_achat.return_value = mock_response
 
             mock_model = AsyncMock()
@@ -107,7 +107,7 @@ class TestReflectionOutcomeUnderstandingGraderUnit:
         }
 
         # Use patch to mock the model's achat method
-        with patch("rm_gallery.core.graders.llm_grader.BaseChatModel.achat", new_callable=AsyncMock) as mock_achat:
+        with patch("open_judge.graders.llm_grader.BaseChatModel.achat", new_callable=AsyncMock) as mock_achat:
             mock_achat.return_value = mock_response
 
             mock_model = AsyncMock()
@@ -141,7 +141,7 @@ class TestReflectionOutcomeUnderstandingGraderUnit:
         }
 
         # Use patch to mock the model's achat method
-        with patch("rm_gallery.core.graders.llm_grader.BaseChatModel.achat", new_callable=AsyncMock) as mock_achat:
+        with patch("open_judge.graders.llm_grader.BaseChatModel.achat", new_callable=AsyncMock) as mock_achat:
             mock_achat.return_value = mock_response
 
             mock_model = AsyncMock()
@@ -173,7 +173,7 @@ class TestReflectionOutcomeUnderstandingGraderUnit:
     async def test_error_handling(self):
         """Test graceful error handling"""
         # Use patch to mock the model's achat method to raise an exception
-        with patch("rm_gallery.core.graders.llm_grader.BaseChatModel.achat", new_callable=AsyncMock) as mock_achat:
+        with patch("open_judge.graders.llm_grader.BaseChatModel.achat", new_callable=AsyncMock) as mock_achat:
             mock_achat.side_effect = Exception("API Error")
 
             mock_model = AsyncMock()
@@ -328,8 +328,9 @@ class TestReflectionOutcomeUnderstandingGraderQuality:
         # Use ConsistencyAnalyzer to calculate consistency metrics
         consistency_analyzer = ConsistencyAnalyzer()
         consistency_result = consistency_analyzer.analyze(
-            first_run_results=results["reflection_outcome_understanding_run1"],
-            second_run_results=results["reflection_outcome_understanding_run2"],
+            dataset=dataset,
+            grader_results=results["reflection_outcome_understanding_run1"],
+            another_grader_results=results["reflection_outcome_understanding_run2"],
         )
 
         # Assert that consistency metrics meet expected thresholds

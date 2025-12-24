@@ -11,7 +11,7 @@ these predictions into reward scores where higher scores indicate less toxic con
 # -*- coding: utf-8 -*-
 from typing import Any, Union
 
-from rm_gallery.core.graders.base_grader import (
+from open_judge.graders.base_grader import (
     BaseGrader,
     GraderMode,
     GraderRank,

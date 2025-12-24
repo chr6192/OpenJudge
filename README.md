@@ -7,11 +7,11 @@
 **Holistic Evaluation, Quality Rewards: Driving Application Excellence**
 
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue)](https://pypi.org/project/rm-gallery/)
-[![PyPI](https://img.shields.io/badge/pypi-v0.2.0-blue?logo=pypi)](https://pypi.org/project/rm-gallery/)
-[![Documentation](https://img.shields.io/badge/docs-online-blue?logo=markdown)](https://modelscope.github.io/RM-Gallery/)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue)](https://pypi.org/project/open_judge/)
+[![PyPI](https://img.shields.io/badge/pypi-v0.2.0-blue?logo=pypi)](https://pypi.org/project/open_judge/)
+[![Documentation](https://img.shields.io/badge/docs-online-blue?logo=markdown)](https://modelscope.github.io/OpenJudge/)
 
-[Documentation](https://modelscope.github.io/RM-Gallery/) | [Contributing](./docs/community/contributing.md) | [中文](./README_zh.md)
+[Documentation](https://modelscope.github.io/OpenJudge/) | [Contributing](./docs/community/contributing.md) | [中文](./README_zh.md)
 
 </div>
 
@@ -20,7 +20,7 @@
 
 - **2025-10-20** - [Auto-Rubric: Learning to Extract Generalizable Criteria for Reward Modeling](https://arxiv.org/abs/2510.17314) - We released a new paper on learning generalizable reward criteria for robust modeling.
 - **2025-10-17** - [Taming the Judge: Deconflicting AI Feedback for Stable Reinforcement Learning](https://arxiv.org/abs/2510.15514) - We introduced techniques to align judge feedback and improve RL stability.
-- **2025-07-09** - Released RM-Gallery v0.1.0 on [PyPI](https://pypi.org/project/rm-gallery/)
+- **2025-07-09** - Released OpenJudge v0.1.0 on [PyPI](https://pypi.org/project/open_judge/)
 
 
 Evaluation and reward signals are the cornerstones of application excellence. **Holistic evaluation** enables the systematic analysis of shortcomings to drive rapid iteration, while **high-quality** rewards provide the essential foundation for advanced optimization and fine-tuning.
@@ -46,15 +46,15 @@ Open-Judge unifies reward signals and evaluation metrics into one **Grader** int
 
 ## Installation
 ```bash
-pip install rm-gallery
+pip install open_judge
 ```
-More installation methods can be found in the [here](https://modelscope.cn/docs/rm-gallery/installation).
+More installation methods can be found in the [here](https://modelscope.cn/docs/open_judge/installation).
 
 ## Quickstart
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.common.relevance import RelevanceGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.common.relevance import RelevanceGrader
 
 
 # step1 create model client
@@ -76,21 +76,21 @@ result = await grader.aevaluate(**data)
 print(f"Score: {result.score}")  # Score: 5
 print(f"Reason: {result.reason}")
 ```
-Complete Quickstart can be found in [here](https://modelscope.cn/docs/rm-gallery/quickstart).
+Complete Quickstart can be found in [here](https://modelscope.cn/docs/open_judge/quickstart).
 
 ## Integrations
 
 | Integration | Documentation |
 |-------------|---------------|
-| LangSmith   | [LangSmith](https://modelscope.cn/docs/rm-gallery/integrations/langsmith) |
-| LangFuse    | [LangFuse](https://modelscope.cn/docs/rm-gallery/integrations/langfuse) |
-| Arize Phoenix| [Arize Phoenix](https://modelscope.cn/docs/rm-gallery/integrations/langfuse) |
+| LangSmith   | [LangSmith](https://modelscope.cn/docs/open_judge/integrations/langsmith) |
+| LangFuse    | [LangFuse](https://modelscope.cn/docs/open_judge/integrations/langfuse) |
+| Arize Phoenix| [Arize Phoenix](https://modelscope.cn/docs/open_judge/integrations/langfuse) |
 
 ## Contributing
-We welcome contributions from the community! 
-1. Raise and comment on [Issues](https://github.com/modelscope/RM-Gallery/issues).
+We welcome contributions from the community!
+1. Raise and comment on [Issues](https://github.com/modelscope/OpenJudge/issues).
 2. Open a PR - Whether you're fixing bugs, adding new features, improving documentation, or sharing
-ideas, your contributions help make Open-Judge better for everyone. See [Contributing](https://github.com/modelscope/RM-Gallery/blob/main/CONTRIBUTING.md) for more details.
+ideas, your contributions help make Open-Judge better for everyone. See [Contributing](https://github.com/modelscope/OpenJudge/blob/main/CONTRIBUTING.md) for more details.
 
 ## Citation
 
@@ -98,7 +98,7 @@ If you use Open-Judge in your research, please cite:
 
 ```
 @software{
-title = {RM-Gallery: XXXX},
+title = {OpenJudge: XXXX},
 author = {The Open-Judge Team},
 url = {https://github.com/modelscope/Open-Judge},
 month = {07},

@@ -2,12 +2,12 @@
 """SummarizationGrader."""
 from typing import Any, List
 
-from rm_gallery.core.graders.base_grader import GraderRank
-from rm_gallery.core.graders.llm_grader import LLMGrader
-from rm_gallery.core.graders.schema import GraderMode
-from rm_gallery.core.models.base_chat_model import BaseChatModel
-from rm_gallery.core.models.schema.oai.message import ChatMessage
-from rm_gallery.core.models.schema.prompt_template import LanguageEnum, PromptTemplate
+from open_judge.graders.base_grader import GraderRank
+from open_judge.graders.llm_grader import LLMGrader
+from open_judge.graders.schema import GraderMode
+from open_judge.models.base_chat_model import BaseChatModel
+from open_judge.models.schema.oai.message import ChatMessage
+from open_judge.models.schema.prompt_template import LanguageEnum, PromptTemplate
 
 # Summarization Listwise System Prompt
 SUMMARIZATION_SYSTEM_PROMPT_EN = (
@@ -140,7 +140,7 @@ class SummarizationGrader(LLMGrader):
 
         Example:
             >>> import asyncio
-            >>> from rm_gallery.core.models.openai_chat_model import OpenAIChatModel
+            >>> from open_judge.models.openai_chat_model import OpenAIChatModel
             >>> model = OpenAIChatModel(model="qwen3-max")
             >>> grader = SummarizationGrader(model=model)
             >>> result = asyncio.run(grader.aevaluate(

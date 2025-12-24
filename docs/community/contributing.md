@@ -29,7 +29,7 @@ Welcome! OpenJudge is an open-source reward model platform. Your contributions h
 === "Step 3: Verify Installation"
 
     ```bash
-    python -c "from rm_gallery.core.graders.common import RelevanceGrader; print('✓ Installation successful')"
+    python -c "from open_judge.graders.common import RelevanceGrader; print('✓ Installation successful')"
     ```
 
 
@@ -55,7 +55,7 @@ Before submitting, verify your changes work:
 
 ```bash
 # Verify installation
-python -c "from rm_gallery.core.graders.common import RelevanceGrader; print('✓ Works')"
+python -c "from open_judge.graders.common import RelevanceGrader; print('✓ Works')"
 
 # Run tests (optional)
 pytest tests/ -v
@@ -75,7 +75,7 @@ Unit tests verify individual components of your code. Each component should incl
 ```python
 import pytest
 from unittest.mock import AsyncMock
-from rm_gallery.core.graders.category.grader_module import YourGrader
+from open_judge.graders.category.grader_module import YourGrader
 
 @pytest.mark.unit
 class TestYourGrader:
@@ -148,12 +148,12 @@ Place your grader in the appropriate category:
 
 | Category | Path | Purpose |
 |----------|------|---------|
-| **Common** | `rm_gallery/core/graders/common/` | General-purpose (Relevance, Hallucination) |
-| **Agent** | `rm_gallery/core/graders/agent/` | Agent evaluation |
-| **Code** | `rm_gallery/core/graders/code/` | Code evaluation |
-| **Format** | `rm_gallery/core/graders/format/` | Format validation |
-| **Text** | `rm_gallery/core/graders/text/` | Text similarity |
-| **Multimodal** | `rm_gallery/core/graders/multimodal/` | Vision/image |
+| **Common** | `open_judge/graders/common/` | General-purpose (Relevance, Hallucination) |
+| **Agent** | `open_judge/graders/agent/` | Agent evaluation |
+| **Code** | `open_judge/graders/code/` | Code evaluation |
+| **Format** | `open_judge/graders/format/` | Format validation |
+| **Text** | `open_judge/graders/text/` | Text similarity |
+| **Multimodal** | `open_judge/graders/multimodal/` | Vision/image |
 
 ### Grader Specifications
 
@@ -175,7 +175,7 @@ Place your grader in the appropriate category:
 
 ### Grader Method Parameter Naming Convention
 
-To ensure consistency and usability, the [aevaluate](../../rm_gallery/core/graders/base_grader.py#L71-L116) method of Graders should follow these common parameter naming conventions:
+To ensure consistency and usability, the [aevaluate](../../open_judge/graders/base_grader.py#L71-L116) method of Graders should follow these common parameter naming conventions:
 
 | Parameter Name | Description | Alternative Names (Not Recommended) |
 | --- | --- | --- |
@@ -189,8 +189,8 @@ To ensure consistency and usability, the [aevaluate](../../rm_gallery/core/grade
 ### Minimal Grader Template
 
 ```python
-from rm_gallery.core.graders.base_grader import BaseGrader
-from rm_gallery.core.graders.schema import GraderScore
+from open_judge.graders.base_grader import BaseGrader
+from open_judge.graders.schema import GraderScore
 
 class MyGrader(BaseGrader):
     """Evaluate [specific aspect].

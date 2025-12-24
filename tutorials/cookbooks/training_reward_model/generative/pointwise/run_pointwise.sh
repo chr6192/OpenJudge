@@ -8,7 +8,7 @@ VAL_FILE=./examples/data/exports/helpsteer2_pointwise_test.parquet
 MODEL_PATH=./models/Qwen3-8B
 
 PROJECT_NAME=pointwise_train_${MODEL_NAME}
-EXPERIMENT_NAME=rm-gallery-pointwise_${MODEL_NAME}-${TIMESTAMP}
+EXPERIMENT_NAME=open_judge-pointwise_${MODEL_NAME}-${TIMESTAMP}
 
 CUSTOM_REWARD_FUNCTION_PATH=./examples/train/generative/pointwise/reward_fn.py
 CUSTOM_CHAT_RL_DATASET_PATH=./examples/train/generative/pointwise/dataset.py

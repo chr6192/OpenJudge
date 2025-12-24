@@ -3,9 +3,9 @@ requires = ["poetry-core>=2.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
 build-backend = "poetry_dynamic_versioning.backend"
 
 [project]
-name = "rm-gallery"
+name = "open_judge"
 dynamic = ["version"]
-description = "RM-Gallery: A Next-Generation Evaluation System for AI Model Assessment"
+description = "OpenJudge: A Next-Generation Evaluation System for AI Model Assessment"
 readme = "README.md"
 authors = [
   { name = "Haoran Chen", email = "chenhaoran.chr@alibaba-inc.com" },
@@ -39,9 +39,9 @@ classifiers = [
 requires-python = ">=3.10,<3.13"
 
 [project.urls]
-Homepage = "https://github.com/modelscope/RM-Gallery"
-Repository = "https://github.com/modelscope/RM-Gallery"
-Documentation = "https://modelscope.github.io/RM-Gallery/"
+Homepage = "https://github.com/modelscope/OpenJudge"
+Repository = "https://github.com/modelscope/OpenJudge"
+Documentation = "https://modelscope.github.io/OpenJudge/"
 
 [tool.poetry]
 version = "0.0.0"

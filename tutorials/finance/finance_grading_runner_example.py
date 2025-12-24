@@ -17,9 +17,9 @@ import os
 
 from loguru import logger
 
-from rm_gallery.core.models.openai_chat_model import OpenAIChatModel
-from rm_gallery.core.models.schema.prompt_template import LanguageEnum
-from rm_gallery.core.runner.grading_runner import GradingRunner
+from open_judge.models.openai_chat_model import OpenAIChatModel
+from open_judge.models.schema.prompt_template import LanguageEnum
+from open_judge.runner.grading_runner import GradingRunner
 
 # Import finance graders
 from tutorials.finance.event_interpretation import EventAnalysisGrader

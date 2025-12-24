@@ -1,16 +1,16 @@
 # Building Custom Graders
 
-Extend RM-Gallery beyond built-in evaluators by creating custom graders or training reward models. Build domain-specific evaluation logic that seamlessly integrates with RM-Gallery's evaluation pipeline.
+Extend OpenJudge beyond built-in evaluators by creating custom graders or training reward models. Build domain-specific evaluation logic that seamlessly integrates with OpenJudge's evaluation pipeline.
 
 
 ## Why Build Custom Graders?
 
-While RM-Gallery provides 50+ pre-built graders, custom graders enable you to evaluate industry-specific criteria (legal, medical, financial), implement proprietary scoring logic, and train models that learn from your preference data. They also help optimize costs by replacing expensive API judges with self-hosted models while maintaining consistent evaluation standards across applications.
+While OpenJudge provides 50+ pre-built graders, custom graders enable you to evaluate industry-specific criteria (legal, medical, financial), implement proprietary scoring logic, and train models that learn from your preference data. They also help optimize costs by replacing expensive API judges with self-hosted models while maintaining consistent evaluation standards across applications.
 
 
 ## Building Approaches
 
-RM-Gallery supports three paths for creating custom graders, each optimized for different scenarios.
+OpenJudge supports three paths for creating custom graders, each optimized for different scenarios.
 
 
 | Approach | Time to Deploy | Data Required | Best For | Cost Profile |
@@ -58,7 +58,7 @@ Use this decision tree to choose the right approach based on your data availabil
 **Choose based on your situation:**
 
 - **Have labeled data + need automation?** → Train a reward model
-- **Have data + need fast iteration?** → Generate rubrics from data  
+- **Have data + need fast iteration?** → Generate rubrics from data
 - **No data + need immediate results?** → Create custom graders
 
 ### Approach 1: Create Custom Graders

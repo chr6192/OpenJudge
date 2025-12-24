@@ -10,7 +10,7 @@ While LLM judges and code-based graders handle many evaluation scenarios, traine
 
 ## Training Approaches
 
-RM-Gallery supports multiple training paradigms through the VERL framework. Choose the approach that matches your data type and evaluation goals:
+OpenJudge supports multiple training paradigms through the VERL framework. Choose the approach that matches your data type and evaluation goals:
 
 | Approach | Best For | Training Signal | Complexity |
 |----------|----------|-----------------|------------|
@@ -49,11 +49,11 @@ All training methods use the **VERL** (Versatile Efficient Reinforcement Learnin
                    ▼
 ┌─────────────────────────────────────────────────┐
 │  Trained Reward Model                           │
-│  └─ Integrate as rm_gallery.core grader        │
+│  └─ Integrate as open_judge grader        │
 └─────────────────────────────────────────────────┘
 ```
 
-> **Note:** Training code (`tutorials/cookbooks/training_reward_model/`) is independent from the core evaluation framework (`rm_gallery.core`). Train models separately, then integrate them as graders.
+> **Note:** Training code (`tutorials/cookbooks/training_reward_model/`) is independent from the core evaluation framework (`open_judge`). Train models separately, then integrate them as graders.
 
 
 ## Quick Start
@@ -75,8 +75,8 @@ bash run_bt.sh
 After training completes, use your model as a grader:
 
 ```python
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.common import RelevanceGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.common import RelevanceGrader
 
 # Load trained model
 model = OpenAIChatModel(model="./checkpoints/your-model", is_local=True)
@@ -91,10 +91,10 @@ result = await grader.aevaluate(query="...", response="...")
 
 ## Data Requirements
 
-All training approaches require data in **Parquet format**. Export your evaluation data using RM-Gallery utilities:
+All training approaches require data in **Parquet format**. Export your evaluation data using OpenJudge utilities:
 
 ```python
-from rm_gallery.core.generator import export_data
+from open_judge.generator import export_data
 
 export_data(
     eval_cases=your_data,

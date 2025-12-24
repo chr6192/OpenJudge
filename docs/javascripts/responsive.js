@@ -1,5 +1,5 @@
 /**
- * Responsive Enhancements for RM-Gallery Documentation
+ * Responsive Enhancements for OpenJudge Documentation
  * Phase 5: 响应式完善
  *
  * Features:
@@ -346,7 +346,7 @@
   }
 
   // Expose functions for external use
-  window.RMGalleryResponsive = {
+  window.OpenJudgeResponsive = {
     toggleMobileNav: toggleMobileNav,
     closeMobileNav: closeMobileNav,
     updateTableScrollState: updateTableScrollState

@@ -2,11 +2,11 @@
 """Brainstorming: Generates creative ideas and suggestions to address user challenges."""
 from typing import Any, List
 
-from rm_gallery.core.graders.base_grader import GraderMode, GraderRank
-from rm_gallery.core.graders.llm_grader import LLMGrader
-from rm_gallery.core.models.base_chat_model import BaseChatModel
-from rm_gallery.core.models.schema.oai.message import ChatMessage
-from rm_gallery.core.models.schema.prompt_template import LanguageEnum, PromptTemplate
+from open_judge.graders.base_grader import GraderMode, GraderRank
+from open_judge.graders.llm_grader import LLMGrader
+from open_judge.models.base_chat_model import BaseChatModel
+from open_judge.models.schema.oai.message import ChatMessage
+from open_judge.models.schema.prompt_template import LanguageEnum, PromptTemplate
 
 # Brainstorming Listwise System Prompt
 BRAINSTORMING_SYSTEM_PROMPT_EN = (

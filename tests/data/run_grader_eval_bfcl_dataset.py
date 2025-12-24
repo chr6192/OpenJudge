@@ -1,5 +1,5 @@
 """
-Grader Test Runner for RM Gallery
+Grader Test Runner for OpenJudge
 
 This script evaluates the performance of a specified grader (e.g., ToolCallAccuracyGrader)
 on a set of test cases from the BFCL dataset. It supports random sampling, skipping initial
@@ -26,9 +26,9 @@ from typing import List
 
 import nest_asyncio
 
-from rm_gallery.core.graders.agent import *
-from rm_gallery.core.graders.common import *
-from rm_gallery.core.models.schema.prompt_template import LanguageEnum
+from open_judge.graders.agent import *
+from open_judge.graders.common import *
+from open_judge.models.schema.prompt_template import LanguageEnum
 
 nest_asyncio.apply()
 

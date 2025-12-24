@@ -38,7 +38,7 @@ RewardBench2 uses two complementary evaluation approaches:
     ```
 
     **Description:**
-    
+
     Candidates are randomly shuffled to prevent position bias. This mode tests comparative judgment ability with a binary outcome (correct/incorrect).
 
 === "Ties Absolute Rating"
@@ -58,7 +58,7 @@ RewardBench2 uses two complementary evaluation approaches:
     ```
 
     **Description:**
-    
+
     This mode allows multiple correct answers (ties) and tests absolute quality assessment, providing more nuanced evaluation than binary ranking.
 
 
@@ -96,8 +96,8 @@ Initialize a model and create a grader with custom prompts for evaluating respon
 
 ???+ example "Show Code"
     ```python
-    from rm_gallery.core.graders.llm_grader import LLMGrader
-    from rm_gallery.core.models import OpenAIChatModel
+    from open_judge.graders.llm_grader import LLMGrader
+    from open_judge.models import OpenAIChatModel
 
     # Initialize model
     model = OpenAIChatModel(model="qwen3-32b")
@@ -117,8 +117,8 @@ Execute evaluation on the dataset and analyze results to get accuracy metrics.
 
 ???+ example "Show Code"
     ```python
-    from rm_gallery.core.runner import GradingRunner
-    from rm_gallery.core.analyzer import ValidationAnalyzer
+    from open_judge.runner import GradingRunner
+    from open_judge.analyzer import ValidationAnalyzer
 
     # Setup runner
     runner = GradingRunner(grader_configs={"my_grader": grader})

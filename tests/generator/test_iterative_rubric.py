@@ -38,19 +38,19 @@ from copy import deepcopy
 import pytest
 from loguru import logger
 
-from rm_gallery.core.generator.iterative_rubric.generator import (
+from open_judge.generator.iterative_rubric.generator import (
     IterativeListwiseRubricsGeneratorConfig,
     IterativePointwiseRubricsGeneratorConfig,
     IterativeRubricsGenerator,
 )
-from rm_gallery.core.generator.iterative_rubric.query_rubric_generator import (
+from open_judge.generator.iterative_rubric.query_rubric_generator import (
     LISTWISE_EVALUATION_TEMPLATE,
     POINTWISE_EVALUATION_TEMPLATE,
 )
-from rm_gallery.core.graders.llm_grader import LLMGrader
-from rm_gallery.core.graders.schema import GraderRank, GraderScore
-from rm_gallery.core.models.openai_chat_model import OpenAIChatModel
-from rm_gallery.core.models.schema.prompt_template import LanguageEnum
+from open_judge.graders.llm_grader import LLMGrader
+from open_judge.graders.schema import GraderRank, GraderScore
+from open_judge.models.openai_chat_model import OpenAIChatModel
+from open_judge.models.schema.prompt_template import LanguageEnum
 
 # pylint: disable=line-too-long
 

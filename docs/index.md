@@ -1,7 +1,7 @@
-# RM-Gallery
+# OpenJudge
 
-## Why RM-Gallery?
-**RM-Gallery** unifies reward signals and evaluation metrics into one **Grader** interface—with pre-built graders, flexible customization, and seamless framework integration.
+## Why OpenJudge?
+**OpenJudge** unifies reward signals and evaluation metrics into one **Grader** interface—with pre-built graders, flexible customization, and seamless framework integration.
 
 ### Key Features
 
@@ -33,7 +33,7 @@
       <h3>Evaluate An AI Agent</h3>
     </div>
     <p class="card-desc card-desc-lg">
-      <b>Comprehensive evaluation for AI Agents:</b> Learn to evaluate the full lifecycle—including final response, trajectory, tool usage, plan, memory, reflection, observation—using RM-Gallery Graders.
+      <b>Comprehensive evaluation for AI Agents:</b> Learn to evaluate the full lifecycle—including final response, trajectory, tool usage, plan, memory, reflection, observation—using OpenJudge Graders.
     </p>
   </a>
 

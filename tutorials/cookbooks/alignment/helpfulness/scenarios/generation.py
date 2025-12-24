@@ -5,11 +5,11 @@ Creates high-quality, instruction-following content across diverse formats and t
 """
 from typing import Any, List
 
-from rm_gallery.core.graders.base_grader import GraderMode, GraderRank
-from rm_gallery.core.graders.llm_grader import LLMGrader
-from rm_gallery.core.models.base_chat_model import BaseChatModel
-from rm_gallery.core.models.schema.oai.message import ChatMessage
-from rm_gallery.core.models.schema.prompt_template import LanguageEnum, PromptTemplate
+from open_judge.graders.base_grader import GraderMode, GraderRank
+from open_judge.graders.llm_grader import LLMGrader
+from open_judge.models.base_chat_model import BaseChatModel
+from open_judge.models.schema.oai.message import ChatMessage
+from open_judge.models.schema.prompt_template import LanguageEnum, PromptTemplate
 
 # Generation Rank System Prompt
 GENERATION_SYSTEM_PROMPT_EN = (
@@ -171,8 +171,8 @@ class GenerationGrader(LLMGrader):
         Example:
             >>> # Example for listwise generation grader
             >>> import asyncio
-            >>> from rm_gallery.core.model.openai_llm import OpenAIChatModel
-            >>> from rm_gallery.core.grader.base import GraderMode
+            >>> from open_judge.model.openai_llm import OpenAIChatModel
+            >>> from open_judge.grader.base import GraderMode
             >>> model = OpenAIChatModel(model="qwen3-max")
             >>> grader = GenerationGrader(model=model)
             >>> result = asyncio.run(grader.aevaluate(

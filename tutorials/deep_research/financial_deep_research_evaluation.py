@@ -17,20 +17,30 @@ All graders are aggregated using GradingRunner for concurrent evaluation.
 import asyncio
 from typing import Any, Dict, List
 
-from tutorials.deep_research.graders.financial_report_resolution import FinancialReportResolutionGrader
-from tutorials.deep_research.graders.financial_trajectory_faithfulness import FinancialTrajectoryFaithfulGrader
-from rm_gallery.core.graders.agent.trajectory.rubrics_based_trajectory_performance import RubricsBasedTrajectoryPerformance
-from rm_gallery.core.graders.agent.observation.observation_information_gain import ObservationInformationGainGrader
-from rm_gallery.core.graders.agent.action.action_loop import ActionLoopDetectionGrader
-from rm_gallery.core.graders.agent.trajectory.trajectory_comprehensive import TrajectoryComprehensiveGrader
-from rm_gallery.core.models.openai_chat_model import OpenAIChatModel
-from rm_gallery.core.models.schema.prompt_template import LanguageEnum
-from rm_gallery.core.runner.grading_runner import GraderConfig, GradingRunner
+from open_judge.graders.agent.action.action_loop import ActionLoopDetectionGrader
+from open_judge.graders.agent.observation.observation_information_gain import (
+    ObservationInformationGainGrader,
+)
+from open_judge.graders.agent.trajectory.rubrics_based_trajectory_performance import (
+    RubricsBasedTrajectoryPerformance,
+)
+from open_judge.graders.agent.trajectory.trajectory_comprehensive import (
+    TrajectoryComprehensiveGrader,
+)
+from open_judge.models.openai_chat_model import OpenAIChatModel
+from open_judge.models.schema.prompt_template import LanguageEnum
+from open_judge.runner.grading_runner import GraderConfig, GradingRunner
+from tutorials.deep_research.graders.financial_report_resolution import (
+    FinancialReportResolutionGrader,
+)
+from tutorials.deep_research.graders.financial_trajectory_faithfulness import (
+    FinancialTrajectoryFaithfulGrader,
+)
 
 
 def create_sample_data() -> List[Dict[str, Any]]:
     """Create sample evaluation data for demonstration.
-    
+
     Returns:
         List of evaluation samples with agent trajectories
     """
@@ -77,11 +87,11 @@ def create_sample_data() -> List[Dict[str, Any]]:
 
 def create_grader_configs(model: OpenAIChatModel, language: LanguageEnum = LanguageEnum.ZH) -> Dict[str, GraderConfig]:
     """Create grader configurations with appropriate mappers.
-    
+
     Args:
         model: LLM model for evaluation
         language: Language for evaluation prompts
-        
+
     Returns:
         Dictionary of grader configurations
     """
@@ -169,4 +179,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-

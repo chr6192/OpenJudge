@@ -12,13 +12,13 @@ from typing import Any, Callable, Dict, List, Optional, Union
 from loguru import logger
 from pydantic import BaseModel, Field
 
-from rm_gallery.core.graders.base_grader import GraderMode, GraderScore
-from rm_gallery.core.graders.llm_grader import LLMGrader
-from rm_gallery.core.graders.schema import GraderError
-from rm_gallery.core.models.base_chat_model import BaseChatModel
-from rm_gallery.core.models.schema.oai.response import ChatResponse
-from rm_gallery.core.models.schema.oai.message import ChatMessage
-from rm_gallery.core.models.schema.prompt_template import LanguageEnum, PromptTemplate
+from open_judge.graders.base_grader import GraderMode, GraderScore
+from open_judge.graders.llm_grader import LLMGrader
+from open_judge.graders.schema import GraderError
+from open_judge.models.base_chat_model import BaseChatModel
+from open_judge.models.schema.oai.message import ChatMessage
+from open_judge.models.schema.oai.response import ChatResponse
+from open_judge.models.schema.prompt_template import LanguageEnum, PromptTemplate
 
 # pylint: disable=line-too-long
 
@@ -361,7 +361,7 @@ class FinancialReportResolutionGrader(LLMGrader):
             (default: 0.9, on normalized 0-1 scale)
 
     Example:
-        >>> from rm_gallery.core.models.openai_chat_model import OpenAIChatModel
+        >>> from open_judge.models.openai_chat_model import OpenAIChatModel
         >>> api = OpenAIChatModel(api_key="...", model="gpt-4o")
         >>> grader = FinancialReportResolutionGrader(model=api, resolution_threshold=0.85)
         >>> result = await grader.aevaluate(
@@ -522,7 +522,7 @@ class FinancialReportResolutionGrader(LLMGrader):
                 Defaults to 0.9 (90%). Note: This is on 0-1 normalized scale.
 
         Example:
-            >>> from rm_gallery.core.models.openai_chat_model import OpenAIChatModel
+            >>> from open_judge.models.openai_chat_model import OpenAIChatModel
             >>> model = OpenAIChatModel(api_key="...", model="gpt-4o")
             >>> grader = FinancialReportResolutionGrader(model=model, resolution_threshold=0.85)
         """
@@ -640,10 +640,7 @@ class FinancialReportResolutionGrader(LLMGrader):
 
         if not query or not answer:
             logger.warning("Empty query or answer, returning error")
-            return GraderError(
-                name=self.name,
-                error="Empty query or answer"
-            )
+            return GraderError(name=self.name, error="Empty query or answer")
 
         try:
             # Call parent evaluation with formatted parameters

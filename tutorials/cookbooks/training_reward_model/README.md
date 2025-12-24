@@ -1,4 +1,4 @@
-# Training Examples for RM-Gallery
+# Training Examples for OpenJudge
 
 This directory contains training examples for reward models using the VERL framework. The training code is independent from the core evaluation framework.
 
@@ -85,7 +85,7 @@ The training examples expect data in parquet format. You can convert your data u
 
 ```python
 # Example: Export data to parquet
-from rm_gallery.gallery.data import export_data
+from open_judge.gallery.data import export_data
 
 export_data(
     eval_cases=your_data,
@@ -120,7 +120,7 @@ See `runtime_env.yaml` files for specific dependencies.
 
 ## Notes
 
-- Training code is independent from `rm_gallery.core` evaluation framework
+- Training code is independent from `open_judge` evaluation framework
 - Uses VERL for distributed training with FSDP/PPO
 - Supports multi-node multi-GPU training
 - Compatible with Qwen models with thinking capability

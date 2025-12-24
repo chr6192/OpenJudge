@@ -9,7 +9,7 @@ import json
 
 import pytest
 
-from rm_gallery.core.graders.format.json.json_match import JsonMatchGrader
+from open_judge.graders.format.json.json_match import JsonMatchGrader
 
 
 class TestJsonMatchGrader:

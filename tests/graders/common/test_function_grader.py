@@ -26,16 +26,16 @@ import asyncio
 
 import pytest
 
-from rm_gallery.core.analyzer.validation import (
+from open_judge.analyzer.validation import (
     AccuracyAnalyzer,
     CorrelationAnalyzer,
     F1ScoreAnalyzer,
     PrecisionAnalyzer,
     RecallAnalyzer,
 )
-from rm_gallery.core.graders.function_grader import FunctionGrader
-from rm_gallery.core.graders.schema import GraderMode, GraderRank, GraderScore
-from rm_gallery.core.runner.grading_runner import GraderConfig, GradingRunner
+from open_judge.graders.function_grader import FunctionGrader
+from open_judge.graders.schema import GraderMode, GraderRank, GraderScore
+from open_judge.runner.grading_runner import GraderConfig, GradingRunner
 
 # ==================== UNIT TESTS ====================
 # These tests verify the basic functionality of the grader in isolation

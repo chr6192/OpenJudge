@@ -73,5 +73,5 @@ python generate_new_cases.py
 ```
 再按步骤3运行测试脚本
 ```
-python run_grader_eval_bfcl_dataset.py --case_file <tool_call_bfcl_v3_multiple_eval_data_new_cases.jsonl> --grader_name ToolCallAccuracyGrader 
+python run_grader_eval_bfcl_dataset.py --case_file <tool_call_bfcl_v3_multiple_eval_data_new_cases.jsonl> --grader_name ToolCallAccuracyGrader
 ```

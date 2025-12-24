@@ -32,17 +32,11 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from rm_gallery.core.analyzer.validation import (
-    AccuracyAnalyzer,
-    ConsistencyAnalyzer,
-    FalseNegativeAnalyzer,
-    FalsePositiveAnalyzer,
-)
-from rm_gallery.core.graders.common.instruction_following import (
-    InstructionFollowingGrader,
-)
-from rm_gallery.core.models.openai_chat_model import OpenAIChatModel
-from rm_gallery.core.runner.grading_runner import GraderConfig, GradingRunner
+from open_judge.analyzer.statistical import ConsistencyAnalyzer
+from open_judge.analyzer.validation import FalseNegativeAnalyzer, FalsePositiveAnalyzer
+from open_judge.graders.common.instruction_following import InstructionFollowingGrader
+from open_judge.models.openai_chat_model import OpenAIChatModel
+from open_judge.runner.grading_runner import GraderConfig, GradingRunner
 
 # ==================== UNIT TESTS ====================
 # These tests verify the basic functionality of the grader in isolation
@@ -72,7 +66,7 @@ class TestInstructionFollowingGraderUnit:
         }
 
         # Use patch to mock the model's achat method
-        with patch("rm_gallery.core.graders.llm_grader.BaseChatModel.achat", new_callable=AsyncMock) as mock_achat:
+        with patch("open_judge.graders.llm_grader.BaseChatModel.achat", new_callable=AsyncMock) as mock_achat:
             mock_achat.return_value = mock_response
 
             mock_model = AsyncMock()
@@ -105,7 +99,7 @@ class TestInstructionFollowingGraderUnit:
         }
 
         # Use patch to mock the model's achat method
-        with patch("rm_gallery.core.graders.llm_grader.BaseChatModel.achat", new_callable=AsyncMock) as mock_achat:
+        with patch("open_judge.graders.llm_grader.BaseChatModel.achat", new_callable=AsyncMock) as mock_achat:
             mock_achat.return_value = mock_response
 
             mock_model = AsyncMock()
@@ -131,7 +125,7 @@ class TestInstructionFollowingGraderUnit:
     async def test_error_handling(self):
         """Test graceful error handling"""
         # Use patch to mock the model's achat method to raise an exception
-        with patch("rm_gallery.core.graders.llm_grader.BaseChatModel.achat", new_callable=AsyncMock) as mock_achat:
+        with patch("open_judge.graders.llm_grader.BaseChatModel.achat", new_callable=AsyncMock) as mock_achat:
             mock_achat.side_effect = Exception("API Error")
 
             mock_model = AsyncMock()
@@ -160,7 +154,7 @@ RUN_QUALITY_TESTS = bool(OPENAI_API_KEY and OPENAI_BASE_URL)
 
 # Configure workspace root
 WORKSPACE_ROOT = Path(__file__).parent.parent.parent.parent
-DATA_FILE = WORKSPACE_ROOT / "data" / "pre_data" / "rm-gallery-hug" / "common" / "instruction_following_eval_v1.json"
+DATA_FILE = WORKSPACE_ROOT / "data" / "pre_data" / "open_judge-hug" / "common" / "instruction_following_eval_v1.json"
 
 
 @pytest.mark.skipif(not RUN_QUALITY_TESTS, reason="Requires API keys and base URL to run quality tests")
@@ -170,7 +164,7 @@ class TestInstructionFollowingGraderQuality:
 
     @pytest.fixture
     def dataset(self):
-        """Load evaluation dataset from rm-gallery-hug"""
+        """Load evaluation dataset from open_judge-hug"""
         import json
 
         if not DATA_FILE.exists():
@@ -270,8 +264,8 @@ class TestInstructionFollowingGraderQuality:
         # Use ConsistencyAnalyzer to calculate consistency metrics
         consistency_analyzer = ConsistencyAnalyzer()
         consistency_result = consistency_analyzer.analyze(
-            first_run_results=results["instruction_following_run1"],
-            second_run_results=results["instruction_following_run2"],
+            grader_results=results["instruction_following_run1"],
+            another_grader_results=results["instruction_following_run2"],
         )
 
         # Assert that consistency metrics meet expected thresholds
@@ -294,7 +288,7 @@ class TestInstructionFollowingGraderAdversarial:
 
     @pytest.fixture
     def dataset(self):
-        """Load evaluation dataset from rm-gallery-hug for adversarial testing"""
+        """Load evaluation dataset from open_judge-hug for adversarial testing"""
         import json
 
         if not DATA_FILE.exists():

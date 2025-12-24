@@ -28,8 +28,8 @@ In many cases, you won't have reference labels to compare against. In these scen
 Here's an example to analyzing your model's performance distribution:
 
 ```python
-from rm_gallery.core.analyzer.statistical.distribution_analyzer import DistributionAnalyzer
-from rm_gallery.core.runner.grading_runner import GradingRunner
+from open_judge.analyzer.statistical.distribution_analyzer import DistributionAnalyzer
+from open_judge.runner.grading_runner import GradingRunner
 
 # After running your graders on a dataset (as described in run_tasks.md)
 runner = GradingRunner(grader_configs=grader_configs)
@@ -51,8 +51,8 @@ OpenJudge provides several built-in statistical analysis for examining model per
 
 | Analysis Name | Functionality |
 |---------------|---------------|
-| [DistributionAnalyzer](../../rm_gallery/core/analyzer/statistical/distribution_analyzer.py#L18-L60) | Examines the distribution of scores across the dataset, including mean, standard deviation, min, and max values to understand the range and variability of model performance |
-| [ConsistencyAnalyzer](../../rm_gallery/core/analyzer/validation/consistency_analyzer.py#L23-L84) | Evaluates how consistently your model performs when presented with similar inputs or when the same input is evaluated multiple times |
+| [DistributionAnalyzer](../../open_judge/analyzer/statistical/distribution_analyzer.py#L18-L60) | Examines the distribution of scores across the dataset, including mean, standard deviation, min, and max values to understand the range and variability of model performance |
+| [ConsistencyAnalyzer](../../open_judge/analyzer/validation/consistency_analyzer.py#L23-L84) | Evaluates how consistently your model performs when presented with similar inputs or when the same input is evaluated multiple times |
 
 
 ### Comparative Analysis With Ground Truth
@@ -64,7 +64,7 @@ Comparative analysis is particularly powerful because it gives you concrete meas
 Here's an example to comparing your model's performance with ground truth labels:
 
 ```python
-from rm_gallery.core.analyzer.validation.accuracy_analyzer import AccuracyAnalyzer
+from open_judge.analyzer.validation.accuracy_analyzer import AccuracyAnalyzer
 
 # Dataset with ground truth labels for comparison
 analyzer = AccuracyAnalyzer()
@@ -84,13 +84,13 @@ OpenJudge provides several built-in comparative analysis for examining model per
 
 | Analysis Name | Functionality |
 |---------------|---------------|
-| [AccuracyAnalyzer](../../rm_gallery/core/analyzer/validation/accuracy_analyzer.py#L15-L60) | Measures the accuracy of your model's evaluation when ground truth labels are available for comparison |
-| [F1ScoreAnalyzer](../../rm_gallery/core/analyzer/validation/f1_score_analyzer.py#L17-L74) | Calculates F1 scores balancing precision and recall for comprehensive evaluation, particularly useful for imbalanced datasets |
-| [FalsePositiveAnalyzer](../../rm_gallery/core/analyzer/validation/false_positive_analyzer.py#L15-L50) | Identifies instances where the model incorrectly identifies positive cases, helping to understand over-estimation patterns |
-| [FalseNegativeAnalyzer](../../rm_gallery/core/analyzer/validation/false_negative_analyzer.py#L15-L50) | Identifies instances where the model fails to detect actual positive cases, helping to understand under-estimation patterns |
-| [PrecisionAnalyzer](../../rm_gallery/core/analyzer/validation/precision_analyzer.py#L15-L56) | Calculates precision of the model's positive predictions compared to actual positive cases |
-| [RecallAnalyzer](../../rm_gallery/core/analyzer/validation/recall_analyzer.py#L15-L56) | Calculates recall of the model's ability to identify all actual positive cases |
-| [CorrelationAnalyzer](../../rm_gallery/core/analyzer/validation/correlation_analyzer.py#L16-L60) | Evaluates the correlation between different metrics or evaluation criteria to understand relationships in model performance |
+| [AccuracyAnalyzer](../../open_judge/analyzer/validation/accuracy_analyzer.py#L15-L60) | Measures the accuracy of your model's evaluation when ground truth labels are available for comparison |
+| [F1ScoreAnalyzer](../../open_judge/analyzer/validation/f1_score_analyzer.py#L17-L74) | Calculates F1 scores balancing precision and recall for comprehensive evaluation, particularly useful for imbalanced datasets |
+| [FalsePositiveAnalyzer](../../open_judge/analyzer/validation/false_positive_analyzer.py#L15-L50) | Identifies instances where the model incorrectly identifies positive cases, helping to understand over-estimation patterns |
+| [FalseNegativeAnalyzer](../../open_judge/analyzer/validation/false_negative_analyzer.py#L15-L50) | Identifies instances where the model fails to detect actual positive cases, helping to understand under-estimation patterns |
+| [PrecisionAnalyzer](../../open_judge/analyzer/validation/precision_analyzer.py#L15-L56) | Calculates precision of the model's positive predictions compared to actual positive cases |
+| [RecallAnalyzer](../../open_judge/analyzer/validation/recall_analyzer.py#L15-L56) | Calculates recall of the model's ability to identify all actual positive cases |
+| [CorrelationAnalyzer](../../open_judge/analyzer/validation/correlation_analyzer.py#L16-L60) | Evaluates the correlation between different metrics or evaluation criteria to understand relationships in model performance |
 
 ## Next Steps
 After analyzing your grader results, you can confidently [refine data quality](../applications/data_refinement.md) based on the insights gained from your analysis or [create custom graders](../building_graders/create_custom_graders.md) to address specific evaluation needs identified during analysis.

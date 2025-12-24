@@ -36,7 +36,7 @@ Assess the end result of agent execution to determine if the agent successfully 
 
 Suppose you want to evaluate: **Is the agent's final answer factually correct compared to a reference answer?**
 
-This is a **correctness** evaluation task. RM-Gallery provides the `CorrectnessGrader` for exactly this purpose—it compares the response against a reference and scores accuracy on a 1-5 scale.
+This is a **correctness** evaluation task. OpenJudge provides the `CorrectnessGrader` for exactly this purpose—it compares the response against a reference and scores accuracy on a 1-5 scale.
 
 | Your Scenario | Recommended Grader |
 |---------------|-------------------|
@@ -54,7 +54,7 @@ In this example, we'll use `CorrectnessGrader` to evaluate the agent's final ans
 === "Environment Variables"
 
     ```python
-    from rm_gallery.core.models import OpenAIChatModel
+    from open_judge.models import OpenAIChatModel
 
     # Uses OPENAI_API_KEY and OPENAI_BASE_URL from environment
     model = OpenAIChatModel(model="qwen3-32b")
@@ -63,7 +63,7 @@ In this example, we'll use `CorrectnessGrader` to evaluate the agent's final ans
 === "Pass Directly"
 
     ```python
-    from rm_gallery.core.models import OpenAIChatModel
+    from open_judge.models import OpenAIChatModel
 
     model = OpenAIChatModel(
         model="qwen3-32b",
@@ -89,8 +89,8 @@ dataset = [
 
 ```python
 import asyncio
-from rm_gallery.core.graders.common import CorrectnessGrader
-from rm_gallery.core.models import OpenAIChatModel
+from open_judge.graders.common import CorrectnessGrader
+from open_judge.models import OpenAIChatModel
 
 async def main():
     # Initialize model and grader
@@ -133,7 +133,7 @@ Assess individual agent decisions in isolation—one tool call, one planning ste
 
 Suppose you want to evaluate: **Did the agent select the most appropriate tool for the current sub-task?**
 
-This is a **tool selection** evaluation task. RM-Gallery provides the `ToolSelectionGrader` for exactly this purpose—it assesses whether the chosen tool matches the task requirements.
+This is a **tool selection** evaluation task. OpenJudge provides the `ToolSelectionGrader` for exactly this purpose—it assesses whether the chosen tool matches the task requirements.
 
 | Your Scenario | Recommended Grader |
 |---------------|-------------------|
@@ -152,7 +152,7 @@ In this example, we'll use `ToolSelectionGrader` to evaluate the agent's tool ch
 === "Environment Variables"
 
     ```python
-    from rm_gallery.core.models import OpenAIChatModel
+    from open_judge.models import OpenAIChatModel
 
     # Uses OPENAI_API_KEY and OPENAI_BASE_URL from environment
     model = OpenAIChatModel(model="qwen3-32b")
@@ -161,7 +161,7 @@ In this example, we'll use `ToolSelectionGrader` to evaluate the agent's tool ch
 === "Pass Directly"
 
     ```python
-    from rm_gallery.core.models import OpenAIChatModel
+    from open_judge.models import OpenAIChatModel
 
     model = OpenAIChatModel(
         model="qwen3-32b",
@@ -194,8 +194,8 @@ data = {
 
 ```python
 import asyncio
-from rm_gallery.core.graders.agent import ToolSelectionGrader
-from rm_gallery.core.models import OpenAIChatModel
+from open_judge.graders.agent import ToolSelectionGrader
+from open_judge.models import OpenAIChatModel
 
 async def main():
     # Initialize model and grader
@@ -244,7 +244,7 @@ Assess the entire sequence of agent actions to determine if the agent took an op
 
 Suppose you want to evaluate: **Did the agent complete the task efficiently without unnecessary steps or loops?**
 
-This is a **trajectory** evaluation task. RM-Gallery provides the `TrajectoryComprehensiveGrader` for exactly this purpose—it analyzes the full execution path for efficiency and correctness.
+This is a **trajectory** evaluation task. OpenJudge provides the `TrajectoryComprehensiveGrader` for exactly this purpose—it analyzes the full execution path for efficiency and correctness.
 
 For a complete list of available graders, see [Agent Graders](../built_in_graders/agent_graders.md).
 
@@ -255,7 +255,7 @@ In this example, we'll use `TrajectoryComprehensiveGrader` to evaluate the agent
 === "Environment Variables"
 
     ```python
-    from rm_gallery.core.models import OpenAIChatModel
+    from open_judge.models import OpenAIChatModel
 
     # Uses OPENAI_API_KEY and OPENAI_BASE_URL from environment
     model = OpenAIChatModel(model="qwen3-32b")
@@ -264,7 +264,7 @@ In this example, we'll use `TrajectoryComprehensiveGrader` to evaluate the agent
 === "Pass Directly"
 
     ```python
-    from rm_gallery.core.models import OpenAIChatModel
+    from open_judge.models import OpenAIChatModel
 
     model = OpenAIChatModel(
         model="qwen3-32b",
@@ -308,8 +308,8 @@ data = {
 
 ```python
 import asyncio
-from rm_gallery.core.graders.agent import TrajectoryComprehensiveGrader
-from rm_gallery.core.models import OpenAIChatModel
+from open_judge.graders.agent import TrajectoryComprehensiveGrader
+from open_judge.models import OpenAIChatModel
 
 async def main():
     # Initialize model and grader
@@ -370,9 +370,9 @@ For evaluating multiple agent traces efficiently, use `GradingRunner` to run gra
 
 ```python
 import asyncio
-from rm_gallery.core.graders.agent import ToolSelectionGrader
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.runner.grading_runner import GradingRunner, GraderConfig
+from open_judge.graders.agent import ToolSelectionGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.runner.grading_runner import GradingRunner, GraderConfig
 
 async def main():
     # Initialize model and grader

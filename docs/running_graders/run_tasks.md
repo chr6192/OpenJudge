@@ -2,7 +2,7 @@
 > **Tip:** Grading is the process of evaluating how good responses from an AI model are. Think of it like having different teachers grade student essays - each teacher focuses on a different aspect like grammar, content, or creativity.
 
 ## What is GradingRunner?
-The [GradingRunner](../../rm_gallery/core/runner/grading_runner.py) is RM-Gallery's primary execution engine that orchestrates the evaluation process across multiple graders. It acts as the conductor of an orchestra, coordinating all the different graders to create a harmonious evaluation process.
+The [GradingRunner](../../open_judge/runner/grading_runner.py) is OpenJudge's primary execution engine that orchestrates the evaluation process across multiple graders. It acts as the conductor of an orchestra, coordinating all the different graders to create a harmonious evaluation process.
 
 GradingRunner's main purpose is to coordinate the execution of multiple graders across your dataset, providing the infrastructure needed for efficient and effective evaluations. Specifically, it provides:
 
@@ -20,11 +20,11 @@ Setting up an evaluation workflow with the GradingRunner involves configuring th
 Let's begin with a simple example to understand how GradingRunner works:
 
 ```python
-from rm_gallery.core.runner.grading_runner import GradingRunner
-from rm_gallery.core.runner.aggregator.weighted_sum_aggregator import WeightedSumAggregator
-from rm_gallery.core.graders.common.helpfulness import HelpfulnessGrader
-from rm_gallery.core.graders.common.relevance import RelevanceGrader
-from rm_gallery.core.models.openai_chat_model import OpenAIChatModel
+from open_judge.runner.grading_runner import GradingRunner
+from open_judge.runner.aggregator.weighted_sum_aggregator import WeightedSumAggregator
+from open_judge.graders.common.helpfulness import HelpfulnessGrader
+from open_judge.graders.common.relevance import RelevanceGrader
+from open_judge.models.openai_chat_model import OpenAIChatModel
 
 # Prepare your data in whatever format works for you
 data = [
@@ -139,7 +139,7 @@ grader_configs = {
 ```
 
 ### Aggregation Configuration
-After running multiple graders, you might want to combine their results into a single score. The [aggregator submodule](../../rm_gallery/core/runner/aggregator/) provides components that take multiple grader results and combine them into a unified result:
+After running multiple graders, you might want to combine their results into a single score. The [aggregator submodule](../../open_judge/runner/aggregator/) provides components that take multiple grader results and combine them into a unified result:
 
 - **WeightedSumAggregator**: Combining results using weighted averages. In our example, we assign 60% weight to helpfulness and 40% to relevance: `WeightedSumAggregator(weights={"helpfulness": 0.6, "relevance": 0.4})`
 - **MaxAggregator**: Taking the maximum score among all graders
@@ -150,7 +150,7 @@ These aggregators allow you to create composite scores that reflect multiple eva
 Often you'll want to combine multiple grader results into unified scores:
 
 ```python
-from rm_gallery.core.runner.aggregator.weighted_sum_aggregator import WeightedSumAggregator
+from open_judge.runner.aggregator.weighted_sum_aggregator import WeightedSumAggregator
 
 # Combine multiple perspectives into a single quality score
 # Like calculating a final grade based on different subject scores

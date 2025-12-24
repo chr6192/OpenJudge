@@ -37,7 +37,7 @@ Validates whether a response is valid JSON, ensuring structured outputs can be p
 
 ```python
 import asyncio
-from rm_gallery.core.graders.format.json.json_validator import JsonValidatorGrader
+from open_judge.graders.format.json.json_validator import JsonValidatorGrader
 
 async def main():
     grader = JsonValidatorGrader()
@@ -83,7 +83,7 @@ Performs deep structural comparison of JSON objects by recursively validating th
 
 ```python
 import asyncio
-from rm_gallery.core.graders.format.json.json_match import JsonMatchGrader
+from open_judge.graders.format.json.json_match import JsonMatchGrader
 
 async def main():
     # Strict matching
@@ -149,7 +149,7 @@ Applies penalties to responses that are too short or too long, helping you contr
 
 ```python
 import asyncio
-from rm_gallery.core.graders.format.length_penalty import LengthPenaltyGrader
+from open_judge.graders.format.length_penalty import LengthPenaltyGrader
 
 async def main():
     grader = LengthPenaltyGrader(
@@ -208,7 +208,7 @@ Detects and penalizes repetitive patterns in text using N-gram analysis with sup
 
 ```python
 import asyncio
-from rm_gallery.core.graders.format.ngram_repetition_penalty import NgramRepetitionPenaltyGrader
+from open_judge.graders.format.ngram_repetition_penalty import NgramRepetitionPenaltyGrader
 
 async def main():
     # Hard threshold penalty
@@ -276,7 +276,7 @@ Validates that responses follow a specific reasoning format with `<think>` and `
 
 ```python
 import asyncio
-from rm_gallery.core.graders.format.reasoning_format import ReasoningFormatGrader
+from open_judge.graders.format.reasoning_format import ReasoningFormatGrader
 
 async def main():
     grader = ReasoningFormatGrader()
@@ -343,7 +343,7 @@ Validates that responses follow proper format for tool-calling agents with reaso
 
 ```python
 import asyncio
-from rm_gallery.core.graders.format.reasoning_tool_format import ReasoningToolCallFormatGrader
+from open_judge.graders.format.reasoning_tool_format import ReasoningToolCallFormatGrader
 
 async def main():
     grader = ReasoningToolCallFormatGrader()

@@ -50,7 +50,7 @@ Flexible [data mapping](#data-mapping) ensures your existing data formats can be
 
 Based on your evaluation purpose, you can choose the appropriate assessment approach:
 
-- **Code-Based graders**: For objective, quantitative evaluations using the [FunctionGrader](../../rm_gallery/core/graders/function_grader.py), these graders use predefined functions or algorithms to compute scores. These graders are deterministic and fast, ideal for metrics like exact match, format validation, or simple checks. This approach is best suited for quantitative analysis where you need consistent, reproducible results based on mathematical or logical operations.
+- **Code-Based graders**: For objective, quantitative evaluations using the [FunctionGrader](../../open_judge/graders/function_grader.py), these graders use predefined functions or algorithms to compute scores. These graders are deterministic and fast, ideal for metrics like exact match, format validation, or simple checks. This approach is best suited for quantitative analysis where you need consistent, reproducible results based on mathematical or logical operations.
 
 ```
 # A simple function grader that checks if response contains reference answer
@@ -60,7 +60,7 @@ def contains_reference(response, reference):
 contains_grader = FunctionGrader(contains_reference)
 ```
 
-- **LLM-Based graders**: For subjective, qualitative evaluations using the [LLMGrader](../../rm_gallery/core/graders/llm_grader.py), these graders leverage large language models to perform sophisticated evaluations. These graders can assess complex qualities like helpfulness, safety, or coherence by using natural language understanding. This approach is best suited for qualitative analysis where nuanced understanding is required, such as evaluating the helpfulness of responses, detecting subtle hallucinations, or assessing the quality of creative content.
+- **LLM-Based graders**: For subjective, qualitative evaluations using the [LLMGrader](../../open_judge/graders/llm_grader.py), these graders leverage large language models to perform sophisticated evaluations. These graders can assess complex qualities like helpfulness, safety, or coherence by using natural language understanding. This approach is best suited for qualitative analysis where nuanced understanding is required, such as evaluating the helpfulness of responses, detecting subtle hallucinations, or assessing the quality of creative content.
 
 ```
 # An LLM grader that evaluates helpfulness of responses
@@ -71,9 +71,9 @@ helpfulness_grader = HelpfulnessGrader(model=OpenAIChatModel("gpt-4"))
 
 Based on the evaluation purpose, you can choose the appropriate evaluation mode. Each mode produces specific output types:
 
-- **Pointwise evaluation**: Assesses individual samples independently, generating a score for each input-output pair. This approach is suitable for quantitative assessment of individual responses, producing a [GraderScore](../../rm_gallery/core/graders/schema.py) for each sample.
+- **Pointwise evaluation**: Assesses individual samples independently, generating a score for each input-output pair. This approach is suitable for quantitative assessment of individual responses, producing a [GraderScore](../../open_judge/graders/schema.py) for each sample.
 
-- **Listwise evaluation**: Ranks multiple samples relative to each other, comparing several responses to the same query. This approach generates relative rankings rather than absolute scores, producing a [GraderRank](../../rm_gallery/core/graders/schema.py) that indicates the relative quality of responses.
+- **Listwise evaluation**: Ranks multiple samples relative to each other, comparing several responses to the same query. This approach generates relative rankings rather than absolute scores, producing a [GraderRank](../../open_judge/graders/schema.py) that indicates the relative quality of responses.
 
 ### Understanding Results
 
@@ -121,16 +121,16 @@ For detailed instructions on creating custom graders, please refer to the [Build
 
 ## How Runners Use Graders
 
-The [GradingRunner](../../rm_gallery/core/runner/grading_runner.py) is the central execution engine of OpenJudge that orchestrates the evaluation process across multiple graders. It acts as the conductor of an orchestra, coordinating all the different graders to create a harmonious evaluation process. The GradingRunner is specifically designed to serve Graders by providing the infrastructure they need to operate efficiently and effectively. It serves Graders by providing execution orchestration, data mapping services, concurrency management, result aggregation, and resource optimization to execute graders concurrently and maximize throughput.
+The [GradingRunner](../../open_judge/runner/grading_runner.py) is the central execution engine of OpenJudge that orchestrates the evaluation process across multiple graders. It acts as the conductor of an orchestra, coordinating all the different graders to create a harmonious evaluation process. The GradingRunner is specifically designed to serve Graders by providing the infrastructure they need to operate efficiently and effectively. It serves Graders by providing execution orchestration, data mapping services, concurrency management, result aggregation, and resource optimization to execute graders concurrently and maximize throughput.
 
 To better understand how Runners use Graders, let's look at a complete configuration example:
 
 ```
-from rm_gallery.core.runner.grading_runner import GradingRunner
-from rm_gallery.core.runner.aggregator.weighted_sum_aggregator import WeightedSumAggregator
-from rm_gallery.core.graders.common.helpfulness import HelpfulnessGrader
-from rm_gallery.core.graders.common.relevance import RelevanceGrader
-from rm_gallery.core.models.openai_chat_model import OpenAIChatModel
+from open_judge.runner.grading_runner import GradingRunner
+from open_judge.runner.aggregator.weighted_sum_aggregator import WeightedSumAggregator
+from open_judge.graders.common.helpfulness import HelpfulnessGrader
+from open_judge.graders.common.relevance import RelevanceGrader
+from open_judge.models.openai_chat_model import OpenAIChatModel
 
 # Prepare your data in whatever format works for you
 data = [
@@ -188,7 +188,7 @@ Types of mappers include:
 
 #### Aggregation Configuration
 
-After running multiple graders, you might want to combine their results into a single score. The [aggregator submodule](../../rm_gallery/core/runner/aggregator/) provides components that take multiple grader results and combine them into a unified result:
+After running multiple graders, you might want to combine their results into a single score. The [aggregator submodule](../../open_judge/runner/aggregator/) provides components that take multiple grader results and combine them into a unified result:
 
 - **WeightedSumAggregator**: Combining results using weighted averages. In our example, we assign 60% weight to helpfulness and 40% to relevance: `WeightedSumAggregator(weights={"helpfulness": 0.6, "relevance": 0.4})`
 - **MaxAggregator**: Taking the maximum score among all graders
@@ -208,11 +208,11 @@ Concurrency control enables efficient processing of large datasets while maintai
 
 ## How to Analyze Grader
 
-After running evaluations with the **GradingRunner**, you can use the [analyzer module](../../rm_gallery/core/analyzer/) to process the results and gain deeper insights. Analyzers are optional components that help you understand your evaluation results better and assess the quality of your graders.
+After running evaluations with the **GradingRunner**, you can use the [analyzer module](../../open_judge/analyzer/) to process the results and gain deeper insights. Analyzers are optional components that help you understand your evaluation results better and assess the quality of your graders.
 
 Types of analyzers include:
-- **Statistical analyzers**: Compute statistics on evaluation results (e.g., [DistributionAnalyzer](../../rm_gallery/core/analyzer/statistical/distribution_analyzer.py)) to understand score distributions and identify potential issues with grader consistency
-- **Validation analyzers**: Compare evaluation results with reference labels (e.g., [AccuracyAnalyzer](../../rm_gallery/core/analyzer/validation/accuracy_analyzer.py), [F1ScoreAnalyzer](../../rm_gallery/core/analyzer/validation/f1_score_analyzer.py)) to measure how well your graders correlate with known ground truth
+- **Statistical analyzers**: Compute statistics on evaluation results (e.g., [DistributionAnalyzer](../../open_judge/analyzer/statistical/distribution_analyzer.py)) to understand score distributions and identify potential issues with grader consistency
+- **Validation analyzers**: Compare evaluation results with reference labels (e.g., [AccuracyAnalyzer](../../open_judge/analyzer/validation/accuracy_analyzer.py), [F1ScoreAnalyzer](../../open_judge/analyzer/validation/f1_score_analyzer.py)) to measure how well your graders correlate with known ground truth
 
 These analyzers help you:
 - Evaluate the effectiveness of your graders by comparing their outputs to known standards

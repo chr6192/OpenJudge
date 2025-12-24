@@ -18,7 +18,7 @@ Generative pairwise training uses **Group Relative Policy Optimization (GRPO)** 
 The model generates preference analysis and receives binary rewards:
 
 \[
-\text{reward} = 
+\text{reward} =
 \begin{cases}
 1.0 & \text{if predicted = true preference} \\
 0.0 & \text{otherwise}
@@ -81,7 +81,7 @@ Pairwise training expects Parquet files with:
     def convert_to_pairwise(examples, threshold=1.0):
         """Create pairwise comparisons from scored examples"""
         pairwise_data = []
-        
+
         # Group by prompt
         prompts = {}
         for ex in examples:
@@ -89,16 +89,16 @@ Pairwise training expects Parquet files with:
             if prompt not in prompts:
                 prompts[prompt] = []
             prompts[prompt].append(ex)
-        
+
         # Create pairs
         for prompt, responses in prompts.items():
             if len(responses) < 2:
                 continue
-            
+
             # Compare first two responses
             r1, r2 = responses[0], responses[1]
             score_diff = r1["helpfulness"] - r2["helpfulness"]
-            
+
             if abs(score_diff) < 0.5:
                 preferred = "tie"
                 strength = 0
@@ -108,7 +108,7 @@ Pairwise training expects Parquet files with:
             else:
                 preferred = "B"
                 strength = 1 if abs(score_diff) < threshold else 2
-            
+
             pairwise_data.append({
                 "input": [{"role": "user", "content": prompt}],
                 "output": [
@@ -120,7 +120,7 @@ Pairwise training expects Parquet files with:
                     "preference_strength": strength
                 }
             })
-        
+
         return pairwise_data
 
     train_data = convert_to_pairwise(dataset["train"])
@@ -170,17 +170,17 @@ class HelpfulnessPairwiseTrainDataset(BaseTrainDataset):
         """Build comparison prompt"""
         input_messages = example.get('input', [])
         output_data = example.get('output', [])
-        
+
         # Extract query
         query = input_messages[0]['content'] if input_messages else ""
-        
+
         # Extract two responses
         if len(output_data) >= 2:
             response_a = output_data[0].get('content', '')
             response_b = output_data[1].get('content', '')
         else:
             response_a = response_b = ""
-        
+
         # Build comparison prompt
         prompt = f"""Compare these two responses to the query and determine which is better.
 
@@ -199,27 +199,27 @@ Provide your evaluation in this format:
 <preference>A or B or tie</preference>"""
 
         return [{"role": "user", "content": prompt}]
-    
+
     def _apply_chat_template(self, messages: List[Dict[str, str]]) -> str:
         return self.tokenizer.apply_chat_template(
             messages,
             tokenize=False,
             add_generation_prompt=True
         )
-    
+
     def _extract_ground_truth(self, row_dict: Dict[str, Any]) -> str:
         """Extract preference label"""
         metadata = row_dict.get('metadata', {})
-        
+
         # Handle JSON string metadata
         if isinstance(metadata, str):
             try:
                 metadata = json.loads(metadata)
             except (json.JSONDecodeError, ValueError):
                 metadata = {}
-        
+
         return metadata.get('preferred', 'tie')
-    
+
     def _get_data_source(self, row_dict: Dict[str, Any]) -> str:
         return row_dict.get('data_source', 'unknown')
 ```
@@ -237,18 +237,18 @@ def extract_preference_from_response(response_text: str) -> str:
     """Extract preference decision from model output"""
     if not isinstance(response_text, str):
         response_text = str(response_text)
-    
+
     # Parse using template
     try:
         parsed = PairwiseComparisonTemplate.parse(response_text)
         return parsed.preference or "unknown"
     except Exception:
         pass
-    
+
     # Fallback: Extract from XML tags
     pattern = r"<preference>(.*?)</preference>"
     match = re.search(pattern, response_text, re.DOTALL | re.IGNORECASE)
-    
+
     if match:
         preference = match.group(1).strip().upper()
         if preference == "A" or "RESPONSE A" in preference:
@@ -257,7 +257,7 @@ def extract_preference_from_response(response_text: str) -> str:
             return "B"
         elif "TIE" in preference or "EQUAL" in preference:
             return "tie"
-    
+
     return "unknown"
 
 def calculate_pairwise_reward(
@@ -267,7 +267,7 @@ def calculate_pairwise_reward(
     """Calculate binary reward for preference prediction"""
     if true_preference is None or predicted_preference == "unknown":
         return 0.0
-    
+
     return 1.0 if predicted_preference == true_preference else 0.0
 
 def compute_score(
@@ -281,30 +281,30 @@ def compute_score(
     try:
         # Extract predicted preference
         predicted_preference = extract_preference_from_response(solution_str)
-        
+
         # Extract true preference from metadata
         true_preference = "tie"
         preference_strength = 0
-        
+
         if extra_info and isinstance(extra_info, dict):
             metadata = extra_info.get("metadata", {})
-            
+
             # Handle JSON string
             if isinstance(metadata, str):
                 try:
                     metadata = json.loads(metadata)
                 except (json.JSONDecodeError, ValueError):
                     metadata = {}
-            
+
             if isinstance(metadata, dict):
                 true_preference = metadata.get("preferred", "tie")
                 preference_strength = metadata.get("preference_strength", 0)
-        
+
         # Calculate reward
         reward = calculate_pairwise_reward(predicted_preference, true_preference)
-        accuracy = 1.0 if (predicted_preference == true_preference and 
+        accuracy = 1.0 if (predicted_preference == true_preference and
                           predicted_preference != "unknown") else 0.0
-        
+
         return {
             "score": reward,
             "predicted_preference": predicted_preference,
@@ -314,7 +314,7 @@ def compute_score(
             "task_type": "pairwise",
             "data_source": data_source
         }
-    
+
     except Exception as exc:
         return {
             "score": 0.0,
@@ -337,7 +337,7 @@ from pydantic import BaseModel, Field
 
 class PairwiseComparisonTemplate(BaseModel):
     """Template for pairwise comparison parsing"""
-    
+
     analysis: Optional[str] = Field(
         default=None,
         description="Explanation of the comparison"
@@ -346,18 +346,18 @@ class PairwiseComparisonTemplate(BaseModel):
         default=None,
         description="Preference decision: A, B, or tie"
     )
-    
+
     @classmethod
     def parse(cls, text: str) -> "PairwiseComparisonTemplate":
         """Extract analysis and preference from output"""
         contents = {}
-        
+
         # Extract analysis
         analysis_pattern = r"<analysis>(.*?)</analysis>"
         match = re.search(analysis_pattern, text, re.DOTALL | re.IGNORECASE)
         if match:
             contents["analysis"] = match.group(1).strip()
-        
+
         # Extract preference
         pref_pattern = r"<preference>(.*?)</preference>"
         match = re.search(pref_pattern, text, re.DOTALL | re.IGNORECASE)
@@ -369,7 +369,7 @@ class PairwiseComparisonTemplate(BaseModel):
                 contents["preference"] = "B"
             elif "TIE" in pref:
                 contents["preference"] = "tie"
-        
+
         return cls(**contents)
 ```
 
@@ -388,7 +388,7 @@ VAL_FILE=./data/helpsteer2_pairwise_test.parquet
 MODEL_PATH=Qwen/Qwen2.5-14B-Instruct
 
 PROJECT_NAME=pairwise_train
-EXPERIMENT_NAME=rm-gallery-pairwise-${TIMESTAMP}
+EXPERIMENT_NAME=open_judge-pairwise-${TIMESTAMP}
 
 CUSTOM_REWARD_FUNCTION_PATH=./reward_fn.py
 CUSTOM_DATASET_PATH=./dataset.py
@@ -501,7 +501,7 @@ print(by_strength)
 
 !!! note "Expected Accuracy by Preference Strength"
     Strong preferences should have higher accuracy:
-    
+
     - Strength 0 (tie): ~60%
     - Strength 1 (weak): ~75%
     - Strength 2 (strong): ~90%
@@ -512,7 +512,7 @@ print(by_strength)
 ### As Comparison Judge
 
 ```python
-from rm_gallery.core.models import OpenAIChatModel
+from open_judge.models import OpenAIChatModel
 
 model = OpenAIChatModel(
     model="./checkpoints/pairwise-final",
@@ -542,8 +542,8 @@ print(result)
 ### In GradingRunner
 
 ```python
-from rm_gallery.core.graders.common import RelevanceGrader
-from rm_gallery.core.runner import GradingRunner, GraderConfig
+from open_judge.graders.common import RelevanceGrader
+from open_judge.runner import GradingRunner, GraderConfig
 
 grader = RelevanceGrader(model=model)
 
@@ -568,12 +568,12 @@ Account for preference strength in rewards:
 def calculate_weighted_reward(predicted, true, strength):
     """Weight reward by preference strength"""
     base_reward = 1.0 if predicted == true else 0.0
-    
+
     # Strong preferences (strength=2) get full weight
     # Weak preferences (strength=1) get reduced weight
     # Ties (strength=0) get minimal weight
     weight = 1.0 if strength == 2 else (0.7 if strength == 1 else 0.3)
-    
+
     return base_reward * weight
 ```
 

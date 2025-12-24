@@ -2,17 +2,17 @@
 
 ## Overview
 
-Langfuse is an open-source LLM application monitoring and evaluation platform that adopts a "backfill-based" integration model. RM-Gallery can be easily integrated with Langfuse, feeding results back to the Langfuse platform after evaluation.
+Langfuse is an open-source LLM application monitoring and evaluation platform that adopts a "backfill-based" integration model. OpenJudge can be easily integrated with Langfuse, feeding results back to the Langfuse platform after evaluation.
 
 ## Integration Principles
 
-Langfuse does not deeply integrate into the runtime flow, but instead provides flexible APIs that allow external evaluation systems to score existing Traces at any time. This loosely coupled design allows RM-Gallery to operate as an independent evaluation service.
+Langfuse does not deeply integrate into the runtime flow, but instead provides flexible APIs that allow external evaluation systems to score existing Traces at any time. This loosely coupled design allows OpenJudge to operate as an independent evaluation service.
 
 ## Quick Start: Integrating with Individual Graders
 
 ### 1. Install Dependencies
 
-To begin integrating RM-Gallery with Langfuse, first install the required dependencies:
+To begin integrating OpenJudge with Langfuse, first install the required dependencies:
 
 ```bash
 pip install langfuse
@@ -35,25 +35,25 @@ langfuse = Langfuse(
 )
 ```
 
-### 3. Create RM-Gallery Evaluation Worker
+### 3. Create OpenJudge Evaluation Worker
 
-Create a worker that fetches trace data from Langfuse, evaluates it using RM-Gallery graders, and sends the results back to Langfuse. This approach processes traces one by one, which is suitable for simple use cases.
+Create a worker that fetches trace data from Langfuse, evaluates it using OpenJudge graders, and sends the results back to Langfuse. This approach processes traces one by one, which is suitable for simple use cases.
 
 ```python
 import asyncio
-from rm_gallery.core.graders.text.similarity import SimilarityGrader
-from rm_gallery.core.graders.text.relevance_grader import RelevanceGrader
-from rm_gallery.core.graders.schema import GraderResult, GraderScore, GraderRank, GraderError
+from open_judge.graders.text.similarity import SimilarityGrader
+from open_judge.graders.text.relevance_grader import RelevanceGrader
+from open_judge.graders.schema import GraderResult, GraderScore, GraderRank, GraderError
 
-async def rm_gallery_eval_worker():
+async def open_judge_eval_worker():
     """
-    Worker function that evaluates Langfuse traces using RM-Gallery graders.
+    Worker function that evaluates Langfuse traces using OpenJudge graders.
 
     This function demonstrates the basic pattern of fetching traces,
     evaluating them with individual graders, and sending results back to Langfuse.
     """
     # Initialize graders
-    # These are individual RM-Gallery graders that will be used for evaluation
+    # These are individual OpenJudge graders that will be used for evaluation
     similarity_grader = SimilarityGrader(algorithm="cosine")
     relevance_grader = RelevanceGrader()
 
@@ -70,7 +70,7 @@ async def rm_gallery_eval_worker():
         expected_data = trace.get("expected")
 
         try:
-            # Execute RM-Gallery evaluation with individual graders
+            # Execute OpenJudge evaluation with individual graders
             # Each grader is called separately, which is simple but not optimal for performance
             sim_result: GraderResult = await similarity_grader.aevaluate(
                 prediction=output_data,
@@ -82,7 +82,7 @@ async def rm_gallery_eval_worker():
                 input=input_data
             )
 
-            # Convert RM-Gallery results to Langfuse scores
+            # Convert OpenJudge results to Langfuse scores
             # Each result type needs to be handled differently
             if isinstance(sim_result, GraderScore):
                 langfuse.score(
@@ -124,24 +124,24 @@ async def rm_gallery_eval_worker():
 # Run evaluation worker
 # This executes the evaluation process
 if __name__ == "__main__":
-    asyncio.run(rm_gallery_eval_worker())
+    asyncio.run(open_judge_eval_worker())
 ```
 
 ## Advanced Usage: Integrating with GradingRunner
 
 ### Batch Evaluation with GradingRunner
 
-For improved performance and resource efficiency, especially when dealing with many traces or graders, use RM-Gallery's GradingRunner. This approach processes multiple traces in batches, leveraging concurrent execution.
+For improved performance and resource efficiency, especially when dealing with many traces or graders, use OpenJudge's GradingRunner. This approach processes multiple traces in batches, leveraging concurrent execution.
 
 ```python
 import asyncio
 import pandas as pd
-from rm_gallery.core.graders.text.similarity import SimilarityGrader
-from rm_gallery.core.graders.text.relevance_grader import RelevanceGrader
-from rm_gallery.core.graders.schema import GraderResult, GraderScore, GraderRank, GraderError
-from rm_gallery.core.runner.grading_runner import GradingRunner
+from open_judge.graders.text.similarity import SimilarityGrader
+from open_judge.graders.text.relevance_grader import RelevanceGrader
+from open_judge.graders.schema import GraderResult, GraderScore, GraderRank, GraderError
+from open_judge.runner.grading_runner import GradingRunner
 
-async def rm_gallery_batch_eval_worker():
+async def open_judge_batch_eval_worker():
     """
     Worker function that performs batch evaluation using GradingRunner.
 
@@ -175,7 +175,7 @@ async def rm_gallery_batch_eval_worker():
         output_data = trace["output"]
         expected_data = trace.get("expected")
 
-        # Prepare data for RM-Gallery evaluation
+        # Prepare data for OpenJudge evaluation
         # Each item needs to match the expected input format of the graders
         eval_item = {
             "input": input_data,
@@ -195,7 +195,7 @@ async def rm_gallery_batch_eval_worker():
         return
 
     try:
-        # Execute RM-Gallery batch evaluation
+        # Execute OpenJudge batch evaluation
         # This is where the performance benefit comes from - all data is processed together
         batch_results = await runner.arun(evaluation_data)
 
@@ -237,24 +237,24 @@ async def rm_gallery_batch_eval_worker():
 # Run batch evaluation worker
 # This executes the more efficient batch evaluation process
 if __name__ == "__main__":
-    asyncio.run(rm_gallery_batch_eval_worker())
+    asyncio.run(open_judge_batch_eval_worker())
 ```
 
 ### Working with Aggregated Results
 
-RM-Gallery's GradingRunner also supports result aggregation, which allows you to compute composite scores from multiple individual metrics. This is useful for creating overall quality measures.
+OpenJudge's GradingRunner also supports result aggregation, which allows you to compute composite scores from multiple individual metrics. This is useful for creating overall quality measures.
 
 ```python
-from rm_gallery.core.runner.grading_runner import GradingRunner
-from rm_gallery.core.analyzer.aggregator.weighted_sum_aggregator import WeightedSumAggregator
-from rm_gallery.core.graders.text.similarity import SimilarityGrader
-from rm_gallery.core.graders.text.relevance_grader import RelevanceGrader
+from open_judge.runner.grading_runner import GradingRunner
+from open_judge.analyzer.aggregator.weighted_sum_aggregator import WeightedSumAggregator
+from open_judge.graders.text.similarity import SimilarityGrader
+from open_judge.graders.text.relevance_grader import RelevanceGrader
 
-async def rm_gallery_aggregated_eval_worker():
+async def open_judge_aggregated_eval_worker():
     """
     Worker function that performs evaluation with result aggregation.
 
-    This demonstrates how to use RM-Gallery's built-in aggregation capabilities
+    This demonstrates how to use OpenJudge's built-in aggregation capabilities
     to compute composite scores from multiple metrics.
     """
     # Initialize runner with graders and aggregators
@@ -285,7 +285,7 @@ async def rm_gallery_aggregated_eval_worker():
         output_data = trace["output"]
         expected_data = trace.get("expected")
 
-        # Prepare data for RM-Gallery evaluation
+        # Prepare data for OpenJudge evaluation
         eval_item = {
             "input": input_data,
             "prediction": output_data,
@@ -303,7 +303,7 @@ async def rm_gallery_aggregated_eval_worker():
         return
 
     try:
-        # Execute RM-Gallery batch evaluation with aggregation
+        # Execute OpenJudge batch evaluation with aggregation
         # The runner automatically applies aggregators to the results
         batch_results = await runner.arun(evaluation_data)
 
@@ -361,7 +361,7 @@ async def rm_gallery_aggregated_eval_worker():
 # Run aggregated batch evaluation worker
 # Uncomment to run the aggregated evaluation
 # if __name__ == "__main__":
-#     asyncio.run(rm_gallery_aggregated_eval_worker())
+#     asyncio.run(open_judge_aggregated_eval_worker())
 ```
 
 ### Scheduled Evaluation Task with Batch Processing
@@ -372,15 +372,15 @@ For continuous monitoring, you can set up a scheduled task that periodically eva
 import asyncio
 import time
 from datetime import datetime
-from rm_gallery.core.runner.grading_runner import GradingRunner
-from rm_gallery.core.graders.text.similarity import SimilarityGrader
-from rm_gallery.core.graders.text.relevance_grader import RelevanceGrader
+from open_judge.runner.grading_runner import GradingRunner
+from open_judge.graders.text.similarity import SimilarityGrader
+from open_judge.graders.text.relevance_grader import RelevanceGrader
 
 def transform_trace_data(traces):
     """
-    Transform trace data to RM-Gallery evaluation format.
+    Transform trace data to OpenJudge evaluation format.
 
-    This function converts Langfuse trace data into the format expected by RM-Gallery graders.
+    This function converts Langfuse trace data into the format expected by OpenJudge graders.
     It's a reusable utility that can be used in different parts of your evaluation pipeline.
 
     Args:
@@ -398,7 +398,7 @@ def transform_trace_data(traces):
         output_text = trace.get("output", "")
         expected_output = trace.get("expected", "")
 
-        # Create evaluation item in the format expected by RM-Gallery
+        # Create evaluation item in the format expected by OpenJudge
         eval_item = {
             "input": input_text,
             "prediction": output_text,
@@ -448,7 +448,7 @@ async def scheduled_eval_worker(interval_minutes=10):
                 await asyncio.sleep(interval_minutes * 60)
                 continue
 
-            # Transform data to RM-Gallery format
+            # Transform data to OpenJudge format
             evaluation_data, trace_mapping = transform_trace_data(traces)
 
             # Execute batch evaluation
@@ -511,5 +511,5 @@ async def scheduled_eval_worker(interval_minutes=10):
 
 ## Related Resources
 
-- [RM-Gallery Runner Documentation](../running_graders/run_tasks.md)
+- [OpenJudge Runner Documentation](../running_graders/run_tasks.md)
 - [Langfuse Official Documentation](https://langfuse.com/docs)

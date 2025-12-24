@@ -23,7 +23,7 @@ MODEL_PATH=Qwen/Qwen3-1.7B
 TRAIN_FILE=./data/train.parquet
 VAL_FILE=./data/test.parquet
 
-PROJECT_NAME=rm-gallery-sft
+PROJECT_NAME=open_judge-sft
 EXPERIMENT_NAME=sft-${TIMESTAMP}
 
 # use python -m torch.distributed.run for multi-node multi-gpu training

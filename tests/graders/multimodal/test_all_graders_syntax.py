@@ -19,9 +19,7 @@ def test_imports():
     # Test ImageCoherenceGrader
     print("\n1. Testing ImageCoherenceGrader...")
     try:
-        from rm_gallery.core.graders.multimodal.image_coherence import (
-            ImageCoherenceGrader,
-        )
+        from open_judge.graders.multimodal.image_coherence import ImageCoherenceGrader
 
         print("   ✓ ImageCoherenceGrader imported successfully")
     except Exception as e:
@@ -31,7 +29,7 @@ def test_imports():
     # Test ImageHelpfulnessGrader
     print("\n2. Testing ImageHelpfulnessGrader...")
     try:
-        from rm_gallery.core.graders.multimodal.image_helpfulness import (
+        from open_judge.graders.multimodal.image_helpfulness import (
             ImageHelpfulnessGrader,
         )
 
@@ -43,9 +41,7 @@ def test_imports():
     # Test ImageReferenceGrader
     print("\n3. Testing ImageReferenceGrader...")
     try:
-        from rm_gallery.core.graders.multimodal.image_reference import (
-            ImageReferenceGrader,
-        )
+        from open_judge.graders.multimodal.image_reference import ImageReferenceGrader
 
         print("   ✓ ImageReferenceGrader imported successfully")
     except Exception as e:
@@ -55,7 +51,7 @@ def test_imports():
     # Test ImageEditingGrader
     print("\n4. Testing ImageEditingGrader...")
     try:
-        from rm_gallery.core.graders.multimodal.image_editing import ImageEditingGrader
+        from open_judge.graders.multimodal.image_editing import ImageEditingGrader
 
         print("   ✓ ImageEditingGrader imported successfully")
     except Exception as e:
@@ -65,7 +61,7 @@ def test_imports():
     # Test TextToImageGrader
     print("\n5. Testing TextToImageGrader...")
     try:
-        from rm_gallery.core.graders.multimodal.text_to_image import TextToImageGrader
+        from open_judge.graders.multimodal.text_to_image import TextToImageGrader
 
         print("   ✓ TextToImageGrader imported successfully")
     except Exception as e:
@@ -75,9 +71,7 @@ def test_imports():
     # Test MultimodalGEvalGrader
     print("\n6. Testing MultimodalGEvalGrader...")
     try:
-        from rm_gallery.core.graders.multimodal.multimodal_geval import (
-            MultimodalGEvalGrader,
-        )
+        from open_judge.graders.multimodal.multimodal_geval import MultimodalGEvalGrader
 
         print("   ✓ MultimodalGEvalGrader imported successfully")
     except Exception as e:
@@ -108,16 +102,12 @@ def test_grader_signatures():
     import inspect
 
     # Import all graders
-    from rm_gallery.core.graders.multimodal.image_coherence import ImageCoherenceGrader
-    from rm_gallery.core.graders.multimodal.image_editing import ImageEditingGrader
-    from rm_gallery.core.graders.multimodal.image_helpfulness import (
-        ImageHelpfulnessGrader,
-    )
-    from rm_gallery.core.graders.multimodal.image_reference import ImageReferenceGrader
-    from rm_gallery.core.graders.multimodal.multimodal_geval import (
-        MultimodalGEvalGrader,
-    )
-    from rm_gallery.core.graders.multimodal.text_to_image import TextToImageGrader
+    from open_judge.graders.multimodal.image_coherence import ImageCoherenceGrader
+    from open_judge.graders.multimodal.image_editing import ImageEditingGrader
+    from open_judge.graders.multimodal.image_helpfulness import ImageHelpfulnessGrader
+    from open_judge.graders.multimodal.image_reference import ImageReferenceGrader
+    from open_judge.graders.multimodal.multimodal_geval import MultimodalGEvalGrader
+    from open_judge.graders.multimodal.text_to_image import TextToImageGrader
 
     graders = [
         ("ImageCoherenceGrader", ImageCoherenceGrader),

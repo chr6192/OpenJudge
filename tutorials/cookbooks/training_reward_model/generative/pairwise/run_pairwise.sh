@@ -8,7 +8,7 @@ VAL_FILE=./examples/data/exports/helpsteer2_pairwise_test.parquet
 MODEL_PATH=/mnt/data_cpfs/xielipeng.xlp/models/Qwen3-14B
 
 PROJECT_NAME=pairwise_train
-EXPERIMENT_NAME=rm-gallery-pairwise-qwen3-14b-${TIMESTAMP}
+EXPERIMENT_NAME=open_judge-pairwise-qwen3-14b-${TIMESTAMP}
 
 CUSTOM_REWARD_FUNCTION_PATH=./examples/train/generative/pairwise/reward_fn.py
 CUSTOM_CHAT_RL_DATASET_PATH=./examples/train/generative/pairwise/dataset.py

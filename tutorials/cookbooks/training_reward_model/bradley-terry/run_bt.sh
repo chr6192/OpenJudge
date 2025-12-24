@@ -23,7 +23,7 @@ MODEL_PATH=Qwen/Qwen2.5-7B-Instruct
 TRAIN_FILE=hendrydong/preference_700K/train.parquet
 VAL_FILE=hendrydong/preference_700K/test.parquet
 
-PROJECT_NAME=rm-gallery-bt
+PROJECT_NAME=open_judge-bt
 EXPERIMENT_NAME=qwen2.5-7b-bt-${TIMESTAMP}
 
 # Run with torchrun for multi-GPU FSDP trainings

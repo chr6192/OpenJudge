@@ -50,7 +50,7 @@ Hover over these links to see the animated underline effect:
 
 - [Regular internal link](../built_in_graders/overview.md)
 - [External link with icon animation](https://example.com)
-- Link with code inside: [`rm_gallery.graders`](../built_in_graders/overview.md)
+- Link with code inside: [`open_judge.graders`](../built_in_graders/overview.md)
 
 
 ## 💻 Code Block Enhancements
@@ -58,7 +58,7 @@ Hover over these links to see the animated underline effect:
 Hover over the code block to see the shadow lift effect and the copy button appear:
 
 ```python
-from rm_gallery import GraderRunner
+from open_judge import GraderRunner
 
 # Initialize grader
 runner = GraderRunner()
@@ -78,7 +78,7 @@ print(f"Results: {results}")
         return f"Hello, {name}!"
 
     # Usage
-    message = greet("RM-Gallery")
+    message = greet("OpenJudge")
     print(message)
     ```
 
@@ -91,7 +91,7 @@ print(f"Results: {results}")
     }
 
     // Usage
-    const message = greet("RM-Gallery");
+    const message = greet("OpenJudge");
     console.log(message);
     ```
 
@@ -106,7 +106,7 @@ print(f"Results: {results}")
     }
 
     # Usage
-    greet "RM-Gallery"
+    greet "OpenJudge"
     ```
 
 

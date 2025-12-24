@@ -1,15 +1,15 @@
-# Using RM Gallery Graders in astune
+# Using OpenJudge Graders in astune
 
 ## Overview
 
-RMGraderJudge is a component in the astune system that integrates RM Gallery Graders. It allows you to use predefined and custom evaluators (Graders) provided by RM Gallery within astune workflows. Through this integration, you can conveniently evaluate AgentScope workflow outputs and obtain corresponding scores.
+RMGraderJudge is a component in the astune system that integrates OpenJudge Graders. It allows you to use predefined and custom evaluators (Graders) provided by OpenJudge within astune workflows. Through this integration, you can conveniently evaluate AgentScope workflow outputs and obtain corresponding scores.
 
 ## Key Features
 
 - Supports both Pointwise and Listwise evaluation modes
 - Flexible data mapping mechanism for field transformation
 - Seamless integration with astune workflow
-- Supports all predefined evaluators from RM Gallery
+- Supports all predefined evaluators from OpenJudge
 - Supports integration of custom evaluators
 
 ## Configuration Guide
@@ -23,7 +23,7 @@ astuner:
     judge_protocol: astuner.task_judge.rm_grader_judge->RMGraderJudge  # Specify to use RMGraderJudge
     grader:
       class_name: "LLMGrader"
-      module_path: "rm_gallery.core.graders.llm_grader"
+      module_path: "open_judge.graders.llm_grader"
       kwargs:
         name: "helpfulness_grader"
         mode: "pointwise"
@@ -48,7 +48,7 @@ astuner:
 
 1. `judge_type`: Must be set to `customized_protocol`
 2. `judge_protocol`: Specifies using RMGraderJudge, format is `module_path->class_name`
-3. `grader`: Specific configuration for the RM Gallery evaluator
+3. `grader`: Specific configuration for the OpenJudge evaluator
    - `class_name`: Evaluator class name
    - `module_path`: Module path where the evaluator is located
    - `kwargs`: Evaluator initialization parameters
@@ -56,7 +56,7 @@ astuner:
 
 ## Using Predefined Graders
 
-RM Gallery provides a rich set of predefined evaluators covering multiple domains. Here are some common usage examples:
+OpenJudge provides a rich set of predefined evaluators covering multiple domains. Here are some common usage examples:
 
 ### Text Similarity Evaluation
 
@@ -67,7 +67,7 @@ astuner:
     judge_protocol: astuner.task_judge.rm_grader_judge->RMGraderJudge
     grader:
       class_name: "SimilarityGrader"
-      module_path: "rm_gallery.core.graders.text.similarity"
+      module_path: "open_judge.graders.text.similarity"
       kwargs:
         name: "f1_score_evaluator"
         normalize: true
@@ -86,7 +86,7 @@ astuner:
     judge_protocol: astuner.task_judge.rm_grader_judge->RMGraderJudge
     grader:
       class_name: "HelpfulnessGrader"
-      module_path: "rm_gallery.core.graders.alignment.helpfulness.helpfulness"
+      module_path: "open_judge.graders.alignment.helpfulness.helpfulness"
       kwargs:
         name: "helpfulness_evaluator"
         mode: "pointwise"
@@ -119,7 +119,7 @@ astuner:
     judge_protocol: astuner.task_judge.rm_grader_judge->RMGraderJudge
     grader:
       class_name: "MathVerifyGrader"
-      module_path: "rm_gallery.core.graders.math.math"
+      module_path: "open_judge.graders.math.math"
       kwargs:
         name: "math_evaluator"
         mode: "pointwise"
@@ -138,8 +138,8 @@ If you need to create your own evaluator, follow these steps:
 Create a new Python file, for example, `my_custom_grader.py`:
 
 ```python
-from rm_gallery.core.graders.base_grader import BaseGrader
-from rm_gallery.core.graders.schema import GraderMode, GraderResult
+from open_judge.graders.base_grader import BaseGrader
+from open_judge.graders.schema import GraderMode, GraderResult
 
 class MyCustomGrader(BaseGrader):
     def __init__(self, name: str, mode: GraderMode = GraderMode.POINTWISE, **kwargs):

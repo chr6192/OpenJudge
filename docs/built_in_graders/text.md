@@ -63,7 +63,7 @@ Unified text similarity grader supporting multiple mainstream similarity algorit
 
 ```python
 import asyncio
-from rm_gallery.core.graders.text.similarity import SimilarityGrader
+from open_judge.graders.text.similarity import SimilarityGrader
 
 async def main():
     grader = SimilarityGrader(algorithm="bleu")
@@ -83,7 +83,7 @@ asyncio.run(main())
 
 ```python
 import asyncio
-from rm_gallery.core.graders.text.similarity import SimilarityGrader
+from open_judge.graders.text.similarity import SimilarityGrader
 
 async def main():
     grader = SimilarityGrader(algorithm="rougeL")
@@ -104,7 +104,7 @@ asyncio.run(main())
 
 ```python
 import asyncio
-from rm_gallery.core.graders.text.similarity import SimilarityGrader
+from open_judge.graders.text.similarity import SimilarityGrader
 
 async def main():
     grader = SimilarityGrader(algorithm="f1_score", normalize=True)
@@ -125,7 +125,7 @@ asyncio.run(main())
 
 ```python
 import asyncio
-from rm_gallery.core.graders.text.similarity import SimilarityGrader
+from open_judge.graders.text.similarity import SimilarityGrader
 
 async def main():
     grader = SimilarityGrader(algorithm="cosine")
@@ -146,7 +146,7 @@ asyncio.run(main())
 
 ```python
 import asyncio
-from rm_gallery.core.graders.text.similarity import SimilarityGrader
+from open_judge.graders.text.similarity import SimilarityGrader
 
 async def main():
     grader = SimilarityGrader(algorithm="fuzzy_match")
@@ -235,7 +235,7 @@ Unified string matching grader supporting multiple matching patterns. Use for fo
 
 ```python
 import asyncio
-from rm_gallery.core.graders.text.string_match import StringMatchGrader
+from open_judge.graders.text.string_match import StringMatchGrader
 
 async def main():
     grader = StringMatchGrader(
@@ -259,7 +259,7 @@ asyncio.run(main())
 
 ```python
 import asyncio
-from rm_gallery.core.graders.text.string_match import StringMatchGrader
+from open_judge.graders.text.string_match import StringMatchGrader
 
 async def main():
     grader = StringMatchGrader(algorithm="regex_match")
@@ -288,7 +288,7 @@ asyncio.run(main())
 
 ```python
 import asyncio
-from rm_gallery.core.graders.text.string_match import StringMatchGrader
+from open_judge.graders.text.string_match import StringMatchGrader
 
 async def main():
     grader = StringMatchGrader(algorithm="contains_all", case_sensitive=False)
@@ -320,7 +320,7 @@ asyncio.run(main())
 
 ```python
 import asyncio
-from rm_gallery.core.graders.text.string_match import StringMatchGrader
+from open_judge.graders.text.string_match import StringMatchGrader
 
 async def main():
     grader = StringMatchGrader(algorithm="contains_any")
@@ -342,7 +342,7 @@ asyncio.run(main())
 
 ```python
 import asyncio
-from rm_gallery.core.graders.text.string_match import StringMatchGrader
+from open_judge.graders.text.string_match import StringMatchGrader
 
 async def main():
     # Prefix matching
@@ -368,7 +368,7 @@ asyncio.run(main())
 
 ```python
 import asyncio
-from rm_gallery.core.graders.text.string_match import StringMatchGrader
+from open_judge.graders.text.string_match import StringMatchGrader
 
 async def main():
     grader = StringMatchGrader(algorithm="word_overlap", case_sensitive=False)
@@ -434,7 +434,7 @@ Check numerical calculation accuracy by comparing numbers extracted from text.
 
 ```python
 import asyncio
-from rm_gallery.core.graders.text.number_accuracy import NumberAccuracyGrader
+from open_judge.graders.text.number_accuracy import NumberAccuracyGrader
 
 async def main():
     grader = NumberAccuracyGrader(tolerance=1e-6)
@@ -455,7 +455,7 @@ asyncio.run(main())
 
 ```python
 import asyncio
-from rm_gallery.core.graders.text.number_accuracy import NumberAccuracyGrader
+from open_judge.graders.text.number_accuracy import NumberAccuracyGrader
 
 async def main():
     grader = NumberAccuracyGrader(tolerance=0.01)
@@ -477,7 +477,7 @@ asyncio.run(main())
 
 ```python
 import asyncio
-from rm_gallery.core.graders.text.number_accuracy import NumberAccuracyGrader
+from open_judge.graders.text.number_accuracy import NumberAccuracyGrader
 
 async def main():
     grader = NumberAccuracyGrader(tolerance=1e-6)
@@ -499,7 +499,7 @@ asyncio.run(main())
 
 ```python
 import asyncio
-from rm_gallery.core.graders.text.number_accuracy import NumberAccuracyGrader
+from open_judge.graders.text.number_accuracy import NumberAccuracyGrader
 
 async def main():
     # Loose tolerance - for approximate calculations

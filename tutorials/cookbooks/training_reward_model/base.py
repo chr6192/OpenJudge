@@ -43,7 +43,7 @@ class BaseTrainDataset(Dataset, ABC):
     - Filtering overlong prompts
     - Building messages for different training tasks
 
-    Note: This is separate from rm_gallery.core and is specifically for training workflows.
+    Note: This is separate from open_judge and is specifically for training workflows.
     """
 
     def __init__(

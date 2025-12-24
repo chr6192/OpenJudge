@@ -113,14 +113,14 @@ dataset = [
 
 ```python
 import asyncio
-from rm_gallery.core.generator.iterative_rubric.generator import (
+from open_judge.generator.iterative_rubric.generator import (
     IterativeRubricsGenerator,
     IterativePointwiseRubricsGeneratorConfig
 )
-from rm_gallery.core.generator.iterative_rubric.query_rubric_generator import (
+from open_judge.generator.iterative_rubric.query_rubric_generator import (
     POINTWISE_EVALUATION_TEMPLATE
 )
-from rm_gallery.core.models import OpenAIChatModel
+from open_judge.models import OpenAIChatModel
 
 async def main():
     # Configure the generator
@@ -306,14 +306,14 @@ def word_freq(text):
 
 ```python
 import asyncio
-from rm_gallery.core.generator.iterative_rubric.generator import (
+from open_judge.generator.iterative_rubric.generator import (
     IterativeRubricsGenerator,
     IterativeListwiseRubricsGeneratorConfig  # Use Listwise config for pairwise
 )
-from rm_gallery.core.generator.iterative_rubric.query_rubric_generator import (
+from open_judge.generator.iterative_rubric.query_rubric_generator import (
     LISTWISE_EVALUATION_TEMPLATE
 )
-from rm_gallery.core.models import OpenAIChatModel
+from open_judge.models import OpenAIChatModel
 
 async def main():
     # Configure the generator (Pairwise uses Listwise config)
@@ -422,7 +422,7 @@ GraderRank(
 | `custom_evaluation_prompt` | `PromptTemplate` | `None` | Evaluation prompt template |
 
 !!! tip "Built-in Templates"
-    Use templates from `rm_gallery.core.generator.iterative_rubric.query_rubric_generator`:
+    Use templates from `open_judge.generator.iterative_rubric.query_rubric_generator`:
 
     - `POINTWISE_EVALUATION_TEMPLATE` — for scoring
     - `LISTWISE_EVALUATION_TEMPLATE` — for ranking

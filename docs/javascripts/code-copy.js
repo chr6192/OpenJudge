@@ -10,7 +10,7 @@
     // Find all code blocks that don't already have a copy button
     // Exclude tabbed code blocks (handled by tabbed-code.js)
     const codeBlocks = document.querySelectorAll('article pre, .prose pre, .md-typeset pre');
-    
+
     codeBlocks.forEach(function(preElement) {
       // Skip if already has a copy button
       if (preElement.querySelector('.copy-button')) {
@@ -66,7 +66,7 @@
 
     // Also handle .highlight wrapper (Pygments)
     const highlightBlocks = document.querySelectorAll('article .highlight, .prose .highlight, .md-typeset .highlight');
-    
+
     highlightBlocks.forEach(function(highlightElement) {
       // Skip if already has a copy button
       if (highlightElement.querySelector('.copy-button')) {

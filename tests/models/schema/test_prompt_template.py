@@ -2,8 +2,8 @@
 """Unit tests for PromptTemplate."""
 import pytest
 
-from rm_gallery.core.models.schema.oai.message import ChatMessage
-from rm_gallery.core.models.schema.prompt_template import LanguageEnum, PromptTemplate
+from open_judge.models.schema.oai.message import ChatMessage
+from open_judge.models.schema.prompt_template import LanguageEnum, PromptTemplate
 
 
 @pytest.mark.unit

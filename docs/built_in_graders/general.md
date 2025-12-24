@@ -69,8 +69,8 @@ Evaluates how well a response addresses the user's query. Measures whether the a
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.common.relevance import RelevanceGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.common.relevance import RelevanceGrader
 
 async def main():
     model = OpenAIChatModel(model="qwen3-32b")
@@ -123,8 +123,8 @@ Detects fabricated information not supported by the provided context or common k
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.common.hallucination import HallucinationGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.common.hallucination import HallucinationGrader
 
 async def main():
     model = OpenAIChatModel(model="qwen3-32b")
@@ -195,8 +195,8 @@ Identifies harmful, offensive, or inappropriate content in responses. Critical f
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.common.harmfulness import HarmfulnessGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.common.harmfulness import HarmfulnessGrader
 
 async def main():
     model = OpenAIChatModel(model="qwen3-32b")
@@ -249,8 +249,8 @@ Evaluates how precisely a response follows given instructions, including format,
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.common.instruction_following import InstructionFollowingGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.common.instruction_following import InstructionFollowingGrader
 
 async def main():
     model = OpenAIChatModel(model="qwen3-32b")
@@ -312,8 +312,8 @@ Evaluates whether a response matches the provided ground truth answer. Checks fa
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.common.correctness import CorrectnessGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.common.correctness import CorrectnessGrader
 
 async def main():
     model = OpenAIChatModel(model="qwen3-32b")

@@ -3,8 +3,8 @@
 
 import pytest
 
-from rm_gallery.core.analyzer.validation import AccuracyAnalysisResult, AccuracyAnalyzer
-from rm_gallery.core.graders.schema import GraderScore
+from open_judge.analyzer.validation import AccuracyAnalysisResult, AccuracyAnalyzer
+from open_judge.graders.schema import GraderScore
 
 
 @pytest.mark.unit

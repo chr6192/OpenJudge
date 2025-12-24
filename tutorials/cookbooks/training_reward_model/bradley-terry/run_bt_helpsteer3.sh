@@ -23,7 +23,7 @@ MODEL_PATH=Qwen/Qwen2.5-7B-Instruct
 TRAIN_FILE=./data/helpsteer3_preference_train.parquet
 VAL_FILE=./data/helpsteer3_preference_test.parquet
 
-PROJECT_NAME=rm-gallery-bt
+PROJECT_NAME=open_judge-bt
 EXPERIMENT_NAME=qwen2.5-7b-bt-helpsteer3-${TIMESTAMP}
 
 DATA_CUSTOM_CLASS_PATH=./dataset_helpsteer3.py

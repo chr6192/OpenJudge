@@ -8,12 +8,12 @@ from openai.types.chat import ChatCompletion, ChatCompletionMessage
 from openai.types.chat.chat_completion import Choice
 from pydantic import BaseModel
 
-from rm_gallery.core.models.openai_chat_model import (
+from open_judge.models.openai_chat_model import (
     OpenAIChatModel,
     _format_audio_data_for_qwen_omni,
 )
-from rm_gallery.core.models.schema.oai.message import ChatMessage
-from rm_gallery.core.models.schema.oai.response import ChatResponse
+from open_judge.models.schema.oai.message import ChatMessage
+from open_judge.models.schema.oai.response import ChatResponse
 
 
 class PersonModelForTesting(BaseModel):
@@ -30,7 +30,7 @@ class TestOpenAIChatModel:
     @pytest.fixture(autouse=True)
     def setup(self):
         """Set up test fixtures before each test method."""
-        with patch("rm_gallery.core.models.openai_chat_model.AsyncOpenAI"):
+        with patch("open_judge.models.openai_chat_model.AsyncOpenAI"):
             self.model = OpenAIChatModel(
                 model="gpt-3.5-turbo",
                 api_key="test-key",
@@ -39,7 +39,7 @@ class TestOpenAIChatModel:
 
     def test_init(self):
         """Test initialization of OpenAIChatModel."""
-        with patch("rm_gallery.core.models.openai_chat_model.AsyncOpenAI"):
+        with patch("open_judge.models.openai_chat_model.AsyncOpenAI"):
             # Test basic initialization
             model = OpenAIChatModel(model="gpt-3.5-turbo")
             assert model.model == "gpt-3.5-turbo"
@@ -71,7 +71,7 @@ class TestOpenAIChatModel:
             exc_info.value,
         )
 
-    @patch("rm_gallery.core.models.openai_chat_model.AsyncOpenAI")
+    @patch("open_judge.models.openai_chat_model.AsyncOpenAI")
     def test_achat_with_valid_messages(self, mock_async_openai):
         """Test achat method with valid messages."""
         # Mock the OpenAI API response
@@ -97,7 +97,7 @@ class TestOpenAIChatModel:
 
         # Create a new model instance for this test to ensure proper mocking
         with patch(
-            "rm_gallery.core.models.openai_chat_model.AsyncOpenAI",
+            "open_judge.models.openai_chat_model.AsyncOpenAI",
         ) as mock_openai_constructor:
             mock_openai_constructor.return_value = mock_instance
             model = OpenAIChatModel(
@@ -124,7 +124,7 @@ class TestOpenAIChatModel:
             assert call_kwargs["model"] == "gpt-3.5-turbo"
             assert len(call_kwargs["messages"]) == 2
 
-    @patch("rm_gallery.core.models.openai_chat_model.AsyncOpenAI")
+    @patch("open_judge.models.openai_chat_model.AsyncOpenAI")
     def test_achat_with_structured_model(self, mock_async_openai):
         """Test achat method with structured model."""
         # Mock the OpenAI API response for structured output
@@ -151,7 +151,7 @@ class TestOpenAIChatModel:
 
         # Create a new model instance for this test to ensure proper mocking
         with patch(
-            "rm_gallery.core.models.openai_chat_model.AsyncOpenAI",
+            "open_judge.models.openai_chat_model.AsyncOpenAI",
         ) as mock_openai_constructor:
             mock_openai_constructor.return_value = mock_instance
             model = OpenAIChatModel(
@@ -184,7 +184,7 @@ class TestOpenAIChatModel:
             assert "response_format" in call_kwargs
             assert call_kwargs["response_format"] == PersonModelForTesting
 
-    @patch("rm_gallery.core.models.openai_chat_model.AsyncOpenAI")
+    @patch("open_judge.models.openai_chat_model.AsyncOpenAI")
     def test_achat_with_chat_message_objects(self, mock_async_openai):
         """Test achat method with ChatMessage objects."""
         mock_completion = ChatCompletion(
@@ -209,7 +209,7 @@ class TestOpenAIChatModel:
 
         # Create a new model instance for this test to ensure proper mocking
         with patch(
-            "rm_gallery.core.models.openai_chat_model.AsyncOpenAI",
+            "open_judge.models.openai_chat_model.AsyncOpenAI",
         ) as mock_openai_constructor:
             mock_openai_constructor.return_value = mock_instance
             model = OpenAIChatModel(
@@ -238,7 +238,7 @@ class TestOpenAIChatModel:
                 assert "role" in msg
                 assert "content" in msg
 
-    @patch("rm_gallery.core.models.openai_chat_model.AsyncOpenAI")
+    @patch("open_judge.models.openai_chat_model.AsyncOpenAI")
     def test_callback_execution(self, mock_async_openai):
         """Test callback function execution."""
         # Mock the OpenAI API response
@@ -264,7 +264,7 @@ class TestOpenAIChatModel:
 
         # Create a new model instance for this test to ensure proper mocking
         with patch(
-            "rm_gallery.core.models.openai_chat_model.AsyncOpenAI",
+            "open_judge.models.openai_chat_model.AsyncOpenAI",
         ) as mock_openai_constructor:
             mock_openai_constructor.return_value = mock_instance
             model = OpenAIChatModel(

@@ -31,7 +31,7 @@ Benchmark results using `qwen-vl-max` as the judge model:
 All multimodal graders use `MLLMImage` to represent images. It supports both URL and base64 formats.
 
 ```python
-from rm_gallery.core.graders.multimodal import MLLMImage
+from open_judge.graders.multimodal import MLLMImage
 
 # From URL
 image = MLLMImage(url="https://example.com/image.jpg")
@@ -77,8 +77,8 @@ Evaluates how well images match and relate to their surrounding text context. As
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.multimodal import ImageCoherenceGrader, MLLMImage
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.multimodal import ImageCoherenceGrader, MLLMImage
 
 async def main():
     model = OpenAIChatModel(model="qwen-vl-max")
@@ -137,8 +137,8 @@ Evaluates how helpful images are in aiding readers' understanding of text. Goes 
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.multimodal import ImageHelpfulnessGrader, MLLMImage
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.multimodal import ImageHelpfulnessGrader, MLLMImage
 
 async def main():
     model = OpenAIChatModel(model="qwen-vl-max")
@@ -195,8 +195,8 @@ Formula: `sqrt(semantic × min(perceptual)) / 10` → normalized to [0, 1]
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.multimodal import TextToImageGrader, MLLMImage
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.multimodal import TextToImageGrader, MLLMImage
 
 async def main():
     model = OpenAIChatModel(model="qwen-vl-max")

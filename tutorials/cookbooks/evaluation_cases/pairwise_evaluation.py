@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Pairwise evaluation script using RM-Gallery components
+"""Pairwise evaluation script using OpenJudge components
 
 Three-step evaluation pipeline:
     Step 1: prepare_comparison_data() - Create pairwise comparison dataset
@@ -25,13 +25,13 @@ import fire
 from loguru import logger
 from pydantic import Field
 
-from rm_gallery.core.analyzer.base_analyzer import AnalysisResult, BaseAnalyzer
-from rm_gallery.core.graders.llm_grader import GraderMode, LLMGrader
-from rm_gallery.core.graders.schema import GraderResult, GraderScore
-from rm_gallery.core.models.openai_chat_model import OpenAIChatModel
-from rm_gallery.core.models.schema.oai.message import ChatMessage
-from rm_gallery.core.models.schema.prompt_template import PromptTemplate
-from rm_gallery.core.runner.grading_runner import GraderConfig, GradingRunner
+from open_judge.analyzer.base_analyzer import AnalysisResult, BaseAnalyzer
+from open_judge.graders.llm_grader import GraderMode, LLMGrader
+from open_judge.graders.schema import GraderResult, GraderScore
+from open_judge.models.openai_chat_model import OpenAIChatModel
+from open_judge.models.schema.oai.message import ChatMessage
+from open_judge.models.schema.prompt_template import PromptTemplate
+from open_judge.runner.grading_runner import GraderConfig, GradingRunner
 
 # Default example data for direct invocation
 DEFAULT_INSTRUCTION = "Write a short poem about artificial intelligence"
@@ -219,7 +219,7 @@ def prepare_comparison_data(
         }
 
     # Create dataset with both orders for each pair (to eliminate position bias)
-    # Following rm-gallery design: separate evaluation data from metadata
+    # Following open_judge design: separate evaluation data from metadata
     dataset = [
         comparison
         for model_a, model_b in pairs
@@ -240,7 +240,7 @@ async def run_pairwise_evaluation(
 ) -> List[GraderResult]:
     """Step 2: Initialize grader runner and evaluate
 
-    This function creates the pairwise comparison grader using RM-Gallery's LLMGrader,
+    This function creates the pairwise comparison grader using OpenJudge's LLMGrader,
     sets up the GradingRunner with parallel execution, and runs the evaluation.
 
     Args:
@@ -250,7 +250,7 @@ async def run_pairwise_evaluation(
     Returns:
         List of grader results for all pairwise comparisons
     """
-    # Create pairwise comparison grader using RM-Gallery's LLMGrader with POINTWISE mode
+    # Create pairwise comparison grader using OpenJudge's LLMGrader with POINTWISE mode
     template = PromptTemplate(
         messages=[
             ChatMessage(
@@ -279,7 +279,7 @@ async def run_pairwise_evaluation(
     )
 
     # Define mapper to extract evaluation data fields
-    # Following rm-gallery design: use dict mapper for simple field extraction
+    # Following open_judge design: use dict mapper for simple field extraction
     mapper = {
         "instruction": "evaluation_data.instruction",
         "response_a": "evaluation_data.response_a",

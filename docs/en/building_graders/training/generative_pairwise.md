@@ -387,7 +387,7 @@ VAL_FILE=./data/helpsteer2_pairwise_test.parquet
 MODEL_PATH=Qwen/Qwen2.5-14B-Instruct
 
 PROJECT_NAME=pairwise_train
-EXPERIMENT_NAME=rm-gallery-pairwise-${TIMESTAMP}
+EXPERIMENT_NAME=open_judge-pairwise-${TIMESTAMP}
 
 CUSTOM_REWARD_FUNCTION_PATH=./reward_fn.py
 CUSTOM_DATASET_PATH=./dataset.py
@@ -508,7 +508,7 @@ print(by_strength)
 ### As Comparison Judge
 
 ```python
-from rm_gallery.core.models import OpenAIChatModel
+from open_judge.models import OpenAIChatModel
 
 model = OpenAIChatModel(
     model="./checkpoints/pairwise-final",
@@ -538,8 +538,8 @@ print(result)
 ### In GradingRunner
 
 ```python
-from rm_gallery.core.graders.common import RelevanceGrader
-from rm_gallery.core.runner import GradingRunner, GraderConfig
+from open_judge.graders.common import RelevanceGrader
+from open_judge.runner import GradingRunner, GraderConfig
 
 grader = RelevanceGrader(model=model)
 

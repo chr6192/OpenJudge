@@ -38,28 +38,28 @@ Now run the relevance grader on this dataset. The `GradingRunner` handles execut
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.common import RelevanceGrader
-from rm_gallery.core.runner.grading_runner import GradingRunner, GraderConfig
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.common import RelevanceGrader
+from open_judge.runner.grading_runner import GradingRunner, GraderConfig
 
 async def main():
     # Initialize the grading model
     model = OpenAIChatModel(model="qwen3-32b")
-    
+
     # Configure the relevance grader
     grader_configs = {
         "relevance": GraderConfig(grader=RelevanceGrader(model=model))
     }
-    
+
     # Create runner and execute
     runner = GradingRunner(
         grader_configs=grader_configs,
         max_concurrency=32,
         show_progress=True
     )
-    
+
     results = await runner.arun(dataset)
-    
+
     # Print results
     for i, result in enumerate(results["relevance"]):
         print(f"Sample {i}: relevance={result.score}/5")
@@ -105,10 +105,10 @@ Now we can configure all three graders and combine their scores into a single re
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.common import HarmfulnessGrader, RelevanceGrader, CorrectnessGrader
-from rm_gallery.core.runner.grading_runner import GradingRunner, GraderConfig
-from rm_gallery.core.runner.aggregator.weighted_sum_aggregator import WeightedSumAggregator
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.common import HarmfulnessGrader, RelevanceGrader, CorrectnessGrader
+from open_judge.runner.grading_runner import GradingRunner, GraderConfig
+from open_judge.runner.aggregator.weighted_sum_aggregator import WeightedSumAggregator
 
 async def main():
     model = OpenAIChatModel(model="qwen3-32b")
@@ -173,14 +173,14 @@ Here's the complete workflow for building a composite reward signal for our cust
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.common import HarmfulnessGrader, RelevanceGrader, CorrectnessGrader
-from rm_gallery.core.runner.grading_runner import GradingRunner, GraderConfig
-from rm_gallery.core.runner.aggregator.weighted_sum_aggregator import WeightedSumAggregator
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.common import HarmfulnessGrader, RelevanceGrader, CorrectnessGrader
+from open_judge.runner.grading_runner import GradingRunner, GraderConfig
+from open_judge.runner.aggregator.weighted_sum_aggregator import WeightedSumAggregator
 
 async def main():
     model = OpenAIChatModel(model="qwen3-32b")
-    
+
     # Prepare training data
     dataset = [
         {
@@ -194,7 +194,7 @@ async def main():
             "ground_truth": "Settings > Security > Reset Password"
         },
     ]
-    
+
     # Configure graders
     grader_configs = {
         "harmfulness": GraderConfig(grader=HarmfulnessGrader(model=model)),
@@ -240,7 +240,7 @@ You now have a foundation for building reward models. Start with a single grader
 
 ## Explore More Graders
 
-Beyond the three graders used in this tutorial, RM-Gallery provides 50+ built-in graders covering various quality dimensions. Different applications require different evaluation criteria, so it's worth exploring what's available.
+Beyond the three graders used in this tutorial, OpenJudge provides 50+ built-in graders covering various quality dimensions. Different applications require different evaluation criteria, so it's worth exploring what's available.
 
 For text-based applications, you might need graders that check for hallucinations, measure response conciseness, or validate output format. The [General Graders](../built_in_graders/general.md) and [Format Graders](../built_in_graders/format.md) documentation covers these use cases. If you're building AI agents that use tools or follow multi-step reasoning, check out [Agent Graders](../built_in_graders/agent_graders.md) for evaluating tool selection accuracy, action alignment, and trajectory quality.
 

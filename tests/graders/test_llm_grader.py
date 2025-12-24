@@ -32,24 +32,23 @@ from unittest.mock import AsyncMock
 
 import pytest
 
-from rm_gallery.core.analyzer.validation import (
+from open_judge.analyzer.statistical import ConsistencyAnalyzer
+from open_judge.analyzer.validation import (
     AccuracyAnalyzer,
-    ConsistencyAnalyzer,
     CorrelationAnalyzer,
     F1ScoreAnalyzer,
     PrecisionAnalyzer,
     RecallAnalyzer,
 )
-from rm_gallery.core.graders.base_grader import (
+from open_judge.graders.base_grader import (
     BaseGrader,
     GraderMode,
     GraderRank,
     GraderScore,
 )
-from rm_gallery.core.graders.llm_grader import LLMGrader
-from rm_gallery.core.models.base_chat_model import BaseChatModel
-from rm_gallery.core.models.openai_chat_model import OpenAIChatModel
-from rm_gallery.core.runner.grading_runner import GraderConfig, GradingRunner
+from open_judge.graders.llm_grader import LLMGrader
+from open_judge.models.openai_chat_model import OpenAIChatModel
+from open_judge.runner.grading_runner import GraderConfig, GradingRunner
 
 # ==================== UNIT TESTS ====================
 # These tests verify the basic functionality of the grader in isolation
@@ -509,8 +508,8 @@ class TestLLMGraderQuality:
         # Use ConsistencyAnalyzer to calculate consistency metrics
         consistency_analyzer = ConsistencyAnalyzer()
         consistency_result = consistency_analyzer.analyze(
-            first_run_results=results["accuracy_run1"],
-            second_run_results=results["accuracy_run2"],
+            grader_results=results["accuracy_run1"],
+            another_grader_results=results["accuracy_run2"],
         )
 
         # Assert that consistency metrics meet expected thresholds

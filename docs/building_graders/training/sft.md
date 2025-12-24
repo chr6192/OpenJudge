@@ -38,7 +38,7 @@ SFT training expects **Parquet files** with a `messages` column containing multi
 
     def to_messages(example):
         return {"messages": [
-            {"role": "assistant" if msg["from"] == "gpt" else "user", 
+            {"role": "assistant" if msg["from"] == "gpt" else "user",
              "content": msg["value"]}
             for msg in example["conversations"]
         ]}
@@ -145,7 +145,7 @@ MODEL_PATH=Qwen/Qwen2.5-7B-Instruct
 TRAIN_FILE=./data/train.parquet
 VAL_FILE=./data/test.parquet
 
-PROJECT_NAME=rm-gallery-sft
+PROJECT_NAME=open_judge-sft
 EXPERIMENT_NAME=sft-${TIMESTAMP}
 
 # Launch with torchrun
@@ -239,8 +239,8 @@ trainer.logger=['console','swanlab']    # Add SwanLab
 ### Build Grader from SFT Checkpoint
 
 ```python
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.common import RelevanceGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.common import RelevanceGrader
 
 model = OpenAIChatModel(
     model="./checkpoints/sft/qwen-sft-final",

@@ -1,6 +1,6 @@
 # Built-in Graders Overview
 
-RM-Gallery provides **50+ pre-built graders** for evaluating AI responses across quality dimensions, agent behaviors, formats, and modalities. All graders are **rigorously evaluated** on benchmark datasets to ensure reliability and accuracy.
+OpenJudge provides **50+ pre-built graders** for evaluating AI responses across quality dimensions, agent behaviors, formats, and modalities. All graders are **rigorously evaluated** on benchmark datasets to ensure reliability and accuracy.
 
 
 ## Key Features
@@ -21,7 +21,7 @@ For installation, environment setup, and running your first evaluation, see the 
 
 ## Available Graders
 
-Choose the right grader for your evaluation needs. RM-Gallery organizes graders by evaluation focus, making it easy to find graders for specific tasks.
+Choose the right grader for your evaluation needs. OpenJudge organizes graders by evaluation focus, making it easy to find graders for specific tasks.
 
 !!! tip "Implementation Types"
     - **LLM-Based** graders: Nuanced quality assessment using LLM judges, suitable for subjective evaluation

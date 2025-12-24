@@ -15,7 +15,7 @@ Pre-built graders work well for general tasks, but custom training enables:
 
 ## Training Approaches
 
-RM-Gallery supports multiple training paradigms through the VERL framework:
+OpenJudge supports multiple training paradigms through the VERL framework:
 
 | Approach | Best For | Training Signal | Complexity |
 |----------|----------|-----------------|------------|
@@ -55,11 +55,11 @@ All training methods use the **VERL** (Versatile Efficient Reinforcement Learnin
                    ▼
 ┌─────────────────────────────────────────────────┐
 │  Trained Model                                  │
-│  └─ Use in rm_gallery.core evaluation          │
+│  └─ Use in open_judge evaluation          │
 └─────────────────────────────────────────────────┘
 ```
 
-> **Note:** Training code (`tutorials/cookbooks/training_reward_model/`) is independent from the core evaluation framework (`rm_gallery.core`). Train models separately, then integrate them as graders.
+> **Note:** Training code (`tutorials/cookbooks/training_reward_model/`) is independent from the core evaluation framework (`open_judge`). Train models separately, then integrate them as graders.
 
 
 ## Data Requirements
@@ -99,10 +99,10 @@ All training approaches use **Parquet files** with specific column structures:
 
 ### Data Preparation
 
-Use RM-Gallery's data export utilities to convert your evaluation data:
+Use OpenJudge's data export utilities to convert your evaluation data:
 
 ```python
-from rm_gallery.core.generator import export_data
+from open_judge.generator import export_data
 
 # Export from evaluation cases
 export_data(
@@ -134,7 +134,7 @@ Convert your data to Parquet format:
 
 ```bash
 # Example: Use HelpSteer2 dataset
-python -m rm_gallery.core.generator.export \
+python -m open_judge.generator.export \
     --dataset helpsteer2 \
     --output-dir ./data \
     --format parquet
@@ -167,8 +167,8 @@ bash sft_rm.sh
 Use your trained model as a grader:
 
 ```python
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.common import RelevanceGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.common import RelevanceGrader
 
 # Load your trained model
 model = OpenAIChatModel(

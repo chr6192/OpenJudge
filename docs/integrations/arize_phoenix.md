@@ -2,17 +2,17 @@
 
 ## Overview
 
-Arize Phoenix is an open-standard-based LLM observability platform that adopts a "standard-based" integration model. RM-Gallery can be integrated with Phoenix through the OpenInference specification, importing evaluation results as telemetry signals into the Phoenix platform.
+Arize Phoenix is an open-standard-based LLM observability platform that adopts a "standard-based" integration model. OpenJudge can be integrated with Phoenix through the OpenInference specification, importing evaluation results as telemetry signals into the Phoenix platform.
 
 ## Integration Principles
 
-Phoenix is based on the OpenInference specification, treating evaluation results as a set of ID-tagged DataFrames that align with the original Trace tree through ID mapping. This plug-in integration approach allows RM-Gallery to flexibly interface with Phoenix.
+Phoenix is based on the OpenInference specification, treating evaluation results as a set of ID-tagged DataFrames that align with the original Trace tree through ID mapping. This plug-in integration approach allows OpenJudge to flexibly interface with Phoenix.
 
 ## Quick Start: Integrating with Individual Graders
 
 ### 1. Install Dependencies
 
-To begin integrating RM-Gallery with Arize Phoenix, first install the required dependencies:
+To begin integrating OpenJudge with Arize Phoenix, first install the required dependencies:
 
 ```bash
 pip install phoenix-langchain pandas
@@ -20,14 +20,14 @@ pip install phoenix-langchain pandas
 
 ### 2. Export Trace Data and Perform Evaluation
 
-The first step is to export trace data from Phoenix and evaluate it using RM-Gallery graders. This example shows how to perform individual evaluations with separate graders.
+The first step is to export trace data from Phoenix and evaluate it using OpenJudge graders. This example shows how to perform individual evaluations with separate graders.
 
 ```python
 import phoenix as px
 import pandas as pd
-from rm_gallery.core.graders.text.similarity import SimilarityGrader
-from rm_gallery.core.graders.text.relevance_grader import RelevanceGrader
-from rm_gallery.core.graders.schema import GraderResult, GraderScore, GraderRank, GraderError
+from open_judge.graders.text.similarity import SimilarityGrader
+from open_judge.graders.text.relevance_grader import RelevanceGrader
+from open_judge.graders.schema import GraderResult, GraderScore, GraderRank, GraderError
 import asyncio
 
 # Launch Phoenix (if not already started)
@@ -38,14 +38,14 @@ px.launch_app()
 # This retrieves the trace data as a pandas DataFrame
 spans_df = px.Client().get_spans_dataframe()
 
-# Initialize RM-Gallery graders
+# Initialize OpenJudge graders
 # These are individual graders that will be used for evaluation
 similarity_grader = SimilarityGrader(algorithm="cosine")
 relevance_grader = RelevanceGrader()
 
 async def evaluate_spans(spans_df):
     """
-    Evaluate spans using individual RM-Gallery graders.
+    Evaluate spans using individual OpenJudge graders.
 
     This function demonstrates the basic pattern of evaluating each span
     individually with separate graders. While simple, this approach may
@@ -67,7 +67,7 @@ async def evaluate_spans(spans_df):
             output_text = row.get('output.value', '')
             expected_output = row.get('expected_output', '')  # If there's expected output
 
-            # Execute RM-Gallery evaluation with individual graders
+            # Execute OpenJudge evaluation with individual graders
             # Each grader is called separately
             sim_result: GraderResult = await similarity_grader.aevaluate(
                 prediction=output_text,
@@ -163,20 +163,20 @@ print("Evaluations logged to Phoenix successfully!")
 
 ### Batch Evaluation with GradingRunner
 
-For improved performance and resource efficiency, especially with large datasets, use RM-Gallery's GradingRunner. This approach processes multiple spans in batches, leveraging concurrent execution.
+For improved performance and resource efficiency, especially with large datasets, use OpenJudge's GradingRunner. This approach processes multiple spans in batches, leveraging concurrent execution.
 
 ```python
-from rm_gallery.core.runner.grading_runner import GradingRunner
-from rm_gallery.core.analyzer.aggregator.weighted_sum_aggregator import WeightedSumAggregator
-from rm_gallery.core.graders.text.similarity import SimilarityGrader
-from rm_gallery.core.graders.text.relevance_grader import RelevanceGrader
-from rm_gallery.core.graders.schema import GraderResult
+from open_judge.runner.grading_runner import GradingRunner
+from open_judge.analyzer.aggregator.weighted_sum_aggregator import WeightedSumAggregator
+from open_judge.graders.text.similarity import SimilarityGrader
+from open_judge.graders.text.relevance_grader import RelevanceGrader
+from open_judge.graders.schema import GraderResult
 
-def prepare_phoenix_data_for_rm_gallery(spans_df):
+def prepare_phoenix_data_for_open_judge(spans_df):
     """
-    Prepare Phoenix trace data for RM-Gallery evaluation.
+    Prepare Phoenix trace data for OpenJudge evaluation.
 
-    This function transforms Phoenix trace data into the format expected by RM-Gallery graders.
+    This function transforms Phoenix trace data into the format expected by OpenJudge graders.
     It's a reusable utility that can be used in different parts of your evaluation pipeline.
 
     Args:
@@ -195,7 +195,7 @@ def prepare_phoenix_data_for_rm_gallery(spans_df):
         output_text = row.get('output.value', '')
         expected_output = row.get('expected_output', '')  # If there's expected output
 
-        # Prepare evaluation item in RM-Gallery format
+        # Prepare evaluation item in OpenJudge format
         eval_item = {
             "input": input_text,
             "prediction": output_text,
@@ -215,7 +215,7 @@ async def advanced_phoenix_integration():
     """
     Advanced Phoenix integration using GradingRunner for batch processing.
 
-    This function demonstrates how to use RM-Gallery's GradingRunner for efficient
+    This function demonstrates how to use OpenJudge's GradingRunner for efficient
     batch evaluation of Phoenix traces. It offers better performance than individual
     evaluation by processing multiple spans concurrently.
     """
@@ -239,7 +239,7 @@ async def advanced_phoenix_integration():
 
     # Prepare data for batch evaluation
     # This transforms the data into the format expected by GradingRunner
-    evaluation_data, span_id_mapping = prepare_phoenix_data_for_rm_gallery(spans_df)
+    evaluation_data, span_id_mapping = prepare_phoenix_data_for_open_judge(spans_df)
 
     try:
         # Execute comprehensive batch evaluation
@@ -307,19 +307,19 @@ async def advanced_phoenix_integration():
 
 ### Working with Aggregated Results
 
-RM-Gallery's GradingRunner also supports result aggregation, which allows you to compute composite scores from multiple individual metrics. This is useful for creating overall quality measures.
+OpenJudge's GradingRunner also supports result aggregation, which allows you to compute composite scores from multiple individual metrics. This is useful for creating overall quality measures.
 
 ```python
-from rm_gallery.core.runner.grading_runner import GradingRunner
-from rm_gallery.core.analyzer.aggregator.weighted_sum_aggregator import WeightedSumAggregator
-from rm_gallery.core.graders.text.similarity import SimilarityGrader
-from rm_gallery.core.graders.text.relevance_grader import RelevanceGrader
+from open_judge.runner.grading_runner import GradingRunner
+from open_judge.analyzer.aggregator.weighted_sum_aggregator import WeightedSumAggregator
+from open_judge.graders.text.similarity import SimilarityGrader
+from open_judge.graders.text.relevance_grader import RelevanceGrader
 
 async def phoenix_aggregated_integration():
     """
     Phoenix integration with aggregated results.
 
-    This function demonstrates how to use RM-Gallery's built-in aggregation capabilities
+    This function demonstrates how to use OpenJudge's built-in aggregation capabilities
     to compute composite scores from multiple metrics, then import them to Phoenix.
     """
     # Configure runner with graders and aggregators
@@ -346,7 +346,7 @@ async def phoenix_aggregated_integration():
         return pd.DataFrame()
 
     # Prepare data for batch evaluation
-    evaluation_data, span_id_mapping = prepare_phoenix_data_for_rm_gallery(spans_df)
+    evaluation_data, span_id_mapping = prepare_phoenix_data_for_open_judge(spans_df)
 
     try:
         # Execute batch evaluation with aggregation
@@ -417,8 +417,8 @@ async def phoenix_aggregated_integration():
 You can also create custom evaluation metrics and use them with the batch processing capabilities:
 
 ```python
-from rm_gallery.core.graders.base_grader import BaseGrader
-from rm_gallery.core.graders.schema import GraderInput, GraderResult, GraderScore, GraderError
+from open_judge.graders.base_grader import BaseGrader
+from open_judge.graders.schema import GraderInput, GraderResult, GraderScore, GraderError
 
 class CustomPhoenixGrader(BaseGrader):
     """Custom Phoenix grader for specialized evaluation metrics."""
@@ -497,7 +497,7 @@ async def custom_evaluation_with_batch_processing(spans_df):
         return pd.DataFrame()
 
     # Prepare data using the same transformation function
-    evaluation_data, span_id_mapping = prepare_phoenix_data_for_rm_gallery(spans_df)
+    evaluation_data, span_id_mapping = prepare_phoenix_data_for_open_judge(spans_df)
 
     try:
         # Execute batch evaluation with custom grader
@@ -554,6 +554,6 @@ async def custom_evaluation_with_batch_processing(spans_df):
 
 ## Related Resources
 
-- [RM-Gallery Grader Development Guide](../building_graders/overview.md)
+- [OpenJudge Grader Development Guide](../building_graders/overview.md)
 - [Arize Phoenix Official Documentation](https://docs.arize.com/phoenix)
 - [OpenInference Specification](https://github.com/Arize-ai/openinference)

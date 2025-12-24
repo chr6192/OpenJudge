@@ -7,7 +7,7 @@ Test fuzzy matching functionality including exact match, partial match, and toke
 
 import pytest
 
-from rm_gallery.core.graders.text.similarity import SimilarityGrader
+from open_judge.graders.text.similarity import SimilarityGrader
 
 
 class TestFuzzyMatchBasic:

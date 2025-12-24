@@ -1,6 +1,6 @@
 /**
  * Navigation Scroll Position Preservation
- * 
+ *
  * This script preserves the sidebar scroll position when navigating between pages.
  * Without this, clicking a link in the scrolled sidebar would reset it to the top.
  */
@@ -8,7 +8,7 @@
 (function() {
   'use strict';
 
-  const STORAGE_KEY = 'rm-gallery-sidebar-scroll';
+  const STORAGE_KEY = 'open_judge-sidebar-scroll';
   const SIDEBAR_SELECTORS = [
     '[data-slot="sidebar-content"]',  // Current theme's sidebar container
     '[data-sidebar="content"]',       // Alternative selector
@@ -79,7 +79,7 @@
       const stored = sessionStorage.getItem(STORAGE_KEY);
       if (stored) {
         const scrollData = JSON.parse(stored);
-        
+
         // Only restore if saved within the last 5 minutes
         const age = Date.now() - scrollData.timestamp;
         if (age < 5 * 60 * 1000) {

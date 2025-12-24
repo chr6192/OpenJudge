@@ -17,8 +17,8 @@ A comprehensive evaluation framework for deep research agents, assessing report 
 
 ```python
 import asyncio
-from rm_gallery.core.models.openai_chat_model import OpenAIChatModel
-from rm_gallery.core.runner.grading_runner import GradingRunner
+from open_judge.models.openai_chat_model import OpenAIChatModel
+from open_judge.runner.grading_runner import GradingRunner
 from tutorials.deep_research.deep_research_evaluation import create_grader_configs
 
 # Initialize model and configs
@@ -239,13 +239,13 @@ grader_configs = {
             "chat_date": data.get("chat_date")  # None if not present
         }
     ),
-    
+
     # Messages only
     "trajectory_faithfulness": GraderConfig(
         grader=FinancialTrajectoryFaithfulGrader(model=model),
         mapper=lambda data: {"messages": data["messages"]}
     ),
-    
+
     # Messages + optional rubrics
     "rubrics_performance": GraderConfig(
         grader=RubricsBasedTrajectoryPerformance(model=model),
@@ -299,7 +299,7 @@ Sample 1:
 ### Adding Custom Graders
 
 ```python
-from rm_gallery.core.graders.base_grader import BaseGrader, GraderScore
+from open_judge.graders.base_grader import BaseGrader, GraderScore
 
 class CustomGrader(BaseGrader):
     async def aevaluate(self, messages, **kwargs) -> GraderScore:
@@ -349,7 +349,7 @@ GradingRunner (concurrent execution)
 
 ## References
 
-- [GradingRunner](../../rm_gallery/core/runner/grading_runner.py)
-- [Financial Graders](../../rm_gallery/core/graders/agent/deep_research/)
-- [Trajectory Graders](../../rm_gallery/core/graders/agent/trajectory/)
-- [Action & Observation Graders](../../rm_gallery/core/graders/agent/)
+- [GradingRunner](../../open_judge/runner/grading_runner.py)
+- [Financial Graders](../../open_judge/graders/agent/deep_research/)
+- [Trajectory Graders](../../open_judge/graders/agent/trajectory/)
+- [Action & Observation Graders](../../open_judge/graders/agent/)

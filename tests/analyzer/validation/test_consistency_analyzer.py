@@ -3,11 +3,11 @@
 
 import pytest
 
-from rm_gallery.core.analyzer.validation import (
+from open_judge.analyzer.statistical import (
     ConsistencyAnalysisResult,
     ConsistencyAnalyzer,
 )
-from rm_gallery.core.graders.schema import GraderScore
+from open_judge.graders.schema import GraderScore
 
 
 @pytest.mark.unit
@@ -22,14 +22,14 @@ class TestConsistencyAnalyzer:
     def test_analyze_perfect_consistency(self):
         """Test analyze method with perfect consistency."""
         # Prepare test data - two identical sets of results
-        first_run_results = [
+        grader_results = [
             GraderScore(name="test", score=1.0, reason="Correct"),
             GraderScore(name="test", score=0.0, reason="Incorrect"),
             GraderScore(name="test", score=1.0, reason="Correct"),
             GraderScore(name="test", score=0.0, reason="Incorrect"),
         ]
 
-        second_run_results = [
+        another_grader_results = [
             GraderScore(name="test", score=1.0, reason="Correct"),
             GraderScore(name="test", score=0.0, reason="Incorrect"),
             GraderScore(name="test", score=1.0, reason="Correct"),
@@ -38,7 +38,7 @@ class TestConsistencyAnalyzer:
 
         # Create analyzer and run analysis
         analyzer = ConsistencyAnalyzer()
-        result = analyzer.analyze(first_run_results, second_run_results)
+        result = analyzer.analyze([], grader_results, another_grader_results)
 
         # Assertions
         assert isinstance(result, ConsistencyAnalysisResult)
@@ -50,14 +50,14 @@ class TestConsistencyAnalyzer:
     def test_analyze_partial_consistency(self):
         """Test analyze method with partial consistency."""
         # Prepare test data with some differences
-        first_run_results = [
+        grader_results = [
             GraderScore(name="test", score=1.0, reason="Correct"),
             GraderScore(name="test", score=0.0, reason="Incorrect"),
             GraderScore(name="test", score=1.0, reason="Correct"),
             GraderScore(name="test", score=0.0, reason="Incorrect"),
         ]
 
-        second_run_results = [
+        another_grader_results = [
             GraderScore(name="test", score=1.0, reason="Correct"),
             GraderScore(name="test", score=1.0, reason="Incorrect"),  # Different from first run
             GraderScore(name="test", score=1.0, reason="Correct"),
@@ -66,7 +66,7 @@ class TestConsistencyAnalyzer:
 
         # Create analyzer and run analysis
         analyzer = ConsistencyAnalyzer()
-        result = analyzer.analyze(first_run_results, second_run_results)
+        result = analyzer.analyze([], grader_results, another_grader_results)
 
         # Assertions
         assert isinstance(result, ConsistencyAnalysisResult)
@@ -78,7 +78,7 @@ class TestConsistencyAnalyzer:
         """Test analyze method with empty data."""
         # Create analyzer and run analysis with empty data
         analyzer = ConsistencyAnalyzer()
-        result = analyzer.analyze([], [])
+        result = analyzer.analyze([], [], [])
 
         # Assertions
         assert isinstance(result, ConsistencyAnalysisResult)
@@ -90,12 +90,12 @@ class TestConsistencyAnalyzer:
     def test_analyze_mismatched_lengths(self):
         """Test analyze method with mismatched lengths."""
         # Prepare test data with different lengths
-        first_run_results = [
+        grader_results = [
             GraderScore(name="test", score=1.0, reason="Correct"),
             GraderScore(name="test", score=0.0, reason="Incorrect"),
         ]
 
-        second_run_results = [
+        another_grader_results = [
             GraderScore(name="test", score=1.0, reason="Correct"),
             GraderScore(name="test", score=0.0, reason="Incorrect"),
             GraderScore(name="test", score=1.0, reason="Extra"),  # Extra result
@@ -103,7 +103,7 @@ class TestConsistencyAnalyzer:
 
         # Create analyzer and run analysis
         analyzer = ConsistencyAnalyzer()
-        result = analyzer.analyze(first_run_results, second_run_results)
+        result = analyzer.analyze([], grader_results, another_grader_results)
 
         # Assertions - should only compare first 2 results
         assert isinstance(result, ConsistencyAnalysisResult)

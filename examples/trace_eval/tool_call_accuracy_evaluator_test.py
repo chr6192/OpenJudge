@@ -4,8 +4,10 @@ import asyncio
 import json
 import os
 
-from rm_gallery.core.graders.agent.tool.tool_call_accuracy import ToolCallAccuracyGrader
-from rm_gallery.core.models.schema.prompt_template import LanguageEnum
+from rm_gallery.open_judge.graders.agent.tool.tool_call_accuracy import (
+    ToolCallAccuracyGrader,
+)
+from rm_gallery.open_judge.models.schema.prompt_template import LanguageEnum
 
 # pylint: disable=line-too-long
 # pylint: disable=missing-function-docstring

@@ -8,7 +8,7 @@ Get started with OpenJudge in 5 minutes. This guide walks you through installati
 
 ```bash
 # Install with Standard dependencies from PyPI
-pip install rm-gallery
+pip install open_judge
 
 # For development purposes, install with dev dependencies
 pip install -e .[dev]
@@ -59,7 +59,7 @@ For LLM-Based graders, you need to configure API credentials. OpenJudge uses the
     You can also pass credentials when creating the model:
 
     ```python
-    from rm_gallery.core.models import OpenAIChatModel
+    from open_judge.models import OpenAIChatModel
 
     model = OpenAIChatModel(
         model="qwen3-32b",
@@ -108,8 +108,8 @@ data = {
 Create the LLM model and the `RelevanceGrader` to evaluate how well the response addresses the query:
 
 ```python
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.common.relevance import RelevanceGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.common.relevance import RelevanceGrader
 
 # Create the judge model (uses OPENAI_API_KEY and OPENAI_BASE_URL from env)
     model = OpenAIChatModel(model="qwen3-32b")
@@ -128,8 +128,8 @@ All graders use async/await. Evaluate your data with `aevaluate()`:
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.common.relevance import RelevanceGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.common.relevance import RelevanceGrader
 
 async def main():
     # Initialize model and grader

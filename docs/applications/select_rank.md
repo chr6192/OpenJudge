@@ -51,15 +51,15 @@ from tutorials.cookbooks.evaluation_cases.pairwise_evaluation import evaluate_ta
 
 async def main():
     instruction = "Write a short poem about artificial intelligence"
-    
+
     model_outputs = {
         "model_v1": "Silicon minds awake at dawn...",
         "model_v2": "Circuits pulse with electric thought...",
         "model_v3": "Binary dreams and neural nets...",
     }
-    
+
     results = await evaluate_task(instruction, model_outputs)
-    
+
     # View rankings
     print(f"Best: {results['pairwise'].best_model}")
     for rank, (model, win_rate) in enumerate(results['pairwise'].rankings, 1):
@@ -139,9 +139,9 @@ The `PairwiseAnalysisResult` contains:
     claude     0.25       --      0.75
     gemini     0.50      0.25      --
     ```
-    
+
     This shows:
-    
+
     - gpt-4 beats claude **75%** of the time
     - gpt-4 beats gemini **50%** of the time
     - claude beats gemini **75%** of the time
@@ -158,7 +158,7 @@ results = await evaluate_task(instruction, model_outputs, max_concurrency=20)
 **Custom Judge Model:**
 
 ```python
-from rm_gallery.core.models import OpenAIChatModel
+from open_judge.models import OpenAIChatModel
 
 model = OpenAIChatModel(model="qwen3-32b")  # Pass to run_pairwise_evaluation()
 ```

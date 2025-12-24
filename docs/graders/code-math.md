@@ -45,8 +45,8 @@ Executes generated code against test cases to verify functional correctness. Eva
 
 ```python
 import asyncio
-from rm_gallery.core.graders.code import SyntaxCheckGrader, CodeStyleGrader
-from rm_gallery.core.runner.grading_runner import GradingRunner
+from open_judge.graders.code import SyntaxCheckGrader, CodeStyleGrader
+from open_judge.runner.grading_runner import GradingRunner
 
 async def main():
     # For code quality evaluation without test cases
@@ -77,8 +77,8 @@ For execution testing with test cases in benchmark scenarios:
 ```python
 # CodeExecutionGrader is used with datasets containing test cases
 # Typical usage in benchmark evaluation contexts:
-from rm_gallery.core.graders.code import CodeExecutionGrader
-from rm_gallery.core.runner.grading_runner import GradingRunner
+from open_judge.graders.code import CodeExecutionGrader
+from open_judge.runner.grading_runner import GradingRunner
 
 grader = CodeExecutionGrader(continuous=True, timeout=10)
 runner = GradingRunner(grader_configs={"execution": grader})
@@ -122,7 +122,7 @@ Validates Python code syntax using Abstract Syntax Tree (AST) parsing. Extracts 
 
 ```python
 import asyncio
-from rm_gallery.core.graders.code import SyntaxCheckGrader
+from open_judge.graders.code import SyntaxCheckGrader
 
 async def main():
     grader = SyntaxCheckGrader()
@@ -186,7 +186,7 @@ Evaluates code style including indentation consistency and naming conventions. C
 
 ```python
 import asyncio
-from rm_gallery.core.graders.code import CodeStyleGrader
+from open_judge.graders.code import CodeStyleGrader
 
 async def main():
     grader = CodeStyleGrader()
@@ -252,7 +252,7 @@ Calculates similarity between generated code patches and ground truth patches us
 
 ```python
 import asyncio
-from rm_gallery.core.graders.code import PatchSimilarityGrader
+from open_judge.graders.code import PatchSimilarityGrader
 
 async def main():
     grader = PatchSimilarityGrader()
@@ -316,7 +316,7 @@ Verifies mathematical expressions for correctness using symbolic mathematics. Su
 
 ```python
 import asyncio
-from rm_gallery.core.graders.math import MathExpressionVerifyGrader
+from open_judge.graders.math import MathExpressionVerifyGrader
 
 async def main():
     grader = MathExpressionVerifyGrader()
@@ -353,7 +353,7 @@ asyncio.run(main())
 
 ```python
 import asyncio
-from rm_gallery.core.graders.math import MathExpressionVerifyGrader
+from open_judge.graders.math import MathExpressionVerifyGrader
 
 async def main():
     # Set timeout_score to 0.0 to be stricter on errors
@@ -376,12 +376,12 @@ For comprehensive code evaluation, combine multiple code graders to assess diffe
 
 ```python
 import asyncio
-from rm_gallery.core.graders.code import (
+from open_judge.graders.code import (
     CodeExecutionGrader,
     SyntaxCheckGrader,
     CodeStyleGrader,
 )
-from rm_gallery.core.runner.grading_runner import GradingRunner, GraderConfig
+from open_judge.runner.grading_runner import GradingRunner, GraderConfig
 
 async def main():
     # Configure multiple code graders for comprehensive evaluation

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 """
-Integration module for connecting RM-Gallery graders with AgentScope metrics.
+Integration module for connecting OpenJudge graders with AgentScope metrics.
 
-This module provides a wrapper class that allows RM-Gallery graders to be used
+This module provides a wrapper class that allows OpenJudge graders to be used
 as AgentScope metrics, enabling interoperability between the two frameworks.
 """
 
@@ -11,8 +11,8 @@ from typing import Any, Dict
 
 from pydantic import BaseModel
 
-from rm_gallery.core.graders.base_grader import BaseGrader
-from rm_gallery.core.graders.schema import GraderResult
+from open_judge.graders.base_grader import BaseGrader
+from open_judge.graders.schema import GraderResult
 
 # Type aliases for AgentScope components (using BaseModel as placeholder)
 MetricBase = BaseModel
@@ -20,22 +20,22 @@ SolutionOutput = BaseModel
 MetricResult = BaseModel
 
 
-class RMGalleryMetric(MetricBase):
-    """A wrapper class that adapts RM-Gallery graders to AgentScope metrics.
+class OpenJudgeMetric(MetricBase):
+    """A wrapper class that adapts OpenJudge graders to AgentScope metrics.
 
-    This class serves as a bridge between RM-Gallery's grading system and
-    AgentScope's metric system, allowing RM-Gallery graders to be used
+    This class serves as a bridge between OpenJudge's grading system and
+    AgentScope's metric system, allowing OpenJudge graders to be used
     directly as AgentScope metrics.
 
     Attributes:
-        grader (BaseGrader): The RM-Gallery grader instance to be wrapped.
+        grader (BaseGrader): The OpenJudge grader instance to be wrapped.
     """
 
     def __init__(self, grader: BaseGrader):
-        """Initialize the RMGalleryMetric wrapper.
+        """Initialize the OpenJudgeMetric wrapper.
 
         Args:
-            grader: An RM-Gallery grader instance that will be used to
+            grader: An OpenJudge grader instance that will be used to
                    perform evaluations when this metric is called.
         """
         super().__init__()
@@ -45,17 +45,17 @@ class RMGalleryMetric(MetricBase):
         self,
         solution: SolutionOutput,
     ) -> Dict[Any, Any]:
-        """Convert an AgentScope solution to a dictionary for RM-Gallery.
+        """Convert an AgentScope solution to a dictionary for OpenJudge.
 
         This abstract method needs to be implemented by subclasses to define
         how AgentScope solution objects should be converted to the dictionary
-        format expected by RM-Gallery graders.
+        format expected by OpenJudge graders.
 
         Args:
             solution: An AgentScope solution object to be converted.
 
         Returns:
-            A dictionary containing the data needed by the RM-Gallery grader.
+            A dictionary containing the data needed by the OpenJudge grader.
 
         Raises:
             NotImplementedError: This is an abstract method that must be implemented.
@@ -68,13 +68,13 @@ class RMGalleryMetric(MetricBase):
         self,
         grader_result: GraderResult,
     ) -> MetricResult:
-        """Convert RM-Gallery grader result to AgentScope metric result.
+        """Convert OpenJudge grader result to AgentScope metric result.
 
         This abstract method needs to be implemented by subclasses to define
-        how RM-Gallery grader results should be converted to AgentScope metric results.
+        how OpenJudge grader results should be converted to AgentScope metric results.
 
         Args:
-            grader_result: A result from an RM-Gallery grader evaluation.
+            grader_result: A result from an OpenJudge grader evaluation.
 
         Returns:
             A metric result in the format expected by AgentScope.
@@ -87,10 +87,10 @@ class RMGalleryMetric(MetricBase):
         )
 
     async def __call__(self, solution: SolutionOutput, *args, **kwargs) -> MetricResult:
-        """Evaluate the solution using the wrapped RM-Gallery grader.
+        """Evaluate the solution using the wrapped OpenJudge grader.
 
         This method converts the AgentScope solution to the format expected
-        by RM-Gallery, runs the evaluation, and converts the result back
+        by OpenJudge, runs the evaluation, and converts the result back
         to the format expected by AgentScope.
 
         Args:
@@ -101,10 +101,10 @@ class RMGalleryMetric(MetricBase):
         Returns:
             The evaluation result in AgentScope metric format.
         """
-        # Convert AgentScope solution to RM-Gallery compatible data format
+        # Convert AgentScope solution to OpenJudge compatible data format
         data = await self._convert_solution_to_dict(solution)
 
-        # Evaluate using RM-Gallery grader
+        # Evaluate using OpenJudge grader
         grader_result = await self.grader.aevaluate(**data)
 
         # Convert result back to AgentScope format

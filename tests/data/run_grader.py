@@ -5,10 +5,10 @@ import os
 
 import nest_asyncio
 
-from rm_gallery.core.graders.agent import *
-from rm_gallery.core.graders.common import *
-from rm_gallery.core.graders.llm_grader import LLMGrader
-from rm_gallery.core.models.schema.prompt_template import LanguageEnum
+from open_judge.graders.agent import *
+from open_judge.graders.common import *
+from open_judge.graders.llm_grader import LLMGrader
+from open_judge.models.schema.prompt_template import LanguageEnum
 
 nest_asyncio.apply()
 

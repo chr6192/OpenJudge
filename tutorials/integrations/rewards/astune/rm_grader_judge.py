@@ -1,12 +1,12 @@
 """
-RM Gallery Grader Judge Integration
+OpenJudge Grader Judge Integration
 
-This module integrates RM Gallery's Graders into astuner's judge system.
-It provides a way to evaluate workflow outputs using pre-defined RM Gallery graders.
+This module integrates OpenJudge's Graders into astuner's judge system.
+It provides a way to evaluate workflow outputs using pre-defined OpenJudge graders.
 
 Key Features:
 - Support for both pointwise and listwise evaluation modes
-- Flexible scoring based on RM Gallery graders
+- Flexible scoring based on OpenJudge graders
 - Seamless integration with astuner's workflow system
 - Support for mapper to handle data format conversion using parse_data_with_mapper
 
@@ -16,7 +16,7 @@ Example Configuration:
       judge_protocol: astuner.task_judge.rm_grader_judge->RMGraderJudge
       grader:
         class_name: "LLMGrader"
-        module_path: "rm_gallery.core.graders.llm_grader"
+        module_path: "open_judge.graders.llm_grader"
         kwargs:
           name: "helpfulness_grader"
           mode: "pointwise"
@@ -44,14 +44,14 @@ from typing import Any, Dict, List, Union
 
 from loguru import logger
 
-from rm_gallery.core.graders.base_grader import BaseGrader
-from rm_gallery.core.graders.schema import GraderError, GraderMode
+from open_judge.graders.base_grader import BaseGrader
+from open_judge.graders.schema import GraderError, GraderMode
 
 # pylint: disable=ungrouped-imports, wrong-import-order
 # from astuner.schema.task import Task, WorkflowOutput
 # from astuner.task_judge.judge_base import JudgeBase
-from rm_gallery.core.utils.instance import init_instance_by_config
-from rm_gallery.core.utils.mapping import parse_data_with_mapper
+from open_judge.utils.instance import init_instance_by_config
+from open_judge.utils.mapping import parse_data_with_mapper
 
 Task = dict
 WorkflowOutput = dict
@@ -60,9 +60,9 @@ WorkflowOutput = dict
 # to inherit from JudgeBase
 class RMGraderJudge:
     """
-    A judge that uses RM Gallery's Graders to evaluate workflow outputs.
+    A judge that uses OpenJudge's Graders to evaluate workflow outputs.
 
-    This judge allows using pre-defined RM Gallery graders to score workflow outputs.
+    This judge allows using pre-defined OpenJudge graders to score workflow outputs.
     It supports data mapping through the mapper configuration to transform task and
     workflow output data into the format expected by the grader.
 
@@ -71,7 +71,7 @@ class RMGraderJudge:
     2. Evaluate each workflow output using the grader
 
     Attributes:
-        grader (BaseGrader): The RM Gallery grader instance used for evaluation
+        grader (BaseGrader): The OpenJudge grader instance used for evaluation
         mapper (Dict[str, str]): Mapping configuration to transform input data fields
 
     Example Config (in YAML):
@@ -80,7 +80,7 @@ class RMGraderJudge:
           judge_protocol: astuner.task_judge.rm_grader_judge->RMGraderJudge
           grader:
             class_name: "LLMGrader"
-            module_path: "rm_gallery.core.graders.llm_grader"
+            module_path: "open_judge.graders.llm_grader"
             kwargs:
               name: "helpfulness_grader"
               mode: "pointwise"
@@ -109,7 +109,7 @@ class RMGraderJudge:
         Args:
             config: Configuration object containing grader configuration and optional mapper.
                    The config should contain:
-                   - config.astuner.task_judge.grader: Configuration for the RM Gallery grader
+                   - config.astuner.task_judge.grader: Configuration for the OpenJudge grader
                    - config.astuner.task_judge.mapper (optional): Data mapping configuration
         """
 
@@ -137,7 +137,7 @@ class RMGraderJudge:
         Prepare evaluation parameters by applying mapper configuration.
 
         Creates a data dictionary with 'task' and 'workflow_output' keys and applies
-        the mapper configuration using RM-Gallery's parse_data_with_mapper utility.
+        the mapper configuration using OpenJudge's parse_data_with_mapper utility.
 
         Args:
             task: The task being evaluated
@@ -159,7 +159,7 @@ class RMGraderJudge:
         workflow_output: Union[WorkflowOutput, List[WorkflowOutput]],
     ):
         """
-        Asynchronously compute reward using the RM Gallery grader.
+        Asynchronously compute reward using the OpenJudge grader.
 
         Args:
             task: The task being evaluated
@@ -275,7 +275,7 @@ if __name__ == "__main__":
                 "task_judge": {
                     "grader": {
                         "class_name": "HelpfulnessGrader",
-                        "module_path": "rm_gallery.core.graders.alignment.helpfulness.helpfulness",
+                        "module_path": "open_judge.graders.alignment.helpfulness.helpfulness",
                         "kwargs": {
                             "model": {
                                 "model": "qwen-plus",

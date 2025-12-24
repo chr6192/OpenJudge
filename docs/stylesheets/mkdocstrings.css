@@ -1,5 +1,5 @@
 /* mkdocstrings API documentation styling */
-/* Brings structured cards, signatures, and definition lists inline with RM-Gallery visuals */
+/* Brings structured cards, signatures, and definition lists inline with OpenJudge visuals */
 /*
  * IMPORTANT: These selectors target the default mkdocstrings-python template classes:
  * - .doc, .doc-object, .doc-heading, .doc-signature, .doc-contents

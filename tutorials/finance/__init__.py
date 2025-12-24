@@ -3,7 +3,7 @@
 Finance Domain Graders
 
 This package provides specialized graders for evaluating financial analysis
-and research content. All graders follow the new RM-Gallery framework architecture.
+and research content. All graders follow the new OpenJudgeframework architecture.
 
 Modules:
     - event_interpretation: Event identification and analysis graders

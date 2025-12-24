@@ -31,12 +31,12 @@ from unittest.mock import AsyncMock
 
 import pytest
 
-from rm_gallery.core.graders.agent.trajectory.trajectory_comprehensive import (
+from open_judge.graders.agent.trajectory.trajectory_comprehensive import (
     TrajectoryComprehensiveGrader,
 )
-from rm_gallery.core.graders.base_grader import GraderError
-from rm_gallery.core.models.openai_chat_model import OpenAIChatModel
-from rm_gallery.core.models.schema.prompt_template import LanguageEnum
+from open_judge.graders.base_grader import GraderError
+from open_judge.models.openai_chat_model import OpenAIChatModel
+from open_judge.models.schema.prompt_template import LanguageEnum
 
 # ==================== UNIT TESTS ====================
 # These tests verify the basic functionality of the grader in isolation

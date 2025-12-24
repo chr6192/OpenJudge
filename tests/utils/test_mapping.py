@@ -8,7 +8,7 @@ from typing import Any, Dict
 
 import pytest
 
-from rm_gallery.core.utils.mapping import (
+from open_judge.utils.mapping import (
     get_value_by_mapping,
     get_value_by_path,
     parse_data_with_mapper,
@@ -227,9 +227,9 @@ class TestParseDataWithMapper:
         result = parse_data_with_mapper(sample_data, {})
         assert result == {}
 
-    # RM Gallery specific test cases
-    def test_rm_gallery_task_mapping(self):
-        """Test mapping typical RM Gallery task data."""
+    # OpenJudge specific test cases
+    def test_open_judge_task_mapping(self):
+        """Test mapping typical OpenJudge task data."""
         task_data = {
             "task": {
                 "question": "How do I sort a list in Python?",

@@ -1,5 +1,6 @@
 import json
 import re
+
 from dashscope import Generation
 
 
@@ -24,7 +25,7 @@ def build_prompt(content: str, functions: list) -> str:
         '- "arguments": a JSON STRING (not object) containing only the required parameter values inferred from the question.\n'
         "Do NOT include optional parameters that use default values unless explicitly mentioned.\n"
         "Do NOT output any other text, explanation, or markdown.\n\n"
-        f"User question: \"{content}\"\n\n"
+        f'User question: "{content}"\n\n'
         "Available functions:\n"
     )
     for i, func in enumerate(functions, 1):
@@ -71,8 +72,7 @@ def extract_and_stringify_arguments(text: str) -> dict:
 
 
 def process_jsonl(input_path: str, output_path: str):
-    with open(input_path, 'r', encoding='utf-8') as fin, \
-            open(output_path, 'w', encoding='utf-8') as fout:
+    with open(input_path, "r", encoding="utf-8") as fin, open(output_path, "w", encoding="utf-8") as fout:
 
         for line_num, line in enumerate(fin, 1):
             line = line.strip()
@@ -85,9 +85,7 @@ def process_jsonl(input_path: str, output_path: str):
                 functions = record["function"]
                 prompt = build_prompt(content, functions)
                 response = Generation.call(
-                    model="qwen-max",
-                    messages=[{"role": "user", "content": prompt}],
-                    temperature=0.0
+                    model="qwen-max", messages=[{"role": "user", "content": prompt}], temperature=0.0
                 )
 
                 reply = response.output.text
@@ -103,5 +101,7 @@ def process_jsonl(input_path: str, output_path: str):
 
 
 if __name__ == "__main__":
-    process_jsonl("../../bfcl_v3/tool_call/tool_call_bfcl_v3_multiple_raw.jsonl",
-                 "../../bfcl_v3/tool_call/tool_call_bfcl_v3_multiple_raw_llm_output.jsonl")
+    process_jsonl(
+        "../../bfcl_v3/tool_call/tool_call_bfcl_v3_multiple_raw.jsonl",
+        "../../bfcl_v3/tool_call/tool_call_bfcl_v3_multiple_raw_llm_output.jsonl",
+    )

@@ -6,36 +6,36 @@ LangSmith is an LLM application development and monitoring platform provided by 
 
 ## Integration Principles
 
-LangSmith deeply integrates into the runtime flow, requiring evaluators to be packaged as Python Callables that accept specific inputs and return specific outputs. RM-Gallery can be easily integrated with LangSmith by wrapping RM-Gallery graders as LangSmith-compatible evaluators.
+LangSmith deeply integrates into the runtime flow, requiring evaluators to be packaged as Python Callables that accept specific inputs and return specific outputs. OpenJudge can be easily integrated with LangSmith by wrapping OpenJudge graders as LangSmith-compatible evaluators.
 
 ## Quick Start: Integrating with Individual Graders
 
 ### 1. Install Dependencies
 
-To begin integrating RM-Gallery with LangSmith, first install the required dependencies:
+To begin integrating OpenJudge with LangSmith, first install the required dependencies:
 
 ```bash
 pip install langsmith
 ```
 
-### 2. Create RM-Gallery Evaluator Wrapper
+### 2. Create OpenJudge Evaluator Wrapper
 
-The first step is to create a wrapper function that converts RM-Gallery graders into LangSmith-compatible evaluators. This wrapper handles the conversion of data formats and result types between the two systems.
+The first step is to create a wrapper function that converts OpenJudge graders into LangSmith-compatible evaluators. This wrapper handles the conversion of data formats and result types between the two systems.
 
 ```python
 from typing import Callable, Dict, Any, Union
-from rm_gallery.core.graders.base_grader import BaseGrader
-from rm_gallery.core.graders.schema import GraderResult, GraderScore, GraderRank, GraderError
+from open_judge.graders.base_grader import BaseGrader
+from open_judge.graders.schema import GraderResult, GraderScore, GraderRank, GraderError
 
 def create_langsmith_evaluator(grader: BaseGrader) -> Callable:
     """
-    Create a LangSmith-compatible evaluator from an RM-Gallery grader.
+    Create a LangSmith-compatible evaluator from an OpenJudge grader.
 
-    This function wraps an RM-Gallery grader to make it compatible with LangSmith's
+    This function wraps an OpenJudge grader to make it compatible with LangSmith's
     evaluation interface. It handles data transformation and result formatting.
 
     Args:
-        grader: An RM-Gallery grader instance
+        grader: An OpenJudge grader instance
 
     Returns:
         A LangSmith-compatible evaluator function
@@ -45,7 +45,7 @@ def create_langsmith_evaluator(grader: BaseGrader) -> Callable:
         LangSmith evaluator function.
 
         This function extracts data from LangSmith's run and example objects,
-        passes it to the RM-Gallery grader, and formats the result for LangSmith.
+        passes it to the OpenJudge grader, and formats the result for LangSmith.
 
         Args:
             run: The run object from LangSmith containing outputs
@@ -64,11 +64,11 @@ def create_langsmith_evaluator(grader: BaseGrader) -> Callable:
             # This creates a single dictionary with all available data
             evaluation_data = {**inputs, **outputs}
 
-            # Execute RM-Gallery evaluation
+            # Execute OpenJudge evaluation
             # This calls the grader's aevaluate method with the combined data
             result: GraderResult = await grader.aevaluate(**evaluation_data)
 
-            # Convert RM-Gallery result to LangSmith format
+            # Convert OpenJudge result to LangSmith format
             # Different result types need different handling
             if isinstance(result, GraderScore):
                 return {
@@ -100,26 +100,26 @@ def create_langsmith_evaluator(grader: BaseGrader) -> Callable:
     return langsmith_evaluator
 
 # Example usage
-from rm_gallery.core.graders.text.similarity import SimilarityGrader
+from open_judge.graders.text.similarity import SimilarityGrader
 
-# Create RM-Gallery grader for cosine similarity
+# Create OpenJudge grader for cosine similarity
 similarity_grader = SimilarityGrader(algorithm="cosine")
 ```
 
-### 3. Use RM-Gallery Evaluators in LangSmith
+### 3. Use OpenJudge Evaluators in LangSmith
 
-After creating the wrapper, you can use RM-Gallery graders in LangSmith evaluations. This example shows how to set up and run an evaluation with multiple graders.
+After creating the wrapper, you can use OpenJudge graders in LangSmith evaluations. This example shows how to set up and run an evaluation with multiple graders.
 
 ```python
 from langsmith import Client
 from langsmith.evaluation import evaluate
-from rm_gallery.core.graders.text.relevance_grader import RelevanceGrader
+from open_judge.graders.text.relevance_grader import RelevanceGrader
 
 # Initialize LangSmith client
 # Make sure you have set the LANGSMITH_API_KEY environment variable
 client = Client()
 
-# Create multiple RM-Gallery evaluators
+# Create multiple OpenJudge evaluators
 # This demonstrates how to use different types of graders
 graders = {
     "similarity": SimilarityGrader(algorithm="cosine"),
@@ -127,7 +127,7 @@ graders = {
 }
 
 # Convert to LangSmith evaluators
-# Each RM-Gallery grader is wrapped to be compatible with LangSmith
+# Each OpenJudge grader is wrapped to be compatible with LangSmith
 langsmith_evaluators = {
     name: create_langsmith_evaluator(grader)
     for name, grader in graders.items()
@@ -139,7 +139,7 @@ results = evaluate(
     <your_target_task>,  # Your LLM application or chain
     data=<your_dataset_name_or_id>,  # Dataset in LangSmith
     evaluators=list(langsmith_evaluators.values()),
-    experiment_prefix="rm-gallery-evaluation"
+    experiment_prefix="open_judge-evaluation"
 )
 ```
 
@@ -147,15 +147,15 @@ results = evaluate(
 
 ### Batch Evaluation with Multiple Graders
 
-For more complex scenarios involving multiple graders, RM-Gallery's GradingRunner provides efficient batch processing capabilities. This approach offers better performance and resource management compared to individual grader evaluation.
+For more complex scenarios involving multiple graders, OpenJudge's GradingRunner provides efficient batch processing capabilities. This approach offers better performance and resource management compared to individual grader evaluation.
 
 ```python
-from rm_gallery.core.runner.grading_runner import GradingRunner
-from rm_gallery.core.graders.text.similarity import SimilarityGrader
-from rm_gallery.core.graders.text.relevance_grader import RelevanceGrader
+from open_judge.runner.grading_runner import GradingRunner
+from open_judge.graders.text.similarity import SimilarityGrader
+from open_judge.graders.text.relevance_grader import RelevanceGrader
 
 class LangSmithBatchEvaluator:
-    """Batch evaluator that combines multiple RM-Gallery graders"""
+    """Batch evaluator that combines multiple OpenJudge graders"""
 
     def __init__(self):
         """
@@ -195,7 +195,7 @@ class LangSmithBatchEvaluator:
             outputs = run.outputs or {}
             evaluation_data = [{**inputs, **outputs}]
 
-            # Execute batch evaluation using RM-Gallery runner
+            # Execute batch evaluation using OpenJudge runner
             # The runner handles concurrent execution of all configured graders
             batch_results = await self.runner.arun(evaluation_data)
 
@@ -247,22 +247,22 @@ results = evaluate(
     <your_target_task>,
     data=<your_dataset_name_or_id>,
     evaluators=[batch_evaluator],  # Single batch evaluator handles multiple graders
-    experiment_prefix="rm-gallery-batch-evaluation"
+    experiment_prefix="open_judge-batch-evaluation"
 )
 ```
 
 ### Working with Aggregated Results
 
-RM-Gallery's GradingRunner also supports result aggregation, allowing you to combine multiple evaluation metrics into composite scores. This is particularly useful when you want to create overall quality measures from individual metrics.
+OpenJudge's GradingRunner also supports result aggregation, allowing you to combine multiple evaluation metrics into composite scores. This is particularly useful when you want to create overall quality measures from individual metrics.
 
 ```python
-from rm_gallery.core.runner.grading_runner import GradingRunner
-from rm_gallery.core.analyzer.aggregator.weighted_sum_aggregator import WeightedSumAggregator
-from rm_gallery.core.graders.text.similarity import SimilarityGrader
-from rm_gallery.core.graders.text.relevance_grader import RelevanceGrader
+from open_judge.runner.grading_runner import GradingRunner
+from open_judge.analyzer.aggregator.weighted_sum_aggregator import WeightedSumAggregator
+from open_judge.graders.text.similarity import SimilarityGrader
+from open_judge.graders.text.relevance_grader import RelevanceGrader
 
 class AggregatedLangSmithEvaluator:
-    """Evaluator that uses aggregated results from RM-Gallery runner"""
+    """Evaluator that uses aggregated results from OpenJudge runner"""
 
     def __init__(self):
         """
@@ -289,7 +289,7 @@ class AggregatedLangSmithEvaluator:
         Execute evaluation with both individual and aggregated results.
 
         This function demonstrates how to work with both raw grader results
-        and aggregated scores produced by RM-Gallery's built-in aggregators.
+        and aggregated scores produced by OpenJudge's built-in aggregators.
         """
         try:
             # Prepare data for evaluation
@@ -365,5 +365,5 @@ class AggregatedLangSmithEvaluator:
 
 ## Related Resources
 
-- [RM-Gallery Runner Documentation](../running_graders/run_tasks.md)
+- [OpenJudge Runner Documentation](../running_graders/run_tasks.md)
 - [LangSmith Official Documentation](https://docs.smith.langchain.com/)

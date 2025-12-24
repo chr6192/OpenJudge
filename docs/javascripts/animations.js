@@ -354,7 +354,7 @@
    * Initialize all animations when DOM is ready
    */
   function init() {
-    console.log('🎨 Initializing RM-Gallery animations...');
+    console.log('🎨 Initializing OpenJudge animations...');
 
     // Core animations
     handleReducedMotion();
@@ -391,7 +391,7 @@
   }
 
   // Expose utilities to global scope (optional)
-  window.rmGalleryAnimations = {
+  window.OpenJudgeAnimations = {
     debounce,
     initScrollAnimations,
     initImageAnimations,

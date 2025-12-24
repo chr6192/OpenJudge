@@ -82,8 +82,8 @@ Evaluates whether agent actions align with stated plans or reasoning.
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.agent import ActionAlignmentGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.agent import ActionAlignmentGrader
 
 async def main():
     model = OpenAIChatModel(model="qwen3-32b")
@@ -136,7 +136,7 @@ Detects repetitive or similar actions in agent sequences.
 
 ```python
 import asyncio
-from rm_gallery.core.graders.agent import ActionLoopDetectionGrader
+from open_judge.graders.agent import ActionLoopDetectionGrader
 
 async def main():
     grader = ActionLoopDetectionGrader(similarity_threshold=1.0)
@@ -197,8 +197,8 @@ Evaluates tool selection quality for addressing user queries.
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.agent import ToolSelectionGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.agent import ToolSelectionGrader
 
 async def main():
     model = OpenAIChatModel(model="qwen3-32b")
@@ -262,8 +262,8 @@ Evaluates tool call accuracy including parameter correctness and query relevance
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.agent import ToolCallAccuracyGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.agent import ToolCallAccuracyGrader
 
 async def main():
     model = OpenAIChatModel(model="qwen3-32b")
@@ -335,8 +335,8 @@ Evaluates technical execution success of tool calls (no errors, exceptions, or t
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.agent import ToolCallSuccessGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.agent import ToolCallSuccessGrader
 
 async def main():
     model = OpenAIChatModel(model="qwen3-32b")
@@ -408,8 +408,8 @@ Evaluates parameter extraction accuracy from user queries.
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.agent import ToolParameterCheckGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.agent import ToolParameterCheckGrader
 
 async def main():
     model = OpenAIChatModel(model="qwen3-32b")
@@ -475,7 +475,7 @@ Compares agent tool call sequences against reference sequences.
 
 ```python
 import asyncio
-from rm_gallery.core.graders.agent import ToolCallSequenceMatchGrader
+from open_judge.graders.agent import ToolCallSequenceMatchGrader
 
 async def main():
     grader = ToolCallSequenceMatchGrader(
@@ -546,8 +546,8 @@ Evaluates accuracy and factuality of stored memory content.
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.agent import MemoryAccuracyGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.agent import MemoryAccuracyGrader
 
 async def main():
     model = OpenAIChatModel(model="qwen3-32b")
@@ -601,8 +601,8 @@ Evaluates preservation of important details in stored memory.
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.agent import MemoryDetailPreservationGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.agent import MemoryDetailPreservationGrader
 
 async def main():
     model = OpenAIChatModel(model="qwen3-32b")
@@ -657,8 +657,8 @@ Evaluates effectiveness of memory retrieval for planning and decision-making.
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.agent import MemoryRetrievalEffectivenessGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.agent import MemoryRetrievalEffectivenessGrader
 
 async def main():
     model = OpenAIChatModel(model="qwen3-32b")
@@ -717,8 +717,8 @@ Evaluates logical soundness and feasibility of agent plans.
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.agent import PlanFeasibilityGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.agent import PlanFeasibilityGrader
 
 async def main():
     model = OpenAIChatModel(model="qwen3-32b")
@@ -776,8 +776,8 @@ Evaluates accuracy of agent reflections based on actual observations.
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.agent import ReflectionAccuracyGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.agent import ReflectionAccuracyGrader
 
 async def main():
     model = OpenAIChatModel(model="qwen3-32b")
@@ -831,8 +831,8 @@ Evaluates correctness of action outcome interpretation in reflections.
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.agent import ReflectionOutcomeUnderstandingGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.agent import ReflectionOutcomeUnderstandingGrader
 
 async def main():
     model = OpenAIChatModel(model="qwen3-32b")
@@ -886,8 +886,8 @@ Evaluates accuracy of task progress awareness and sub-goal recognition.
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.agent import ReflectionProgressAwarenessGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.agent import ReflectionProgressAwarenessGrader
 
 async def main():
     model = OpenAIChatModel(model="qwen3-32b")
@@ -943,7 +943,7 @@ Measures information gain and redundancy in observation sequences.
 
 ```python
 import asyncio
-from rm_gallery.core.graders.agent import ObservationInformationGainGrader
+from open_judge.graders.agent import ObservationInformationGainGrader
 
 async def main():
     grader = ObservationInformationGainGrader(similarity_threshold=0.5)
@@ -1008,8 +1008,8 @@ Overall score is the average across all steps and dimensions.
 
 ```python
 import asyncio
-from rm_gallery.core.models import OpenAIChatModel
-from rm_gallery.core.graders.agent import TrajectoryComprehensiveGrader
+from open_judge.models import OpenAIChatModel
+from open_judge.graders.agent import TrajectoryComprehensiveGrader
 
 async def main():
     model = OpenAIChatModel(model="qwen3-32b")

@@ -11,13 +11,11 @@ from unittest.mock import AsyncMock
 import pytest
 from jsonschema import validate
 
-from rm_gallery.core.graders.base_grader import BaseGrader
-from rm_gallery.core.graders.schema import GraderError, GraderScore
-from rm_gallery.core.models.openai_chat_model import OpenAIChatModel
-from rm_gallery.core.runner.aggregator.weighted_sum_aggregator import (
-    WeightedSumAggregator,
-)
-from rm_gallery.core.runner.grading_runner import GradingRunner
+from open_judge.graders.base_grader import BaseGrader
+from open_judge.graders.schema import GraderError, GraderScore
+from open_judge.models.openai_chat_model import OpenAIChatModel
+from open_judge.runner.aggregator.weighted_sum_aggregator import WeightedSumAggregator
+from open_judge.runner.grading_runner import GradingRunner
 
 
 class MockGrader(BaseGrader):
