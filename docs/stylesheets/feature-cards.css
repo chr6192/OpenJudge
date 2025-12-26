@@ -190,6 +190,45 @@
   font-weight: 500;
 }
 
+/* Callout Tip - Highlighted intro section */
+.callout-tip {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.04) 0%, rgba(245, 158, 11, 0.01) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.1);
+  border-left: 3px solid rgba(245, 158, 11, 0.5);
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 1.5rem 0;
+  position: relative;
+}
+
+.callout-tip p {
+  margin: 0;
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+.callout-tip .callout-icon {
+  height: 1.3em;
+  width: 1.3em;
+  margin-right: 10px;
+  vertical-align: middle;
+  display: inline-block;
+  opacity: 0.6;
+  filter: invert(60%) sepia(50%) saturate(400%) hue-rotate(5deg) brightness(100%);
+  flex-shrink: 0;
+}
+
+/* Dark Mode for Callout Tip */
+.dark .callout-tip {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(245, 158, 11, 0.02) 100%);
+  border-color: rgba(245, 158, 11, 0.15);
+  border-left-color: rgba(245, 158, 11, 0.6);
+}
+
+.dark .callout-tip .callout-icon {
+  filter: invert(75%) sepia(60%) saturate(500%) hue-rotate(5deg) brightness(110%);
+}
+
 /* Key Features Section */
 .key-features {
   background: var(--md-default-bg-color, #fff);
@@ -350,6 +389,107 @@
 .dark .key-features strong,
 .dark .key-features b {
   color: rgba(255, 255, 255, 0.95);
+}
+
+/* Key Features Sub-point Links */
+.key-features ul ul li a.feature-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-left: 8px;
+  transition: all 0.2s ease;
+  vertical-align: baseline;
+  pointer-events: auto;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.key-features ul ul li a.feature-link .link-arrow {
+  font-size: 11px;
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+
+.key-features ul ul li a.feature-link:hover .link-arrow {
+  transform: translateX(2px);
+}
+
+/* Blue links for Feature 1 (Library) */
+.key-features > ul > li:nth-child(1) ul li a.feature-link {
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+}
+
+.key-features > ul > li:nth-child(1) ul li a.feature-link:hover {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.3);
+  text-decoration: none;
+}
+
+/* Green links for Feature 2 (Building) */
+.key-features > ul > li:nth-child(2) ul li a.feature-link {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+.key-features > ul > li:nth-child(2) ul li a.feature-link:hover {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.3);
+  text-decoration: none;
+}
+
+/* Purple links for Feature 3 (Integration) */
+.key-features > ul > li:nth-child(3) ul li a.feature-link {
+  color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(139, 92, 246, 0.15);
+}
+
+.key-features > ul > li:nth-child(3) ul li a.feature-link:hover {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.3);
+  text-decoration: none;
+}
+
+/* Dark mode adjustments for feature links */
+.dark .key-features > ul > li:nth-child(1) ul li a.feature-link {
+  color: #60a5fa;
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+.dark .key-features > ul > li:nth-child(1) ul li a.feature-link:hover {
+  background: rgba(59, 130, 246, 0.25);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.dark .key-features > ul > li:nth-child(2) ul li a.feature-link {
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+.dark .key-features > ul > li:nth-child(2) ul li a.feature-link:hover {
+  background: rgba(16, 185, 129, 0.25);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.dark .key-features > ul > li:nth-child(3) ul li a.feature-link {
+  color: #a78bfa;
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.25);
+}
+
+.dark .key-features > ul > li:nth-child(3) ul li a.feature-link:hover {
+  background: rgba(139, 92, 246, 0.25);
+  border-color: rgba(139, 92, 246, 0.4);
 }
 
 /* Card with arrow indicator */

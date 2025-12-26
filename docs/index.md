@@ -1,23 +1,29 @@
 # OpenJudge
 
 ## Why OpenJudge?
-**OpenJudge** unifies reward signals and evaluation metrics into one **Grader** interface—with pre-built graders, flexible customization, and seamless framework integration.
+OpenJudge is a unified framework designed to drive application excellence through **Holistic Evaluation** and **Quality Rewards**.
+
+<div class="callout-tip" markdown>
+<img src="https://unpkg.com/lucide-static@latest/icons/lightbulb.svg" class="callout-icon"> Evaluation and reward signals are the cornerstones of application excellence. **Holistic evaluation** enables the systematic analysis of shortcomings to drive rapid iteration, while **high-quality** rewards provide the essential foundation for advanced optimization and fine-tuning.
+</div>
+
+OpenJudge unifies evaluation metrics and reward signals into a single, standardized **Grader** interface, offering pre-built graders, flexible customization, and seamless framework integration.
 
 ### Key Features
 
 <div class="key-features" markdown>
 
-+ **Systematic & Quality-Assured Grader Library**: Access N+ production-ready graders featuring a comprehensive taxonomy, rigorously validated for reliable performance.
-    - **Multi-Scenario Coverage:** Extensive support for diverse domains including Agent, text, code, math, and multimodal tasks via specialized graders.
-    - **Holistic Agent Evaluation:** Beyond final outcomes, we assess the entire lifecycle—including trajectories and specific components (Memory, Reflection, Tool Use).
-    - **Quality Assurance:** Built for reliability. Every grader comes with benchmark datasets and pytest integration for immediate quality validation.
++ **Systematic & Quality-Assured Grader Library**: Access 50+ production-ready graders featuring a comprehensive taxonomy, rigorously validated for reliable performance.
+    - **Multi-Scenario Coverage:** Extensive support for diverse domains including Agent, text, code, math, and multimodal tasks via specialized graders. <a href="built_in_graders/overview/" class="feature-link">Explore Supported Scenarios<span class="link-arrow">→</span></a>
+    - **Holistic Agent Evaluation:** Beyond final outcomes, we assess the entire lifecycle—including trajectories and specific components (Memory, Reflection, Tool Use). <a href="built_in_graders/agent_graders/" class="feature-link">Agent Lifecycle Evaluation <span class="link-arrow">→</span></a>
+    - **Quality Assurance:** Built for reliability. Every grader comes with benchmark datasets and pytest integration for immediate quality validation. <a href="https://huggingface.co/datasets/agentscope-ai/OpenJudge" class="feature-link" target="_blank"> View Benchmark Datasets<span class="link-arrow">→</span></a>
 
 + **Flexible Grader Building**: Choose the build method that fits your requirements:
-    - **Customization:** Easily extend or modify pre-defined graders to fit your specific needs.
-    - **Data-Driven Rubrics:** Have a few examples but no clear rules? Use our tools to automatically generate white-box evaluation criteria (Rubrics) based on your data.
-    - **Trainable Judge Models:** For high-scale scenarios, train dedicated Judge models as Graders. We support SFT, **Bradley-Terry models, and Reinforcement Learning** workflows.
+    - **Customization:** Easily extend or modify pre-defined graders to fit your specific needs. <a href="building_graders/create_custom_graders/" class="feature-link">Custom Grader Development Guide <span class="link-arrow">→</span></a>
+    - **Data-Driven Rubrics:** Have a few examples but no clear rules? Use our tools to automatically generate white-box evaluation criteria (Rubrics) based on your data. <a href="building_graders/generate_graders_from_data/" class="feature-link">Automatic Rubric Generation Tutorial <span class="link-arrow">→</span></a>
+    - **Trainable Judge Models:** For high-scale and specialized scenarios, we are developing the capability to train dedicated Judge models. Support for SFT, Bradley-Terry models, and Reinforcement Learning workflows is on the way to help you build high-performance, domain-specific graders. <span class="badge-wip">🚧 Coming Soon</span>
 
-+ **Easy Integration**: Seamlessly connect with mainstream evaluation platforms (e.g., LangSmith, LangFuse) and training frameworks (e.g., VERL) using our comprehensive tutorials and flexible APIs.
++ **Easy Integration**: We're actively building seamless connectors for mainstream observability platforms and training frameworks. Stay tuned!<span class="badge-wip">🚧 Coming Soon</span>
 
 </div>
 
@@ -96,6 +102,26 @@
     </p>
   </a>
 
+  <a href="built_in_graders/text/" class="feature-card">
+    <div class="card-header">
+      <img src="https://unpkg.com/lucide-static@latest/icons/text.svg" class="card-icon card-icon-text">
+      <h3>Text</h3>
+    </div>
+    <p class="card-desc">
+      Algorithm-based graders for text similarity and matching. Fast, deterministic, and zero-cost evaluation using BLEU, ROUGE, F1, regex, and 15+ similarity algorithms.
+    </p>
+  </a>
+
+  <a href="built_in_graders/format/" class="feature-card">
+    <div class="card-header">
+      <img src="https://unpkg.com/lucide-static@latest/icons/braces.svg" class="card-icon card-icon-format">
+      <h3>Format</h3>
+    </div>
+    <p class="card-desc">
+      Format validation graders for structured outputs. Validate JSON syntax, check length constraints, detect repetition, and verify reasoning tags for chain-of-thought.
+    </p>
+  </a>
+
 </div>
 
 
@@ -123,15 +149,16 @@
     </p>
   </a>
 
-  <a href="building_graders/training/overview/" class="feature-card-sm">
+  <div class="feature-card-wip">
     <div class="card-header">
       <img src="https://unpkg.com/lucide-static@latest/icons/scale.svg" class="card-icon card-icon-integration">
       <h3>Trainable Judge Model</h3>
     </div>
+    <span class="badge-wip">🚧 Work in Progress</span>
     <p class="card-desc">
       <b>Massive data and need peak performance?</b> Use our training pipeline to train a dedicated Judge Model. This is ideal for complex scenarios where prompt-based grading falls short.
     </p>
-  </a>
+  </div>
 
 </div>
 
@@ -178,47 +205,68 @@
     </p>
   </a>
 
-  <div class="feature-card-wip">
+  <a href="applications/pairwise_evaluation/" class="feature-card">
     <div class="card-header">
-      <img src="https://unpkg.com/lucide-static@latest/icons/rocket.svg" class="card-icon card-icon-agent">
-      <h3>Agent Training</h3>
-      <span class="badge-wip">🚧 Work in Progress</span>
+      <img src="https://unpkg.com/lucide-static@latest/icons/scale.svg" class="card-icon card-icon-general">
+      <h3>Pairwise Evaluation</h3>
     </div>
     <p class="card-desc">
-      Utilize Graders as precise <strong>Reward Models</strong> in Reinforcement Learning (RLHF/RLAIF) loops to align agent behaviors and improve success rates.
+      Compare and rank multiple model outputs using LLM-based pairwise comparisons. Compute win rates, generate win matrices, and identify the best-performing models.
     </p>
-  </div>
+  </a>
 
 </div>
 
-### Improve Graders <span class="badge-wip">🚧 Work in Progress</span>
+
+### Running Graders
 
 <div class="card-grid">
 
-  <div class="feature-card-wip">
+  <a href="running_graders/run_tasks/" class="feature-card">
     <div class="card-header">
-      <img src="https://unpkg.com/lucide-static@latest/icons/vote.svg" class="card-icon card-icon-general">
-      <h3>Voting Strategies</h3>
+      <img src="https://unpkg.com/lucide-static@latest/icons/play.svg" class="card-icon card-icon-tool">
+      <h3>Run Grading Tasks</h3>
     </div>
     <p class="card-desc">
-      Enhance reliability through <strong>Best-of-N</strong> or <strong>Majority Voting</strong>. Aggregate results from multiple grader instances to reduce variance.
+      Orchestrate evaluations at scale with GradingRunner. Configure data mapping, control concurrency, and aggregate results from multiple graders into unified scores.
     </p>
-  </div>
+  </a>
 
-  <div class="feature-card-wip">
+  <a href="running_graders/grader_analysis/" class="feature-card">
     <div class="card-header">
-      <img src="https://unpkg.com/lucide-static@latest/icons/sparkles.svg" class="card-icon card-icon-multimodal">
-      <h3>Advanced Few-Shot</h3>
+      <img src="https://unpkg.com/lucide-static@latest/icons/bar-chart-2.svg" class="card-icon card-icon-data">
+      <h3>Analyze Grader Results</h3>
     </div>
     <p class="card-desc">
-      Boost accuracy with <strong>Dynamic Few-Shot</strong>. Automatically retrieve the most relevant examples (RAG) to guide the grader for specific inputs.
+      Transform raw scores into actionable insights. Examine score distributions, measure consistency, and compare performance against ground truth labels.
     </p>
-  </div>
+  </a>
 
 </div>
-### Others
 
-| documentation | Description | Link |
-|-------------|-----------|-------------|
-| running graders  | xxx | xxx|
-| validating graders  | xxx | xxx|
+
+### Validating Graders
+
+<div class="card-grid">
+
+  <a href="validating_graders/overview/" class="feature-card">
+    <div class="card-header">
+      <img src="https://unpkg.com/lucide-static@latest/icons/shield-check.svg" class="card-icon card-icon-general">
+      <h3>Validation Overview</h3>
+    </div>
+    <p class="card-desc">
+      Ensure your graders make accurate judgments. Learn validation workflows, best practices, and metrics for measuring grader quality.
+    </p>
+  </a>
+
+  <a href="validating_graders/rewardbench2/" class="feature-card">
+    <div class="card-header">
+      <img src="https://unpkg.com/lucide-static@latest/icons/trophy.svg" class="card-icon card-icon-agent">
+      <h3>RewardBench2</h3>
+    </div>
+    <p class="card-desc">
+      Validate against the RewardBench2 benchmark for multi-domain response quality evaluation with standardized ground truth.
+    </p>
+  </a>
+
+</div>

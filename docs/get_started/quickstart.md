@@ -12,9 +12,6 @@ pip install py-openjudge
 
 # For development purposes, install with dev dependencies
 pip install -e .[dev]
-
-# For reinforcement learning and training scenarios, use the VerL option
-pip install -e .[verl]
 ```
 === "From Source"
 
