@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./docs/images/logo.png" alt="Open-Judge Logo" width="500">
+<img src="./docs/images/logo.svg" alt="Open-Judge Logo" width="500">
 
 <br/>
 

@@ -9,4 +9,7 @@ mkdocstrings-python==1.18.2
 # Markdown extensions (pymdownx is included in pymdown-extensions)
 pymdown-extensions==10.16.1
 
+# Syntax highlighting
+Pygments>=2.18.0
+
 
