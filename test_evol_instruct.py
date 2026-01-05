@@ -5,8 +5,8 @@ import asyncio
 
 from loguru import logger
 
-from cookbooks.zero_shot_evaluation.core.schema import load_config
-from cookbooks.zero_shot_evaluation.core.query_generator import QueryGenerator
+from cookbooks.zero_shot_evaluation.schema import load_config
+from cookbooks.zero_shot_evaluation.query_generator import QueryGenerator
 
 
 async def test_evol_instruct():
