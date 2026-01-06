@@ -34,7 +34,7 @@ from cookbooks.zero_shot_evaluation.schema import (
 
 # OpenJudge core components
 from openjudge.analyzer import PairwiseAnalyzer, PairwiseAnalysisResult
-from openjudge.generator import RubricGenerationConfig, RubricGenerator
+from openjudge.generator.simple_rubric import RubricGenerationConfig, TaskBasedRubricGenerator
 from openjudge.graders.llm_grader import GraderMode, LLMGrader
 from openjudge.graders.schema import GraderResult
 from openjudge.models.openai_chat_model import OpenAIChatModel
@@ -288,7 +288,7 @@ class ZeroShotPipeline:
     5. Analyze results and rank models
 
     The pipeline integrates with OpenJudge's core components:
-    - Uses RubricGenerator from openjudge.generator for rubric generation
+    - Uses TaskBasedRubricGenerator from openjudge.generator.simple_rubric for rubric generation
     - Uses PairwiseAnalyzer from openjudge.analyzer for result analysis
     - Uses LLMGrader and GradingRunner for pairwise evaluation
 
@@ -408,18 +408,18 @@ class ZeroShotPipeline:
         self,
         sample_queries: Optional[List[str]] = None,
     ) -> List[str]:
-        """Step 3: Generate evaluation rubrics using OpenJudge's RubricGenerator."""
+        """Step 3: Generate evaluation rubrics using OpenJudge's TaskBasedRubricGenerator."""
         logger.info("Step 3: Generating evaluation rubrics...")
 
         if not sample_queries and self._queries:
             sample_queries = [q.query for q in self._queries[:5]]
 
-        # Use OpenJudge's RubricGenerator
+        # Use OpenJudge's TaskBasedRubricGenerator
         rubric_config = RubricGenerationConfig(
             task_description=self.config.task.description,
             scenario=self.config.task.scenario,
         )
-        generator = RubricGenerator(
+        generator = TaskBasedRubricGenerator(
             config=rubric_config,
             model=self._create_judge_model(),
         )

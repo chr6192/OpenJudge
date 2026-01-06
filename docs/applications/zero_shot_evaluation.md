@@ -33,9 +33,9 @@ Zero-shot evaluation automates the entire evaluation pipeline:
 |------|-----------|-------------|
 | 1 | `QueryGenerator` | Generate diverse test queries from task description |
 | 2 | `ResponseCollector` | Collect responses from all target endpoints |
-| 3 | `RubricGenerator` | Generate evaluation criteria for the task |
+| 3 | `TaskBasedRubricGenerator` | Generate evaluation criteria for the task |
 | 4 | `GradingRunner` | Run pairwise comparisons with judge model |
-| 5 | `ZeroShotEvaluator` | Analyze results and produce rankings |
+| 5 | `ZeroShotPipeline` | Analyze results and produce rankings |
 
 
 ## Quick Start
@@ -44,11 +44,11 @@ Zero-shot evaluation automates the entire evaluation pipeline:
 
 ```python
 import asyncio
-from cookbooks.zero_shot_evaluation import ZeroShotEvaluator
+from cookbooks.zero_shot_evaluation.zero_shot_pipeline import ZeroShotPipeline
 
 async def main():
-    evaluator = ZeroShotEvaluator.from_config("config.yaml")
-    result = await evaluator.evaluate()
+    pipeline = ZeroShotPipeline.from_config("config.yaml")
+    result = await pipeline.evaluate()
 
     print(f"Best Model: {result.best_pipeline}")
     for rank, (model, win_rate) in enumerate(result.rankings, 1):
@@ -137,7 +137,8 @@ For fine-grained control, use individual components directly:
 ### Step 1: Generate Test Queries
 
 ```python
-from cookbooks.zero_shot_evaluation import QueryGenerator, TaskConfig, QueryGenerationConfig, OpenAIEndpoint
+from cookbooks.zero_shot_evaluation.query_generator import QueryGenerator
+from cookbooks.zero_shot_evaluation.schema import TaskConfig, QueryGenerationConfig, OpenAIEndpoint
 
 # Configure task and endpoint
 task = TaskConfig(
@@ -171,7 +172,8 @@ queries = await generator.generate()
 ### Step 2: Collect Responses
 
 ```python
-from cookbooks.zero_shot_evaluation import ResponseCollector, EvaluationConfig
+from cookbooks.zero_shot_evaluation.response_collector import ResponseCollector
+from cookbooks.zero_shot_evaluation.schema import EvaluationConfig
 
 collector = ResponseCollector(
     target_endpoints={
@@ -187,9 +189,13 @@ responses = await collector.collect(queries)
 ### Step 3: Generate Evaluation Rubrics
 
 ```python
-from cookbooks.zero_shot_evaluation import RubricGenerator
+from openjudge.generator.simple_rubric import TaskBasedRubricGenerator, RubricGenerationConfig
 
-rubric_gen = RubricGenerator(judge_endpoint, task)
+rubric_config = RubricGenerationConfig(
+    task_description=task.description,
+    scenario=task.scenario,
+)
+rubric_gen = TaskBasedRubricGenerator(config=rubric_config, model=judge_model)
 rubrics = await rubric_gen.generate(
     sample_queries=[q.query for q in queries[:5]]
 )
@@ -203,16 +209,16 @@ rubrics = await rubric_gen.generate(
 ### Step 4: Run Full Evaluation
 
 ```python
-from cookbooks.zero_shot_evaluation import ZeroShotEvaluator
+from cookbooks.zero_shot_evaluation.zero_shot_pipeline import ZeroShotPipeline
 
-evaluator = ZeroShotEvaluator(
+pipeline = ZeroShotPipeline(
     task_description="Code review assistant",
     target_endpoints=target_endpoints,
     judge_endpoint=judge_endpoint,
     num_queries=20
 )
 
-result = await evaluator.evaluate()
+result = await pipeline.evaluate()
 ```
 
 

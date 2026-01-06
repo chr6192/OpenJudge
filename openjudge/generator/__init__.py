@@ -4,22 +4,43 @@
 This module provides generators for automatically creating graders and
 evaluation criteria based on data or task descriptions.
 
+Submodules:
+    simple_rubric: Task-description-based rubric generation (zero-shot)
+    iterative_rubric: Preference-data-based rubric generation (iterative refinement)
+
 Classes:
     BaseGraderGenerator: Abstract base class for grader generators
     GraderGeneratorConfig: Configuration for grader generation
-    RubricGenerator: Generator for evaluation rubrics
+    LLMGraderGenerator: Base class for LLM-based grader generators
+    LLMGraderGeneratorConfig: Configuration for LLM grader generation
+
+    # Simple rubric generation (from task description)
+    SimpleRubricsGenerator: Main generator for simple rubric-based graders
+    SimpleRubricsGeneratorConfig: Configuration for simple rubric generation
+    TaskBasedRubricGenerator: Core rubric generation logic
     RubricGenerationConfig: Configuration for rubric generation
 """
 
 from openjudge.generator.base_generator import BaseGraderGenerator, GraderGeneratorConfig
-from openjudge.generator.rubric_generator import RubricGenerationConfig, RubricGenerator
+from openjudge.generator.llm_grader_generator import LLMGraderGenerator, LLMGraderGeneratorConfig
+
+# Simple rubric generation
+from openjudge.generator.simple_rubric import (
+    RubricGenerationConfig,
+    SimpleRubricsGenerator,
+    SimpleRubricsGeneratorConfig,
+    TaskBasedRubricGenerator,
+)
 
 __all__ = [
-    # Grader Generator
+    # Base classes
     "BaseGraderGenerator",
     "GraderGeneratorConfig",
-    # Rubric Generator
-    "RubricGenerator",
+    "LLMGraderGenerator",
+    "LLMGraderGeneratorConfig",
+    # Simple rubric generation
+    "SimpleRubricsGenerator",
+    "SimpleRubricsGeneratorConfig",
+    "TaskBasedRubricGenerator",
     "RubricGenerationConfig",
 ]
-
