@@ -15,9 +15,9 @@ A clear and concise description of what the bug is.
 **To Reproduce**
 Steps to reproduce the behavior:
 
-1. You code
-2. How to execute
-3. See error
+1. Code snippet that causes the bug:
+2. Steps to execute the code:
+3. Error message or unexpected behavior observed:
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
